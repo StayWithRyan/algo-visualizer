@@ -1,0 +1,7 @@
+.ConfigurationBar{
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: purple;
+}
