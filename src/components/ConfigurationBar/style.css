@@ -3,5 +3,7 @@
     flex: 1;
     flex-direction: row;
     justify-content: space-around;
-    background-color: purple;
+    background-color: #352f44;
+    height: 60px;
+    padding-top: 10px;
 }

@@ -1,3 +1,11 @@
-.NavLink{
-    background-color: green;
+.NavLinkContainer{
+    width: 33%;
+    height: 100%;
+}
+
+.NavLinkText{
+    margin: 0px;
+    user-select: none;
+    cursor: pointer;
+    text-align: center;
 }

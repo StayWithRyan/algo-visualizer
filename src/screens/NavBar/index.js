@@ -21,13 +21,13 @@ function NavBar() {
     return (
         <>
             <div className="NavBar">
-                <NavLink text = "Pathfinding" onSelect = {onSelectPathfindingPage} isSelected = {selectedPage == "Pathfinding"}/>
-                <NavLink text = "Sorting" onSelect = {onSelectSortingPage} isSelected = {selectedPage == "Sorting"}/>
-                <NavLink text = "String-searching" onSelect = {onSelectStringsearchingPage} isSelected = {selectedPage == "String-searching"}/>
+                <NavLink text = "Pathfinding" onSelect = {onSelectPathfindingPage} isSelected = {selectedPage === "Pathfinding"}/>
+                <NavLink text = "Sorting" onSelect = {onSelectSortingPage} isSelected = {selectedPage === "Sorting"}/>
+                <NavLink text = "String-searching" onSelect = {onSelectStringsearchingPage} isSelected = {selectedPage === "String-searching"}/>
             </div>
-            {selectedPage == "Pathfinding" && <PathfindingPage/>}
-            {selectedPage == "Sorting" && <SortingPage/>}
-            {selectedPage == "String-searching" && <StringsearchingPage/>}
+            {selectedPage === "Pathfinding" && <PathfindingPage/>}
+            {selectedPage === "Sorting" && <SortingPage/>}
+            {selectedPage === "String-searching" && <StringsearchingPage/>}
         </>
     );
 }
