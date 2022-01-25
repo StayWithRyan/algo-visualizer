@@ -18,7 +18,7 @@ export default function BasicSelect(props) {
                     value={props.value}
                     onChange={(event) => {props.onChange(event.target.value)}}
                 >
-                {props.values.map(value => <MenuItem key={value} value={value}>{value}</MenuItem>)}
+                {props.values.map(value => <MenuItem disabled = {props.isDisabled} key={value} value={value}>{value}</MenuItem>)}
                 </Select>
             </FormControl>
         </div>

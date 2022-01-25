@@ -1,0 +1,8 @@
+.SortingContainer {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-left: 10vw;
+    padding-right: 10vw;
+}
