@@ -1,7 +1,7 @@
 const Defaults = {
     sleepMin: 10,
-    sleepMax: 1000,
-    sleepDefault: 300,
+    sleepMax: 2000,
+    sleepDefault: 500,
     sleepStep: 10,
     arraySizeMin: 10,
     arraySizeMax: 100,

@@ -1,41 +1,20 @@
-import Defaults from '../../defaults';
+import BaseSort from './BaseSort';
 
-class InsertionSort {
-    constructor(){
-        this.stop = false;
+class InsertionSort extends BaseSort {
+    constructor(array, updateArray, finishSorting, waitTimeout){
+        super(array, updateArray, finishSorting, waitTimeout);
     }
 
-    async  sort(array, updateArray, finishSorting, waitTimeout){
-        let length = array.length;
-        let newArray = [];
+    async sort(){
+        let length = this.array.length;
+
         for (let i = 1; i < length; i++) {
             let key = i;
             for(let j = i - 1; j >= 0; j--){
-                array[j].color = Defaults.sortingCheckingColor;
-                array[key].color = Defaults.sortingCheckingColor;
-                newArray = [...array];
-                updateArray(newArray);
-                if(this.stop === true){
-                    return;
-                }
-                await Defaults.delay(waitTimeout);
-                array[j].color = Defaults.sortingDefaultColor;
-                array[key].color = Defaults.sortingDefaultColor;
-                if(array[j].value > array[key].value ){
-                    let tmp = array[j].value;
-                    array[j].value = array[key].value;
-                    array[key].value = tmp;
-                    array[j].color = Defaults.sortingSwappingColor;
-                    array[key].color = Defaults.sortingSwappingColor;
-                    newArray = [...array];
-                    updateArray(newArray);
-                    if(this.stop === true){
-                        return;
-                    }
-                    await Defaults.delay(waitTimeout);
-                    array[j].color = Defaults.sortingDefaultColor;
-                    array[key].color = Defaults.sortingDefaultColor;
-
+                await this.visualizeChecking(j, key);
+                if(this.array[j].value > this.array[key].value ){
+                    this.swap(j, key);
+                    await this.visualizeSwapping(j, key);
                     key = j;
                 }
                 else{
@@ -43,12 +22,9 @@ class InsertionSort {
                 }
             }
         }
-        finishSorting();
+        this.finishSorting();
     }
 
-    stopSorting(){
-        this.stop = true;
-    }
 }
 
 export default InsertionSort;

@@ -1,55 +1,27 @@
-import Defaults from '../../defaults';
+import BaseSort from './BaseSort';
 
-class SelectionSort {
-    constructor(){
-        this.stop = false;
+class SelectionSort extends BaseSort {
+    constructor(array, updateArray, finishSorting, waitTimeout){
+        super(array, updateArray, finishSorting, waitTimeout);
     }
 
-    async  sort(array, updateArray, finishSorting, waitTimeout){
-        let length = array.length;
-        let i, j, min_idx;
-        let newArray = [];
-        for (i = 0; i < length - 1; i++) {
-            min_idx = i;
-            for (j = i + 1; j < length; j++) {
-
-                array[j].color = Defaults.sortingCheckingColor;
-                array[min_idx].color = Defaults.sortingCheckingColor;
-                newArray = [...array];
-                if(this.stop === true){
-                    return;
+    async sort(){
+        let length = this.array.length;
+        let i, j, max_idx;
+        for (i = length - 1; i >= 0; i--) {
+            max_idx = i;
+            for (j = 0; j < i; j++) {
+                await this.visualizeChecking(j, max_idx);
+                if (this.array[j].value > this.array[max_idx].value) {
+                    max_idx = j;
                 }
-                updateArray(newArray);
-                await Defaults.delay(waitTimeout);
-                array[j].color = Defaults.sortingDefaultColor;
-                array[min_idx].color = Defaults.sortingDefaultColor;
-                if (array[j].value < array[min_idx].value)
-                    min_idx = j;
             }
-            let tmp = array[min_idx].value;
-            array[min_idx].value = array[i].value;
-            array[i].value = tmp;
-
-            array[min_idx].color = Defaults.sortingSwappingColor;
-            array[i].color = Defaults.sortingSwappingColor;
-            newArray = [...array];
-            if(this.stop === true){
-                return;
-            }
-            updateArray(newArray);
-            await Defaults.delay(waitTimeout);
-            array[min_idx].color = Defaults.sortingDefaultColor;
-            array[i].color = Defaults.sortingDefaultColor;
-
-
-
+            this.swap(i, max_idx);
+            await this.visualizeSwapping(i, max_idx);
         }
-        finishSorting();
+        this.finishSorting();
     }
 
-    stopSorting(){
-        this.stop = true;
-    }
 }
 
 

@@ -8,16 +8,29 @@ import BasicButton from '../../components/BasicButton';
 import BubbleSort from '../../algorithms/sorting/BubbleSort';
 import SelectionSort from '../../algorithms/sorting/SelectionSort';
 import InsertionSort from '../../algorithms/sorting/InsertionSort';
+import MergeSort from '../../algorithms/sorting/MergeSort';
+import QuickSort from '../../algorithms/sorting/QuickSort';
+import HeapSort from '../../algorithms/sorting/HeapSort';
+import ShellSort from '../../algorithms/sorting/ShellSort';
+import CocktailSort from '../../algorithms/sorting/CocktailSort';
+import GnomeSort from '../../algorithms/sorting/GnomeSort';
+
 import Defaults from '../../defaults';
 
 function SortingPage() {
     const algorithmsMapping = {
         "Bubble Sort": BubbleSort,
+        "Cocktail Sort": CocktailSort,
         "Selection Sort": SelectionSort,
-        "Insertion Sort": InsertionSort
+        "Insertion Sort": InsertionSort,
+        "Gnome Sort": GnomeSort,
+        "Shell Sort": ShellSort,
+        "Merge Sort": MergeSort,
+        "Quick Sort": QuickSort,
+        "Heap Sort": HeapSort
     }
 
-    const algorithms = ["Bubble Sort", "Selection Sort", "Insertion Sort"];
+    const algorithms = ["Bubble Sort", "Selection Sort", "Insertion Sort", "Merge Sort", "Quick Sort", "Heap Sort", "Shell Sort", "Cocktail Sort", "Gnome Sort", "Radix Sort"];
     const [algorithm, setAlgorithm] = useState('');
     const [sortingSleep, setSortingSleep] = useState(Defaults.sleepDefault);
     const [startButtonDisabled, setStartButtonDisabled] = useState(true);
@@ -62,9 +75,9 @@ function SortingPage() {
         setStartButtonDisabled(true);
         setStopButtonDisabled(false);
         const algorithmClass = algorithmsMapping[`${algorithm}`];
-        const obj = new algorithmClass();
-        setSortingObj(obj);
-        obj.sort(array, updateArray, handleStop, sortingSleep)
+        const algorithmObj = new algorithmClass(array, updateArray, handleStop, sortingSleep);
+        setSortingObj(algorithmObj);
+        algorithmObj.sort()
     };
 
     const handleStop = () => {
@@ -74,9 +87,15 @@ function SortingPage() {
         setIsSorting(false);
         setStartButtonDisabled(false);
         setStopButtonDisabled(true);
+        const newArray = [...array];
+        for(let i = 0; i < newArray.length; i++){
+            newArray[i].color = Defaults.sortingDefaultColor;
+        }
+        setArray(newArray);
+
     };
     const boxWidth = (80 / array.length - 0.1).toString() + "vw";
-    const maxValue = Math.max(...array.map(elem => elem.value));
+    const maxValue = array.length;
 
 
     return (
