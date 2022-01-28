@@ -18,7 +18,7 @@ class HeapSort extends BaseSort {
         for (let i = n - 1; i > 0; i--) {
             // Move current root to end
             this.swap(0, i);
-            await this.visualizeSwapping(0, i);
+            await this.setSwapping(0, i);
 
             // call max heapify on the reduced heap
             await this.heapify(this.array, i, 0);
@@ -36,14 +36,14 @@ class HeapSort extends BaseSort {
         let r = 2 * i + 2;
         
         if(l < n) {
-            await this.visualizeChecking(largest, l);
+            await this.setChecking(largest, l);
             if (this.array[l].value > this.array[largest].value) {
                 largest = l;
             }
         }
 
         if(r < n) {
-            await this.visualizeChecking(largest, r);
+            await this.setChecking(largest, r);
             if (this.array[r].value > this.array[largest].value) {
                 largest = r;
             }
@@ -52,7 +52,7 @@ class HeapSort extends BaseSort {
 
         if (largest != i) {
             this.swap(i, largest);
-            await this.visualizeSwapping(largest, i);
+            await this.setSwapping(largest, i);
  
             // Recursively heapify the affected sub-tree
             await this.heapify(this.array, n, largest);

@@ -30,9 +30,9 @@ function SortingPage() {
         "Heap Sort": HeapSort
     }
 
-    const algorithms = ["Bubble Sort", "Selection Sort", "Insertion Sort", "Merge Sort", "Quick Sort", "Heap Sort", "Shell Sort", "Cocktail Sort", "Gnome Sort", "Radix Sort"];
+    const algorithms = ["Bubble Sort", "Cocktail Sort", "Selection Sort", "Insertion Sort", "Gnome Sort", "Shell Sort", "Merge Sort", "Quick Sort", "Heap Sort"];
     const [algorithm, setAlgorithm] = useState('');
-    const [sortingSleep, setSortingSleep] = useState(Defaults.sleepDefault);
+    const [sortingSleep, setSortingSleep] = useState(Defaults.sortingSleepDefault);
     const [startButtonDisabled, setStartButtonDisabled] = useState(true);
     const [stopButtonDisabled, setStopButtonDisabled] = useState(true);
 
@@ -104,8 +104,8 @@ function SortingPage() {
                 <BasicSelect title="Sorting algorithm" isDisabled={isSorting} onChange={handleAlgorithmChange} value={algorithm} values={algorithms}  />
                 <BasicSlider title="Array size" isDisabled={isSorting} min={Defaults.arraySizeMin} max={Defaults.arraySizeMax}
                     default={Defaults.arraySizeDefault} step={Defaults.arraySizeStep} onChange={handleSizeChange} />
-                <BasicSlider title="Sleep time(ms)" isDisabled={isSorting} min={Defaults.sleepMin} max={Defaults.sleepMax} 
-                    default={Defaults.sleepDefault} step={Defaults.sleepStep} onChange={handleSpeedChange} />
+                <BasicSlider title="Sleep time(ms)" isDisabled={isSorting} min={Defaults.sortingSleepMin} max={Defaults.sortingSleepMax} 
+                    default={Defaults.sortingSleepDefault} step={Defaults.sortingSleepStep} onChange={handleSpeedChange} />
                 <BasicButton title="Start sorting" onClick={handleStart} isDisabled={startButtonDisabled}/>
                 <BasicButton title="Stop sorting" onClick={handleStop} isDisabled={stopButtonDisabled}/>
             </ConfigurationBar>

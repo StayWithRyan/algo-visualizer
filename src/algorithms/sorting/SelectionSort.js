@@ -11,13 +11,13 @@ class SelectionSort extends BaseSort {
         for (i = length - 1; i >= 0; i--) {
             max_idx = i;
             for (j = 0; j < i; j++) {
-                await this.visualizeChecking(j, max_idx);
+                await this.setChecking(j, max_idx);
                 if (this.array[j].value > this.array[max_idx].value) {
                     max_idx = j;
                 }
             }
             this.swap(i, max_idx);
-            await this.visualizeSwapping(i, max_idx);
+            await this.setSwapping(i, max_idx);
         }
         this.finishSorting();
     }

@@ -20,7 +20,7 @@ class BaseSort {
         this.stop = true;
     }
 
-    async visualizeSingleChecking(i){        
+    async setSingleChecking(i){        
         if(this.stop === true){
             throw "Preventing sorting from executing";
         }
@@ -31,7 +31,7 @@ class BaseSort {
         this.array[i].color = Defaults.sortingDefaultColor;
     }
 
-    async visualizeChecking(i, j) {
+    async setChecking(i, j) {
         if(this.stop === true){
             throw "Preventing sorting from executing";
         }
@@ -44,7 +44,7 @@ class BaseSort {
         this.array[j].color = Defaults.sortingDefaultColor;
     }
 
-    async visualizeSingleSwapping(i){
+    async setSingleSwapping(i){
         if(this.stop === true){
             throw "Preventing sorting from executing";
         }
@@ -54,7 +54,7 @@ class BaseSort {
         await Defaults.delay(this.waitTimeout);
         this.array[i].color = Defaults.sortingDefaultColor;
     }
-    async visualizeSwapping(i, j){
+    async setSwapping(i, j){
         if(this.stop === true){
             throw "Preventing sorting from executing";
         }

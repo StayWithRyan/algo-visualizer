@@ -15,18 +15,18 @@ class QuickSort extends BaseSort {
         let i = (low - 1);
      
         for (let j = low; j <= high - 1; j++) {
-            await this.visualizeChecking(j, high);
+            await this.setChecking(j, high);
             if (this.array[j].value < pivot) {
                 i++;
                 if(i !== j) {
                     this.swap(i, j);
-                    await this.visualizeSwapping(i, j);
+                    await this.setSwapping(i, j);
                 }
             }
         }
         if(i + 1 !== high){
             this.swap(i + 1, high);
-            await this.visualizeSwapping(i + 1, high);
+            await this.setSwapping(i + 1, high);
         }
 
         return (i + 1);

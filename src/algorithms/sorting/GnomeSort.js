@@ -14,13 +14,13 @@ class GnomeSort extends BaseSort {
             if (index == 0) {
                 index++;
             }
-            await this.visualizeChecking(index, index - 1);
+            await this.setChecking(index, index - 1);
             if (this.array[index].value >= this.array[index - 1].value) {
                 index++;
             }
             else {
                 this.swap(index, index - 1);
-                await this.visualizeSwapping(index, index - 1);
+                await this.setSwapping(index, index - 1);
                 index--;
             }
         }

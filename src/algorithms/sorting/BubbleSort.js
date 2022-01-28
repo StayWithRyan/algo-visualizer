@@ -9,10 +9,10 @@ class BubbleSort extends BaseSort {
         let length = this.array.length;
         for (let i = 0; i < length - 1; i++) {
             for (let j = 0; j < length - 1 - i; j++) {
-                await this.visualizeChecking(j, j + 1);
+                await this.setChecking(j, j + 1);
                 if (this.array[j].value > this.array[j + 1].value) {
                     this.swap(j, j + 1);
-                    await this.visualizeSwapping(j, j + 1);
+                    await this.setSwapping(j, j + 1);
                 }
             }
         }

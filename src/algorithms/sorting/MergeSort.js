@@ -31,31 +31,31 @@ class MergeSort extends BaseSort {
         while (i < n1 && j < n2) {
             if (this.array[l + i].value <= this.array[m + 1 + j].value) {
                 mergedArray.push(this.array[l + i].value);
-                await this.visualizeSingleChecking(l + i);
+                await this.setSingleChecking(l + i);
                 i++;
             }
             else {
                 mergedArray.push(this.array[m + 1 + j].value);
-                await this.visualizeSingleChecking(m + 1 + j);
+                await this.setSingleChecking(m + 1 + j);
                 j++;
             }
         }
 
         while (i < n1) {
             mergedArray.push(this.array[l + i].value);
-            await this.visualizeSingleChecking(l + i);
+            await this.setSingleChecking(l + i);
             i++;
         }
     
         while (j < n2) {
             mergedArray.push(this.array[m + 1 + j].value);
-            await this.visualizeSingleChecking(m + 1 + j);
+            await this.setSingleChecking(m + 1 + j);
             j++;
         }
 
         for(let i = 0; i < mergedArray.length; i++){
             this.array[l + i].value = mergedArray[i];
-            await this.visualizeSingleSwapping(l + i);
+            await this.setSingleSwapping(l + i);
         }
     }
   

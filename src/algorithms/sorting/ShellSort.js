@@ -13,10 +13,10 @@ class ShellSort extends BaseSort {
             for (let i = gap; i < length; i++) {
 
                 for(let j = i; j >= gap; j-=gap){
-                    await this.visualizeChecking(j - gap, j);
+                    await this.setChecking(j - gap, j);
                     if(this.array[j - gap].value > this.array[j].value){
                         this.swap(j - gap, j);
-                        await this.visualizeSwapping(j - gap, j);
+                        await this.setSwapping(j - gap, j);
                     }
                     else{
                         break;
