@@ -179,7 +179,7 @@ function StringsearchingPage() {
             </ConfigurationBar>
             {isSearching // pattern
                 ? <div className="textCard">
-                    <div className="textBox" style ={{marginTop: "200px", border: "none"}}>
+                    <div className="textBox" style ={{marginTop: "200px"}}>
                         {pattern.map(
                             elem => {
                                 if (elem.color === "invisible"){
@@ -193,19 +193,19 @@ function StringsearchingPage() {
                     </div>
                 </div>     
                 : <div className="textCard">
-                    <input type="text" className="textBox" placeholder="String to search" 
+                    <input type="text" className="textBox" placeholder="String to search" style={{borderBottom: `5px solid ${Defaults.mainColor}`}}
                         value={convertCharactersArrayToString(pattern)} onChange={(event) => handlePatternChange(event.target.value)}
                     />
                 </div>
             } 
             {isSearching // text
                 ? <div className="textCard">
-                    <div className="textBox" style ={{marginTop: "0px", border: "none"}}>
+                    <div className="textBox" style ={{marginTop: "0px"}}>
                         {text.map(elem => <span style={{backgroundColor: elem.color}}>{elem.character}</span>)}
                     </div>
                 </div>     
                 : <div className="textCard">
-                    <input type="text" className="textBox" placeholder="Text" 
+                    <input type="text" className="textBox" placeholder="Text"  style={{borderBottom: `5px solid ${Defaults.mainColor}`}}
                         value={convertCharactersArrayToString(text)} onChange={(event) => handleTextChange(event.target.value)}
                     />
                 </div>

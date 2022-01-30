@@ -4,6 +4,5 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    background-color: #2a2438;
-    height: 50px;
+    width: 100vw
 }

@@ -3,10 +3,12 @@ import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import InputLabel from '@mui/material/InputLabel';
 
+import Defaults from '../../defaults';
+
 export default function BasicSlider(props) {
   return (
     <div>
-        <InputLabel style={{ color: "#dbd8e3", height: "20px" }} id="demo-simple-select-standard-label">{props.title}</InputLabel>
+        <InputLabel style={{ color: Defaults.textColor, height: "20px" }} id="demo-simple-select-standard-label">{props.title}</InputLabel>
         <Box sx={{ width: 200, p: 0 }}>
         <Slider
             disabled = {props.isDisabled}
@@ -16,7 +18,7 @@ export default function BasicSlider(props) {
             step={props.step}
             min={props.min}
             max={props.max}
-            style={{ color: "#9c27b0"}}
+            style={{ color: Defaults.mainColor}}
             valueLabelDisplay="auto"
         />
         </Box>

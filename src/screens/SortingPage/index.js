@@ -56,18 +56,9 @@ function SortingPage() {
         }
     };
 
-
     const handleSizeChange = (value) => {
         setArray(createArray(value));
     };
-
-    const handleSpeedChange = (value) => {
-        setSortingSleep(value)
-    };
-
-    const updateArray = (array) => {
-        setArray(array);
-    }
 
     const handleStart = () => {
         setIsSorting(true);
@@ -75,7 +66,7 @@ function SortingPage() {
         setStartButtonDisabled(true);
         setStopButtonDisabled(false);
         const algorithmClass = algorithmsMapping[`${algorithm}`];
-        const algorithmObj = new algorithmClass(array, updateArray, handleStop, sortingSleep);
+        const algorithmObj = new algorithmClass(array, setArray, handleStop, sortingSleep);
         setSortingObj(algorithmObj);
         algorithmObj.sort()
     };
@@ -97,7 +88,6 @@ function SortingPage() {
     const boxWidth = (80 / array.length - 0.1).toString() + "vw";
     const maxValue = array.length;
 
-
     return (
         <>
             <ConfigurationBar>
@@ -105,14 +95,17 @@ function SortingPage() {
                 <BasicSlider title="Array size" isDisabled={isSorting} min={Defaults.arraySizeMin} max={Defaults.arraySizeMax}
                     default={Defaults.arraySizeDefault} step={Defaults.arraySizeStep} onChange={handleSizeChange} />
                 <BasicSlider title="Sleep time(ms)" isDisabled={isSorting} min={Defaults.sortingSleepMin} max={Defaults.sortingSleepMax} 
-                    default={Defaults.sortingSleepDefault} step={Defaults.sortingSleepStep} onChange={handleSpeedChange} />
+                    default={Defaults.sortingSleepDefault} step={Defaults.sortingSleepStep} onChange={setSortingSleep} />
                 <BasicButton title="Start sorting" onClick={handleStart} isDisabled={startButtonDisabled}/>
                 <BasicButton title="Stop sorting" onClick={handleStop} isDisabled={stopButtonDisabled}/>
             </ConfigurationBar>
             <div className='SortingContainer'>
                 {array.map(
                     elem => {
-                        const boxHeight = (elem.value / maxValue * 80).toString() + "vh";
+                        const boxHeight = (
+                            elem.value / maxValue * 
+                            (window.innerHeight - Defaults.navBarHeight - Defaults.configurationBarHeight - 50) // 50 is padding to bottom
+                        ).toString() + "px";
                         return <div style={{backgroundColor: elem.color, width: boxWidth, height: boxHeight}}/>
                     }
                 )}
