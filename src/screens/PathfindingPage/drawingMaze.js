@@ -111,7 +111,7 @@ const draw = (canvas, maze, mazePrev) => {
     }
 }
 
-const firstDraw = (canvas, maze, mazePrev) => {
+const firstDraw = (canvas, maze) => {
 
     //grid
     const context = canvas.getContext('2d');
@@ -133,8 +133,6 @@ const firstDraw = (canvas, maze, mazePrev) => {
             
         }
     }
-
-    draw(canvas, maze, mazePrev);
 }
 
 export {draw, firstDraw}

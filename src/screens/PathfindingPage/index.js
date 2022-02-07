@@ -7,11 +7,15 @@ import BasicButton from '../../components/BasicButton';
 import {useState, useEffect, useRef} from 'react';
 
 import Defaults from '../../defaults';
-import {types, createMaze, copyMaze, copyMazeWithoutStartAndTarget, getPosition, onBoarder, updateNode} from './mazeHelpers';
+import {types, createMaze, copyMaze, copyMazeWithoutStartAndTarget, getPosition, onBoarder, updateNode, resetMaze} from './mazeHelpers';
 import {draw, firstDraw} from './drawingMaze';
+import RecursiveDivision from '../../algorithms/pathfinding/mazeGenerators/RecursiveDivision';
+import BasicRandomMaze from '../../algorithms/pathfinding/mazeGenerators/BasicRandomMaze';
+import EllersAlgorithm from '../../algorithms/pathfinding/mazeGenerators/EllersAlgorithm';
 
 
 function PathfindingPage() {
+
     const algorithms = ["DFS", "BFS", "AStar(A*)"];
     const [algorithm, setAlgorithm] = useState('');
     const [pathfindingSleep, setPathfindingSleep] = useState(Defaults.searchingSleepDefault);
@@ -23,11 +27,17 @@ function PathfindingPage() {
     const [startButtonDisabled, setStartButtonDisabled] = useState(true);
     const [stopButtonDisabled, setStopButtonDisabled] = useState(true);
 
-    const generatingAlgorithms = ["recursive division", "basic random maze", "Eller's algorithm"];
+    const generatingAlgorithmsMapping = {
+        "Recursive Division": RecursiveDivision,
+        "Basic Random Maze": BasicRandomMaze,
+        "Eller's Algorithm": EllersAlgorithm
+    }
+    const generatingAlgorithms = ["Recursive Division", "Basic Random Maze", "Eller's Algorithm"];
     const [generatingAlgorithm, setGeneratingAlgorithm] = useState('');
     const [generateButtonDisabled, setGenerateButtonDisabled] = useState(true);
     
-    const [isSearching, setIsSearching] = useState(false);
+    // is our program performing drawing
+    const [isDrawing, setIsDrawing] = useState(false);
     const [isUserDrawing, setIsUserDrawing] = useState(false);
     const [isMovingStartNode, setIsMovingStartNode] = useState(false);
     const [isMovingTargetNode, setIsMovingTargetNode] = useState(false);
@@ -37,7 +47,7 @@ function PathfindingPage() {
 
     // first draw with background
     useEffect(() => {
-        firstDraw(canvasRef.current, maze, mazePrev);
+        firstDraw(canvasRef.current, maze);
     }, []);
 
     // draw at updating state
@@ -47,13 +57,13 @@ function PathfindingPage() {
 
     const handleAlgorithmChange = (value) => {
         setAlgorithm(value);
-        if(isSearching === false){
+        if(startButtonDisabled){
             setStartButtonDisabled(false);
         }
     };
 
     const handleStart = () => {
-        setIsSearching(true);
+        setIsDrawing(true);
 
         setStartButtonDisabled(true);
         setStopButtonDisabled(false);
@@ -61,7 +71,7 @@ function PathfindingPage() {
     };
     
     const handleStop = () => {
-        setIsSearching(false);
+        setIsDrawing(false);
 
         setStartButtonDisabled(false);
         setStopButtonDisabled(true);
@@ -72,15 +82,23 @@ function PathfindingPage() {
     
     const handleGeneratingAlgorithmChange = (value) => {
         setGeneratingAlgorithm(value);
-        if(isSearching === false){
+        if(generateButtonDisabled){
             setGenerateButtonDisabled(false);
         }
     };
 
     const handleGenerating = () => {
+        setIsDrawing(true);
+        setGenerateButtonDisabled(true);
+
+        let newMaze = resetMaze(setMaze, setMazePrev, setMazeSnapshot, canvasRef.current);
+        generatingAlgorithmsMapping[`${generatingAlgorithm}`](newMaze, setMaze, setMazePrev, setMazeSnapshot, setIsDrawing, setGenerateButtonDisabled);
     };
 
     const handleMove = (e) => {
+        if(isDrawing){
+            return;
+        }
 
         if(isUserDrawing || isMovingStartNode || isMovingTargetNode){
             if(handleDrawing(e)){
@@ -98,6 +116,10 @@ function PathfindingPage() {
     }
 
     const handleUp = (e) => {
+        if(isDrawing){
+            return;
+        }
+
         setIsUserDrawing(false);
         setIsMovingStartNode(false);
         setIsMovingTargetNode(false);
@@ -132,6 +154,10 @@ function PathfindingPage() {
     }
 
     const handleDown = (e) => {
+        if(isDrawing){
+            return;
+        }
+
         let [i, j] = getPosition(canvasRef.current, e)
 
         if(maze[i][j].type === types.start){
@@ -151,23 +177,32 @@ function PathfindingPage() {
     }
 
     const handleLeave = () => {
+        if(isDrawing){
+            return;
+        }
+        
         setIsUserDrawing(false); 
         setIsMovingStartNode(false);
         setIsMovingTargetNode(false);
     }
     
-
     const canvasMarginHorizontal = `${ (window.innerWidth - maze[0].length * Defaults.pathfindingElementSize - 1) / 2 }px`
-    
+    const canvasMarginVertical = `${ 
+        (
+            window.innerHeight - maze.length * Defaults.pathfindingElementSize -
+            Defaults.navBarHeight -  Defaults.configurationBarHeight
+        ) / 2 
+    }px`
+
     return (
         <>
             <ConfigurationBar>
-                <BasicSelect title ="Pathfinding algorithm" onChange = {handleAlgorithmChange} value={algorithm} values={algorithms}  />
-                <BasicSlider title="Sleep time" min={Defaults.pathfindingSleepMin} max={Defaults.pathfindingSleepMax} default={Defaults.pathfindingSleepDefault} step={Defaults.pathfindingSleepStep} onChange={setPathfindingSleep} />
+                <BasicSelect isDisabled={isDrawing} title ="Pathfinding algorithm" onChange = {handleAlgorithmChange} value={algorithm} values={algorithms}  />
+                <BasicSlider isDisabled={isDrawing} title="Sleep time" min={Defaults.pathfindingSleepMin} max={Defaults.pathfindingSleepMax} default={Defaults.pathfindingSleepDefault} step={Defaults.pathfindingSleepStep} onChange={setPathfindingSleep} />
                 <BasicButton title="Start pathfinding" onClick={handleStart} isDisabled={startButtonDisabled}/>
                 <BasicButton title="Stop pathfinding" onClick={handleStop} isDisabled={stopButtonDisabled}/>
                 <div style={{width: 3, backgroundColor: Defaults.mainColor, marginBottom: "10px"}}></div>
-                <BasicSelect title ="Maze generating algorithm" onChange = {handleGeneratingAlgorithmChange} value={generatingAlgorithm} values={generatingAlgorithms}  />
+                <BasicSelect isDisabled={isDrawing} title ="Maze generating algorithm" onChange = {handleGeneratingAlgorithmChange} value={generatingAlgorithm} values={generatingAlgorithms}  />
                 <BasicButton title="Generate maze" onClick={handleGenerating} isDisabled={generateButtonDisabled}/>
             </ConfigurationBar>
             <canvas ref={canvasRef} 
@@ -177,7 +212,7 @@ function PathfindingPage() {
                 onMouseMove={(e) => {handleMove(e)}}
                 height={maze.length * Defaults.pathfindingElementSize + 1}
                 width={maze[0].length * Defaults.pathfindingElementSize + 1}
-                style={{marginLeft: canvasMarginHorizontal, marginRight: canvasMarginHorizontal, marginTop: "10px"}}
+                style={{marginLeft: canvasMarginHorizontal, marginRight: canvasMarginHorizontal, marginTop: canvasMarginVertical}}
             />
         </>
     );

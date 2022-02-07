@@ -1,5 +1,7 @@
 import Defaults from '../../defaults';
 
+import {firstDraw} from './drawingMaze';
+
 const types = {
     empty: "empty",
     block: "block",
@@ -27,16 +29,29 @@ const createMaze = () => {
         for(let j = 0; j < w - elemSize; j += elemSize){
             row.push({type: types.empty, x: j, y: i, animation: null});
         }
+        if(row.length % 2 == 0){
+            row.pop();
+        }
         maze.push(row);
     }
 
     // setting start and target
-    let row = parseInt(maze.length / 2) - 1;
+    let row = parseInt(maze.length / 2);
+    if(row % 2 == 0){
+        row--;
+    }
     let shiftFromWall = parseInt(maze[0].length / 7);
+    if(shiftFromWall % 2 == 0){
+        shiftFromWall--;
+    }
     let startNode = maze [row] [shiftFromWall];
-    let targetNode = maze [row] [maze[0].length - shiftFromWall];
+    let targetNode = maze [row] [maze[0].length - shiftFromWall - 1];
     startNode.type = types.start;
     targetNode.type = types.target;
+
+    if(maze.length % 2 == 0){
+        maze.pop();
+    }
 
     return maze;
 }
@@ -116,4 +131,25 @@ const updateNode = (i, j, type, maze, setMaze, setMazePrev, mazeSnapshot, setMaz
     setMaze(newMaze);
 }
 
-export { types, colors, createMaze, copyMaze, copyMazeWithoutStartAndTarget, getPosition, onBoarder, updateNode };
+const resetMaze = (setMaze, setMazePrev, setMazeSnapshot, canvas) => {
+    let newMaze = createMaze();
+
+    setMaze(newMaze);
+    setMazePrev(newMaze);
+    setMazeSnapshot(copyMazeWithoutStartAndTarget(newMaze));
+    firstDraw(canvas, newMaze);
+
+    return newMaze;
+}
+
+const setSingleNodeType = (maze, i, j, type, setMaze, setMazePrev) => {
+    let mazePrev = copyMaze(maze);
+    let newMaze = copyMaze(maze);
+    newMaze[i][j].type = type;
+    setMazePrev(mazePrev);
+    setMaze(newMaze);
+
+    return newMaze;
+}
+
+export { types, colors, createMaze, copyMaze, copyMazeWithoutStartAndTarget, getPosition, onBoarder, updateNode, resetMaze, setSingleNodeType};
