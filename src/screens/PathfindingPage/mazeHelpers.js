@@ -6,14 +6,26 @@ const types = {
     empty: "empty",
     block: "block",
     start: "start",
+    checkingStart: "checkingStart",
+    pathStart: "pathStart",
     target: "target",
+    checkingTarget: "checkingTarget",
+    pathTarget: "pathTarget",
+    checking: "checking",
+    path: "path"
 }
 
 const colors = {
     empty: Defaults.pathfindingEmptyColor,
     block: Defaults.pathfindingBlockColor,
     start: Defaults.pathfindingStartColor,
+    checkingStart: Defaults.pathfindingCheckingColor,
+    pathStart: Defaults.pathfindingPathColor,
     target: Defaults.pathfindingTargetColor,
+    checkingTarget : Defaults.pathfindingCheckingColor,
+    pathTarget : Defaults.pathfindingPathColor,
+    checking: Defaults.pathfindingCheckingColor,
+    path: Defaults.pathfindingPathColor,
 }
 
 let elemSize = Defaults.pathfindingElementSize;
@@ -134,22 +146,66 @@ const updateNode = (i, j, type, maze, setMaze, setMazePrev, mazeSnapshot, setMaz
 const resetMaze = (setMaze, setMazePrev, setMazeSnapshot, canvas) => {
     let newMaze = createMaze();
 
-    setMaze(newMaze);
     setMazePrev(newMaze);
+    setMaze(newMaze);
     setMazeSnapshot(copyMazeWithoutStartAndTarget(newMaze));
     firstDraw(canvas, newMaze);
 
     return newMaze;
 }
 
+const cleanMazeAfterSearching = (maze, setMaze, setMazePrev) => {
+    let newMaze = copyMaze(maze);
+    let prevMaze = copyMaze(maze);
+    for(let i = 0; i < newMaze.length; ++i){
+        for(let j = 0; j < newMaze[0].length; ++j){
+            if(newMaze[i][j].type == types.checking || newMaze[i][j].type == types.path){
+                newMaze[i][j].type = types.empty;
+            }
+            else if(newMaze[i][j].type == types.checkingStart){
+                newMaze[i][j].type = types.start;
+            }
+            else if(newMaze[i][j].type == types.pathStart){
+                newMaze[i][j].type = types.start;
+            }
+            else if(newMaze[i][j].type == types.checkingTarget){
+                newMaze[i][j].type = types.target;
+            }
+            else if(newMaze[i][j].type == types.pathTarget){
+                newMaze[i][j].type = types.target;
+            }
+            newMaze[i][j].animation = null;
+        }
+    }
+    
+    setMazePrev(prevMaze);
+    setMaze(newMaze);
+    
+    return newMaze;
+}
+
+
 const setSingleNodeType = (maze, i, j, type, setMaze, setMazePrev) => {
     let mazePrev = copyMaze(maze);
     let newMaze = copyMaze(maze);
     newMaze[i][j].type = type;
+    maze[i][j].type = type;
     setMazePrev(mazePrev);
     setMaze(newMaze);
 
     return newMaze;
 }
 
-export { types, colors, createMaze, copyMaze, copyMazeWithoutStartAndTarget, getPosition, onBoarder, updateNode, resetMaze, setSingleNodeType};
+const getNodeLocation = (maze, type) => {
+    for(let i = 0; i < maze.length; ++i){
+        for(let j = 0; j < maze[0].length; ++j){
+            if(maze[i][j].type == type){
+                return [i, j];
+            }
+        }
+    }
+    throw "Node not found";
+}
+
+export { types, colors, createMaze, copyMaze, copyMazeWithoutStartAndTarget, 
+    getPosition, onBoarder, updateNode, resetMaze, setSingleNodeType, getNodeLocation, cleanMazeAfterSearching};

@@ -20,7 +20,7 @@ function createSetsArray(maze) {
     return sets;
 }
 
-async function EllersAlgorithm(maze, setMaze, setMazePrev, setMazeSnapshot, setIsDrawing, setGenerateButtonDisabled) {
+async function EllersAlgorithm(maze, setMaze, setMazePrev, setMazeSnapshot, handleFinishGenerating) {
     let newMaze = copyMaze(maze);
 
     
@@ -51,7 +51,7 @@ async function EllersAlgorithm(maze, setMaze, setMazePrev, setMazeSnapshot, setI
     let h = newMaze.length;
     let w = newMaze[0].length;
 
-    for(let i = 1; i < h - 1; ++i) {
+    for(let i = 1; i < h - 2; ++i) {
         if(i % 2 == 0) {
             let gapIndexes = [];
             let setIndex = 0;
@@ -130,25 +130,13 @@ async function EllersAlgorithm(maze, setMaze, setMazePrev, setMazeSnapshot, setI
             }
 
             // set blocks between sets
-            if(i == h - 2){
-                for(let j = 2; j < w - 3; ++j) {
-                    if(sets[i - 1][j] == 0 && sets[i - 1][j - 1] != 0 && sets[i - 1][j + 1] != 0){
-                        newMaze = setSingleNodeType(newMaze, i, j, types.block, setMaze, setMazePrev); 
-                        sets[i][j] = 0;
-                        await Defaults.delay(delayTimeout);
-                    }
+            for(let j = 2; j < w - 2; ++j) {
+                if(sets[i][j] != sets[i][j - 1] && newMaze[i][j - 1].type != types.block && sets[i - 1][j] == 0 && newMaze[i][j].type == types.empty){
+                    newMaze = setSingleNodeType(newMaze, i, j, types.block, setMaze, setMazePrev); 
+                    sets[i][j] = 0;
+                    await Defaults.delay(delayTimeout);
                 }
             }
-            else{
-                for(let j = 2; j < w - 2; ++j) {
-                    if(sets[i][j] != sets[i][j - 1] && newMaze[i][j - 1].type != types.block && sets[i - 1][j] == 0 && newMaze[i][j].type == types.empty){
-                        newMaze = setSingleNodeType(newMaze, i, j, types.block, setMaze, setMazePrev); 
-                        sets[i][j] = 0;
-                        await Defaults.delay(delayTimeout);
-                    }
-                }
-            }
-            
 
             // correcting sets
             for(let j = 2; j < w - 1; ++j) {
@@ -160,8 +148,7 @@ async function EllersAlgorithm(maze, setMaze, setMazePrev, setMazeSnapshot, setI
     }
 
     setMazeSnapshot(copyMazeWithoutStartAndTarget(newMaze))
-    setIsDrawing(false);
-    setGenerateButtonDisabled(false);
+    handleFinishGenerating();
 
 };
   

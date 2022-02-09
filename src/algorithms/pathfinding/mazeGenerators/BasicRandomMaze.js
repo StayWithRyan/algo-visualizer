@@ -8,7 +8,7 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
 
-async function BasicRandomMaze (maze, setMaze, setMazePrev, setMazeSnapshot, setIsDrawing, setGenerateButtonDisabled) {
+async function BasicRandomMaze (maze, setMaze, setMazePrev, setMazeSnapshot, handleFinishGenerating) {
     let newMaze = copyMaze(maze);
 
     for(let i = 0; i < newMaze.length; ++i) {
@@ -23,8 +23,7 @@ async function BasicRandomMaze (maze, setMaze, setMazePrev, setMazeSnapshot, set
     }
 
     setMazeSnapshot(copyMazeWithoutStartAndTarget(newMaze))
-    setIsDrawing(false);
-    setGenerateButtonDisabled(false);
+    handleFinishGenerating();
 
 };
   

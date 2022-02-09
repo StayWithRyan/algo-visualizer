@@ -26,7 +26,7 @@ function getRandomGap(max) {
     return value;
 }
 
-async function RecursiveDivision (maze, setMaze, setMazePrev, setMazeSnapshot, setIsDrawing, setGenerateButtonDisabled) {
+async function RecursiveDivision (maze, setMaze, setMazePrev, setMazeSnapshot, handleFinishGenerating) {
     let newMaze = copyMaze(maze);
 
     for(let i = 0; i < newMaze[0].length; ++i) {
@@ -52,8 +52,7 @@ async function RecursiveDivision (maze, setMaze, setMazePrev, setMazeSnapshot, s
     newMaze = await RecursiveDivisionInner(newMaze, 1, 1, newMaze.length - 2, newMaze[0].length - 2, setMaze, setMazePrev); 
 
     setMazeSnapshot(copyMazeWithoutStartAndTarget(newMaze))
-    setIsDrawing(false);
-    setGenerateButtonDisabled(false);
+    handleFinishGenerating();
 
 };
 

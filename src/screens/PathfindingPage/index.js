@@ -7,18 +7,28 @@ import BasicButton from '../../components/BasicButton';
 import {useState, useEffect, useRef} from 'react';
 
 import Defaults from '../../defaults';
-import {types, createMaze, copyMaze, copyMazeWithoutStartAndTarget, getPosition, onBoarder, updateNode, resetMaze} from './mazeHelpers';
+import {types, createMaze, copyMaze, copyMazeWithoutStartAndTarget, 
+    getPosition, onBoarder, updateNode, resetMaze, cleanMazeAfterSearching} from './mazeHelpers';
 import {draw, firstDraw} from './drawingMaze';
 import RecursiveDivision from '../../algorithms/pathfinding/mazeGenerators/RecursiveDivision';
 import BasicRandomMaze from '../../algorithms/pathfinding/mazeGenerators/BasicRandomMaze';
 import EllersAlgorithm from '../../algorithms/pathfinding/mazeGenerators/EllersAlgorithm';
 
+import DFS from '../../algorithms/pathfinding/pathfindingAlgorithms/DFS';
+import BFS from '../../algorithms/pathfinding/pathfindingAlgorithms/BFS';
+
 
 function PathfindingPage() {
+    const algorithmsMapping = {
+        "Depth First Search": DFS,
+        "Breadth First Search (Dijkstra)": BFS,
+        "Best First Search": BFS,
+        "AStar(A*)": BFS
+    }
 
-    const algorithms = ["DFS", "BFS", "AStar(A*)"];
+    const algorithms = ["Depth First Search", "Breadth First Search (Dijkstra)", "Best First Search", "AStar(A*)"];
     const [algorithm, setAlgorithm] = useState('');
-    const [pathfindingSleep, setPathfindingSleep] = useState(Defaults.searchingSleepDefault);
+    const [pathfindingSleep, setPathfindingSleep] = useState(Defaults.pathfindingSleepDefault);
 
     const [maze, setMaze] = useState(createMaze());
     const [mazeSnapshot, setMazeSnapshot] = useState(copyMazeWithoutStartAndTarget(maze));
@@ -26,6 +36,8 @@ function PathfindingPage() {
 
     const [startButtonDisabled, setStartButtonDisabled] = useState(true);
     const [stopButtonDisabled, setStopButtonDisabled] = useState(true);
+
+    const [pathfindingObj, setPathfindingObj] = useState(null);
 
     const generatingAlgorithmsMapping = {
         "Recursive Division": RecursiveDivision,
@@ -68,9 +80,27 @@ function PathfindingPage() {
         setStartButtonDisabled(true);
         setStopButtonDisabled(false);
         setGenerateButtonDisabled(true);
+
+        let newMaze = cleanMazeAfterSearching(maze, setMaze, setMazePrev);
+
+        const algorithmClass = algorithmsMapping[`${algorithm}`];
+        const algorithmObj = new algorithmClass(newMaze, setMaze, setMazePrev, handleStop, pathfindingSleep);
+        setPathfindingObj(algorithmObj);
+        if(algorithm == "Best First Search"){
+            algorithmObj.setGreedy();
+        }
+        if(algorithm == "AStar(A*)"){
+            algorithmObj.setAStar();
+        }
+        algorithmObj.find();
+        
     };
     
     const handleStop = () => {
+        if(pathfindingObj){
+            pathfindingObj.stopFinding();
+        }
+
         setIsDrawing(false);
 
         setStartButtonDisabled(false);
@@ -90,9 +120,17 @@ function PathfindingPage() {
     const handleGenerating = () => {
         setIsDrawing(true);
         setGenerateButtonDisabled(true);
+        setStartButtonDisabled(true);
+        let setStartButtonDisabledValue = startButtonDisabled;
+
+        const handleFinishGenerating = () => {
+            setIsDrawing(false);
+            setGenerateButtonDisabled(false);
+            setStartButtonDisabled(setStartButtonDisabledValue);
+        }
 
         let newMaze = resetMaze(setMaze, setMazePrev, setMazeSnapshot, canvasRef.current);
-        generatingAlgorithmsMapping[`${generatingAlgorithm}`](newMaze, setMaze, setMazePrev, setMazeSnapshot, setIsDrawing, setGenerateButtonDisabled);
+        generatingAlgorithmsMapping[`${generatingAlgorithm}`](newMaze, setMaze, setMazePrev, setMazeSnapshot, handleFinishGenerating);
     };
 
     const handleMove = (e) => {
@@ -158,15 +196,16 @@ function PathfindingPage() {
             return;
         }
 
-        let [i, j] = getPosition(canvasRef.current, e)
+        let newMaze = cleanMazeAfterSearching(maze, setMaze, setMazePrev);
 
-        if(maze[i][j].type === types.start){
+        let [i, j] = getPosition(canvasRef.current, e)
+        if(newMaze[i][j].type === types.start){
             setIsMovingStartNode(true);
         }
-        else if(maze[i][j].type === types.target){
+        else if(newMaze[i][j].type === types.target){
             setIsMovingTargetNode(true);
         }
-        else if(maze[i][j].type === types.block){
+        else if(newMaze[i][j].type === types.block){
             setIsUserDrawing(true); 
             setIsDrawingBlock(false);
         }

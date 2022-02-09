@@ -37,16 +37,18 @@ const Defaults = {
     NO_OF_CHARS : 256,
 
     
-    pathfindingSleepMin: 100,
+    pathfindingSleepMin: 10,
     pathfindingSleepMax: 300,
-    pathfindingSleepDefault: 150,
+    pathfindingSleepDefault: 50,
     pathfindingSleepStep: 15,
 
     pathfindingElementSize: 30,
-    pathfindingGridColor: "#2a2438",
-    pathfindingBlockColor: "red",
-    pathfindingEmptyColor: "#d3e376",
-    pathfindingStartColor: "green",
+    pathfindingGridColor: "black",
+    pathfindingBlockColor: "#0c3547",
+    pathfindingCheckingColor: "#ADD8E6",
+    pathfindingPathColor: "#4f8ae3",
+    pathfindingEmptyColor: "white",
+    pathfindingStartColor: "purple",
     pathfindingTargetColor: "purple",
 
     delay : ms => new Promise(res => setTimeout(res, ms))
