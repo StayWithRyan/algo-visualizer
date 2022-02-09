@@ -18,10 +18,10 @@ const types = {
 const colors = {
     empty: Defaults.pathfindingEmptyColor,
     block: Defaults.pathfindingBlockColor,
-    start: Defaults.pathfindingStartColor,
+    start: Defaults.pathfindingStartAndTargetColor,
     checkingStart: Defaults.pathfindingCheckingColor,
     pathStart: Defaults.pathfindingPathColor,
-    target: Defaults.pathfindingTargetColor,
+    target: Defaults.pathfindingStartAndTargetColor,
     checkingTarget : Defaults.pathfindingCheckingColor,
     pathTarget : Defaults.pathfindingPathColor,
     checking: Defaults.pathfindingCheckingColor,

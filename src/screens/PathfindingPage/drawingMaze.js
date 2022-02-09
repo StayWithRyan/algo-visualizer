@@ -1,36 +1,37 @@
 import {types, colors} from './mazeHelpers';
 import Defaults from '../../defaults';
 
+let Rainbow = require('rainbowvis.js');
+let elemSize = Defaults.pathfindingElementSize;
+
 class Animation {
     constructor() {
         this.stop = false;
     }
     async animate (canvas, x, y, type) {
         this.stop = false;
-        const context = canvas.getContext('2d')
-        if(type == types.path){
-            context.fillStyle = colors[types.checking];
-        }
-        else{
-            context.fillStyle = colors[types.empty];
-        }
-        context.fillRect(x + 1, y + 1, Defaults.pathfindingElementSize - 1, Defaults.pathfindingElementSize - 1);
-        for(let i = 0; i < 10; ++i) {
+        const context = canvas.getContext('2d');
+
+        let rainbow = new Rainbow();
+        rainbow.setSpectrum(colors[type][0], colors[type][1]);
+
+        let steps = 10;
+        for(let i = 0; i < steps; ++i) {
             if(this.stop) {
                 return;
             }
 
             //background
             if(type == types.pathStart){
-                drawStartNode(canvas, x, y,  Defaults.pathfindingCheckingColor);
+                drawStartNode(canvas, x, y, colors[types.checking][1]);
             }
             if(type == types.pathTarget){
-                drawStartNode(canvas, x, y,  Defaults.pathfindingCheckingColor);
+                drawTargetNode(canvas, x, y, colors[types.checking][1], colors[types.checking][1]);
             }
 
             // main
-            context.fillStyle = colors[type];
-            context.fillRect(x + 1 + ( (29 - 20 - i) / 2), y + 1 + ( (29 - 20 - i) / 2), 20 + i, 20 + i);
+            context.fillStyle = `#${rainbow.colourAt(i * steps)}`
+            context.fillRect(x + 1 + ( (steps - i - 1) / 2), y + 1 + ( (steps - i - 1) / 2), (elemSize - steps) + i, (elemSize - steps) + i);
 
             // start & target images
             if(type == types.checkingStart){
@@ -40,12 +41,12 @@ class Animation {
                 drawStartNode(canvas, x, y,  "none");
             }
             else if(type == types.checkingTarget){
-                drawTargetNode(canvas, x, y, Defaults.pathfindingCheckingColor);
+                drawTargetNode(canvas, x, y, "none", colors[types.checking][1]);
             }
             else if(type == types.pathTarget){
-                drawTargetNode(canvas, x, y, Defaults.pathfindingPathColor);
+                drawTargetNode(canvas, x, y, "none", colors[types.path][1]);
             }
-            await Defaults.delay(10);
+            await Defaults.delay(20);
         }
     }
     stopAnimation(){
@@ -58,7 +59,7 @@ const drawStartNode = (canvas, x, y, backgroundColor) => {
 
     if(backgroundColor != "none") {
         context.fillStyle = backgroundColor;
-        context.fillRect(x + 1, y + 1, Defaults.pathfindingElementSize - 1, Defaults.pathfindingElementSize - 1);
+        context.fillRect(x + 1, y + 1, elemSize - 1, elemSize - 1);
     }
 
     context.strokeStyle = colors[types.start];
@@ -70,15 +71,15 @@ const drawStartNode = (canvas, x, y, backgroundColor) => {
     context.stroke();
 }
 
-const drawTargetNode = (canvas, x, y, backgroundColor) => {
+const drawTargetNode = (canvas, x, y, backgroundColor, secondBackgroundColor) => {
     const context = canvas.getContext('2d');
     
-    if(backgroundColor != Defaults.pathfindingCheckingColor && backgroundColor != Defaults.pathfindingPathColor) {
+    if(backgroundColor != "none") {
         context.fillStyle = backgroundColor;
-        context.fillRect(x + 1, y + 1, Defaults.pathfindingElementSize - 1, Defaults.pathfindingElementSize - 1);
+        context.fillRect(x + 1, y + 1, elemSize - 1, elemSize - 1);
     }
 
-    let shift = Defaults.pathfindingElementSize / 2 + 0.5;
+    let shift = elemSize / 2 + 0.5;
     let radius = 12;
     let radiusDecrease = 3;
 
@@ -89,7 +90,7 @@ const drawTargetNode = (canvas, x, y, backgroundColor) => {
     context.fill();
 
     context.beginPath();
-    context.fillStyle = backgroundColor;
+    context.fillStyle = secondBackgroundColor;
     context.arc(x + shift, y + shift, radius, 0, Math.PI * 2, false);
     radius -= radiusDecrease;
     context.fill();
@@ -111,7 +112,7 @@ const draw = (canvas, maze, mazePrev) => {
                     maze[i][j].animation = null;
                 }
 
-                drawStartNode(canvas, maze[i][j].x, maze[i][j].y, Defaults.pathfindingEmptyColor);
+                drawStartNode(canvas, maze[i][j].x, maze[i][j].y, colors[types.empty]);
             }
             else if(maze[i][j].type == types.target && mazePrev[i][j].type != types.target) {
                 if(maze[i][j].animation){
@@ -119,15 +120,15 @@ const draw = (canvas, maze, mazePrev) => {
                     maze[i][j].animation = null;
                 }
 
-                drawTargetNode(canvas, maze[i][j].x, maze[i][j].y, Defaults.pathfindingEmptyColor);
+                drawTargetNode(canvas, maze[i][j].x, maze[i][j].y, colors[types.empty], colors[types.empty]);
             }
             else if(maze[i][j].type == types.empty && mazePrev[i][j].type != types.empty) {
                 if(maze[i][j].animation){
                     maze[i][j].animation.stopAnimation();
                     maze[i][j].animation = null;
                 }
-                context.fillStyle = colors[maze[i][j].type];
-                context.fillRect(maze[i][j].x + 1, maze[i][j].y + 1, Defaults.pathfindingElementSize - 1, Defaults.pathfindingElementSize - 1)
+                context.fillStyle = colors[types.empty];
+                context.fillRect(maze[i][j].x + 1, maze[i][j].y + 1, elemSize - 1, elemSize - 1)
             }
             else if(maze[i][j].type != mazePrev[i][j].type) {
                 if(maze[i][j].animation === null){
@@ -150,16 +151,15 @@ const firstDraw = (canvas, maze) => {
     for(let i = 0 ; i < maze.length; ++i) {
         for(let j = 0 ; j < maze[0].length; ++j) {
             if(maze[i][j].type === types.start){
-                drawStartNode(canvas, maze[i][j].x, maze[i][j].y, Defaults.pathfindingEmptyColor);
+                drawStartNode(canvas, maze[i][j].x, maze[i][j].y, colors[types.empty]);
             }
             else if(maze[i][j].type === types.target){
-                drawTargetNode(canvas, maze[i][j].x, maze[i][j].y, Defaults.pathfindingEmptyColor);
+                drawTargetNode(canvas, maze[i][j].x, maze[i][j].y, colors[types.empty], colors[types.empty]);
             }
-            else {
-                context.fillStyle = colors[maze[i][j].type];
+            else if(maze[i][j].type === types.empty) {
+                context.fillStyle = colors[types.empty];
                 context.fillRect(maze[i][j].x + 1, maze[i][j].y + 1, Defaults.pathfindingElementSize - 1, Defaults.pathfindingElementSize - 1);
             }
-            
         }
     }
 }

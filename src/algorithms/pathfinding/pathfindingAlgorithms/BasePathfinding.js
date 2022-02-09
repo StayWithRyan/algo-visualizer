@@ -28,7 +28,7 @@ class BasePathfinding {
     }
 
     async showPath(path) {
-        await Defaults.delay(100);
+        await Defaults.delay(200);
         for(let i = 0; i < path.length; ++i) {
             if(this.stop){
                 return false;

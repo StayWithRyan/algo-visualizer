@@ -15,7 +15,7 @@ const Defaults = {
     sortingSleepStep: 10,
 
     sortingDefaultColor: "#6ea1ff",
-    sortingCheckingColor: "#d3e376",
+    sortingCheckingColor: "#fab366",
     sortingSwappingColor: "#ff6d59",
 
     arraySizeMin: 10,
@@ -29,7 +29,7 @@ const Defaults = {
     searchingSleepStep: 50,
 
     searchingDefaultColor: "white",
-    searchingCheckingColor: "#d3e376",
+    searchingCheckingColor: "#fab366",
     searchingCheckingHashColor: "#6ea1ff",
     searchingMatchColor: "#07e35b",
     searchingNoMatchColor: "#ff6d59",
@@ -44,12 +44,11 @@ const Defaults = {
 
     pathfindingElementSize: 30,
     pathfindingGridColor: "black",
-    pathfindingBlockColor: "#0c3547",
-    pathfindingCheckingColor: "#ADD8E6",
-    pathfindingPathColor: "#4f8ae3",
+    pathfindingBlockColor: ["#14856b", "#352f44"],
+    pathfindingCheckingColor: ["#add8e6", "#fab366"],
+    pathfindingPathColor: ["#1c5eba", "#6df774"],
     pathfindingEmptyColor: "white",
-    pathfindingStartColor: "purple",
-    pathfindingTargetColor: "purple",
+    pathfindingStartAndTargetColor: "purple",
 
     delay : ms => new Promise(res => setTimeout(res, ms))
 }
