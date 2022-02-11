@@ -73,7 +73,7 @@ const copyMaze = (maze) => {
     maze.forEach(row => {
         let newRow = [];
         row.forEach(elem => {
-            newRow.push({type: elem.type, x: elem.x, y: elem.y, animation: elem.animation})
+            newRow.push({type: elem.type, x: elem.x, y: elem.y, animation: elem.animation, saturation: elem.saturation})
         });
         newMaze.push(newRow);
 
@@ -88,10 +88,10 @@ const copyMazeWithoutStartAndTarget = (maze) => {
         let newRow = [];
         row.forEach(elem => {
             if(elem.type == types.start || elem.type == types.target){
-                newRow.push({type: types.empty, x: elem.x, y: elem.y, animation: elem.animation})
+                newRow.push({type: types.empty, x: elem.x, y: elem.y, animation: elem.animation, saturation: elem.saturation})
             }
             else{
-                newRow.push({type: elem.type, x: elem.x, y: elem.y, animation: elem.animation})
+                newRow.push({type: elem.type, x: elem.x, y: elem.y, animation: elem.animation, saturation: elem.saturation})
             }
         });
         newMaze.push(newRow);
@@ -160,21 +160,25 @@ const cleanMazeAfterSearching = (maze, setMaze, setMazePrev) => {
     for(let i = 0; i < newMaze.length; ++i){
         for(let j = 0; j < newMaze[0].length; ++j){
             if(newMaze[i][j].type == types.checking || newMaze[i][j].type == types.path){
+                newMaze[i][j].animation = null;
                 newMaze[i][j].type = types.empty;
             }
             else if(newMaze[i][j].type == types.checkingStart){
+                newMaze[i][j].animation = null;
                 newMaze[i][j].type = types.start;
             }
             else if(newMaze[i][j].type == types.pathStart){
+                newMaze[i][j].animation = null;
                 newMaze[i][j].type = types.start;
             }
             else if(newMaze[i][j].type == types.checkingTarget){
+                newMaze[i][j].animation = null;
                 newMaze[i][j].type = types.target;
             }
             else if(newMaze[i][j].type == types.pathTarget){
+                newMaze[i][j].animation = null;
                 newMaze[i][j].type = types.target;
             }
-            newMaze[i][j].animation = null;
         }
     }
     
@@ -185,10 +189,11 @@ const cleanMazeAfterSearching = (maze, setMaze, setMazePrev) => {
 }
 
 
-const setSingleNodeType = (maze, i, j, type, setMaze, setMazePrev) => {
+const setSingleNodeType = (maze, i, j, type, setMaze, setMazePrev, saturation) => {
     let mazePrev = copyMaze(maze);
     let newMaze = copyMaze(maze);
     newMaze[i][j].type = type;
+    newMaze[i][j].saturation = saturation;
     maze[i][j].type = type;
     setMazePrev(mazePrev);
     setMaze(newMaze);

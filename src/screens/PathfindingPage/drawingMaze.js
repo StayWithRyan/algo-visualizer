@@ -8,25 +8,24 @@ class Animation {
     constructor() {
         this.stop = false;
     }
-    async animate (canvas, x, y, type) {
+    async animate (canvas, x, y, type, saturation) {
         this.stop = false;
         const context = canvas.getContext('2d');
 
         let rainbow = new Rainbow();
-        rainbow.setSpectrum(colors[type][0], colors[type][1]);
+        if(isNaN(saturation)){
+            rainbow.setSpectrum(colors[type][0], colors[type][1]);
+        }
+        else{
+            let rainbowSaturation = new Rainbow();
+            rainbowSaturation.setSpectrum(Defaults.pathfindingBegginingColor, colors[type][1]);
+            rainbow.setSpectrum(colors[type][0], `#${rainbowSaturation.colourAt(saturation * 100)}`);
+        }
 
         let steps = 10;
         for(let i = 0; i < steps; ++i) {
             if(this.stop) {
                 return;
-            }
-
-            //background
-            if(type == types.pathStart){
-                drawStartNode(canvas, x, y, colors[types.checking][1]);
-            }
-            if(type == types.pathTarget){
-                drawTargetNode(canvas, x, y, colors[types.checking][1], colors[types.checking][1]);
             }
 
             // main
@@ -130,10 +129,14 @@ const draw = (canvas, maze, mazePrev) => {
                 context.fillStyle = colors[types.empty];
                 context.fillRect(maze[i][j].x + 1, maze[i][j].y + 1, elemSize - 1, elemSize - 1)
             }
+            else if(maze[i][j].type == types.block && (mazePrev[i][j].type == types.start ||  mazePrev[i][j].type == types.target)) {
+                context.fillStyle = colors[types.block][1];
+                context.fillRect(maze[i][j].x + 1, maze[i][j].y + 1, elemSize - 1, elemSize - 1)
+            }
             else if(maze[i][j].type != mazePrev[i][j].type) {
                 if(maze[i][j].animation === null){
                     let animation = new Animation();
-                    animation.animate(canvas, maze[i][j].x, maze[i][j].y, maze[i][j].type);
+                    animation.animate(canvas, maze[i][j].x, maze[i][j].y, maze[i][j].type, maze[i][j].saturation);
                     maze[i][j].animation = animation;
                 }
             }

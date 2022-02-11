@@ -147,6 +147,7 @@ async function EllersAlgorithm(maze, setMaze, setMazePrev, setMazeSnapshot, hand
         }
     }
 
+    await Defaults.delay(200);
     setMazeSnapshot(copyMazeWithoutStartAndTarget(newMaze))
     handleFinishGenerating();
 

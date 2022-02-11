@@ -51,6 +51,7 @@ async function RecursiveDivision (maze, setMaze, setMazePrev, setMazeSnapshot, h
 
     newMaze = await RecursiveDivisionInner(newMaze, 1, 1, newMaze.length - 2, newMaze[0].length - 2, setMaze, setMazePrev); 
 
+    await Defaults.delay(200);
     setMazeSnapshot(copyMazeWithoutStartAndTarget(newMaze))
     handleFinishGenerating();
 

@@ -43,6 +43,7 @@ class BFS extends BasePathfinding{
         if(path.length > 0) {
             await this.showPath(path);
         }
+        await Defaults.delay(200);
         
         this.finishFinding();
     };

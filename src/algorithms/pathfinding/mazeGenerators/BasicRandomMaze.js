@@ -22,9 +22,9 @@ async function BasicRandomMaze (maze, setMaze, setMazePrev, setMazeSnapshot, han
         }
     }
 
-    setMazeSnapshot(copyMazeWithoutStartAndTarget(newMaze))
+    await Defaults.delay(200);
+    setMazeSnapshot(copyMazeWithoutStartAndTarget(newMaze));
     handleFinishGenerating();
-
 };
   
 export default BasicRandomMaze;

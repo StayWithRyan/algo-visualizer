@@ -15,8 +15,8 @@ const Defaults = {
     sortingSleepStep: 10,
 
     sortingDefaultColor: "#6ea1ff",
-    sortingCheckingColor: "#fab366",
-    sortingSwappingColor: "#ff6d59",
+    sortingCheckingColor: "#dfa47f",
+    sortingSwappingColor: "#eb6b64",
 
     arraySizeMin: 10,
     arraySizeMax: 100,
@@ -45,8 +45,9 @@ const Defaults = {
     pathfindingElementSize: 30,
     pathfindingGridColor: "black",
     pathfindingBlockColor: ["#14856b", "#352f44"],
-    pathfindingCheckingColor: ["#add8e6", "#fab366"],
-    pathfindingPathColor: ["#1c5eba", "#6df774"],
+    pathfindingCheckingColor: ["#d8e7c6", "#dfa47f"],
+    pathfindingPathColor: ["#e29b41", "#eb6b0a"],
+    pathfindingBegginingColor: "#eb6b64",
     pathfindingEmptyColor: "white",
     pathfindingStartAndTargetColor: "purple",
 

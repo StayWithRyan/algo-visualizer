@@ -26,6 +26,7 @@ class DFS extends BasePathfinding{
             await this.showPath(path);
         }
         
+        await Defaults.delay(200);
         this.finishFinding();
     };
 

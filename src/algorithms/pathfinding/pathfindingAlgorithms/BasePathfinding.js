@@ -29,7 +29,8 @@ class BasePathfinding {
 
     async showPath(path) {
         await Defaults.delay(200);
-        for(let i = 0; i < path.length; ++i) {
+        let len = path.length;
+        for(let i = 0; i < len; ++i) {
             if(this.stop){
                 return false;
             }
@@ -40,7 +41,7 @@ class BasePathfinding {
             else if(this.maze[path[i][0]][path[i][1]].type == types.checkingTarget) {
                 type = types.pathTarget;
             }
-            setSingleNodeType(this.maze, path[i][0], path[i][1], type, this.setMaze, this.setMazePrev); 
+            setSingleNodeType(this.maze, path[i][0], path[i][1], type, this.setMaze, this.setMazePrev, i / len); 
             await Defaults.delay(this.waitTimeout);
         }
     }

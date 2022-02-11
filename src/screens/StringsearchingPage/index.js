@@ -11,7 +11,7 @@ import {useState, useEffect} from 'react';
 import Defaults from '../../defaults';
 
 
-import NativeAlgorithm from '../../algorithms/string-searching/NativeAlgorithm';
+import NaiveAlgorithm from '../../algorithms/string-searching/NaiveAlgorithm';
 import OptimizedNaiveAlgorithm from '../../algorithms/string-searching/OptimizedNaiveAlgorithm';
 import KMPAlgorithm from '../../algorithms/string-searching/KMPAlgorithm';
 import BoyerMooreAlgorithm from '../../algorithms/string-searching/BoyerMooreAlgorithm';
@@ -20,7 +20,7 @@ import RabinKarpAlgorithm from '../../algorithms/string-searching/RabinKarpAlgor
 function StringsearchingPage() {
 
     const algorithmsMapping = {
-        "Native Algorithm": NativeAlgorithm,
+        "Naive Algorithm": NaiveAlgorithm,
         "Optimized Naive Algorithm": OptimizedNaiveAlgorithm,
         "KMP(Knuth Morris Pratt) Algorithm": KMPAlgorithm,
         "Boyer Moore Algorithm": BoyerMooreAlgorithm,

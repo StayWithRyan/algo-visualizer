@@ -175,8 +175,6 @@ function PathfindingPage() {
         }
 
         if(isUserDrawing){
-            let [i, j] = getPosition(canvasRef.current, e);
-
             if(isDrawingBlock){
                 if(maze[i][j].type != types.block){
                     updateNode(i,j, types.block, maze, setMaze, setMazePrev, mazeSnapshot, setMazeSnapshot);
