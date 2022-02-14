@@ -16,14 +16,23 @@ class BoyerMooreAlgorithm extends BaseStringSearching {
      
 
     badCharHeuristic() {
-        let badchar = new Array(Defaults.NO_OF_CHARS);
-        for (let i = 0; i < Defaults.NO_OF_CHARS; i++) {
-            badchar[i] = -1;
+        this.badchar = {};
+        for (let i = 0; i < this.pattern.length; i++) {
+            this.badchar[this.pattern[i].character] = -1;
         }
         for (let i = 0; i < this.pattern.length; i++) {
-            badchar[this.pattern[i].character.charCodeAt(0)] = i;
+            this.badchar[this.pattern[i].character] = i;
         }
-        return badchar;
+    }
+     
+
+    getBadCharHeuristicValue(value) {
+        if(this.badchar.hasOwnProperty(value)){
+            return this.badchar[value];
+        }
+        else{
+            return -1;
+        }
     }
      
     async innerSearch() {
@@ -31,7 +40,7 @@ class BoyerMooreAlgorithm extends BaseStringSearching {
         let m = this.pattern.length;
         let n = this.text.length;
     
-        let badchar = this.badCharHeuristic();
+        this.badCharHeuristic();
         await this.setPatternPreprocessing();
         this.setDefaultColor();
     
@@ -58,7 +67,7 @@ class BoyerMooreAlgorithm extends BaseStringSearching {
                 await this.setTextMatch(s, s + m);
                 break;
             }
-            s += this.max(1, j - badchar[this.text[s + j].character.charCodeAt(0)]);
+            s += this.max(1, j - this.getBadCharHeuristicValue(this.text[s + j].character));
         }
     }
 }

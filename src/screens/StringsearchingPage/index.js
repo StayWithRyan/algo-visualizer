@@ -26,12 +26,13 @@ function StringsearchingPage() {
         "Boyer Moore Algorithm": BoyerMooreAlgorithm,
         "Rabin-Karp Algorithm": RabinKarpAlgorithm
     }
-    const algorithms = ["Native Algorithm", "Optimized Naive Algorithm", "KMP(Knuth Morris Pratt) Algorithm", "Boyer Moore Algorithm", "Rabin-Karp Algorithm"];
+    const algorithms = ["Naive Algorithm", "Optimized Naive Algorithm", "KMP(Knuth Morris Pratt) Algorithm", "Boyer Moore Algorithm", "Rabin-Karp Algorithm"];
     const [algorithm, setAlgorithm] = useState('');
 
     const [searchingSleep, setSearchingSleep] = useState(Defaults.searchingSleepDefault);
     const [startButtonDisabled, setStartButtonDisabled] = useState(true);
     const [stopButtonDisabled, setStopButtonDisabled] = useState(true);
+    const [clearButtonDisabled, setClearButtonDisabled] = useState(true);
 
     const [pattern, setPattern] = useState([]);
     const [text, setText] = useState([]);
@@ -40,6 +41,12 @@ function StringsearchingPage() {
     const [isSearching, setIsSearching] = useState(false);
 
     useEffect(() => {
+        if((pattern.length !== 0 || text.length !== 0) && isSearching === false) {
+            setClearButtonDisabled(false);
+        }
+        else{
+            setClearButtonDisabled(true);
+        }
         if(pattern.length !== 0 && text.length !== 0 && algorithm !== "" && isSearching === false && pattern.length <= text.length) {
             setStartButtonDisabled(false);
         }
@@ -59,12 +66,11 @@ function StringsearchingPage() {
     }
 
     const inputValidation = (string) => {
-        for(let i = 0; i < string.length; ++i) {
-            if(string.charCodeAt(i) > Defaults.NO_OF_CHARS){
-                return false;
-            }
+        if(string.trim() != string){
+            return false;
         }
-        if(string.length > 35) {
+        let maxLength = (window.innerWidth / 100 * 80) / 30; // 80 is textBox width
+        if(string.length > maxLength) {
             return false;
         }
 
@@ -168,6 +174,11 @@ function StringsearchingPage() {
         setStopButtonDisabled(true);
     };
 
+    const handleClear = () => {
+        setPattern("");
+        setText("");
+    };
+
     return (
         <>
             <ConfigurationBar>
@@ -176,6 +187,7 @@ function StringsearchingPage() {
                     default={Defaults.searchingSleepDefault} step={Defaults.searchingSleepStep} onChange={setSearchingSleep} />
                 <BasicButton title="Start searching" onClick={handleStart} isDisabled={startButtonDisabled}/>
                 <BasicButton title="Stop searching" onClick={() => handleStop()} isDisabled={stopButtonDisabled}/>
+                <BasicButton title="Clear" onClick={() => handleClear()} isDisabled={clearButtonDisabled}/>
             </ConfigurationBar>
             {isSearching // pattern
                 ? <div className="textCard">

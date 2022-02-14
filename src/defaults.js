@@ -33,9 +33,6 @@ const Defaults = {
     searchingCheckingHashColor: "#6ea1ff",
     searchingMatchColor: "#07e35b",
     searchingNoMatchColor: "#ff6d59",
-
-    NO_OF_CHARS : 256,
-
     
     pathfindingSleepMin: 10,
     pathfindingSleepMax: 300,
