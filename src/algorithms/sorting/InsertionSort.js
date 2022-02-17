@@ -5,7 +5,7 @@ class InsertionSort extends BaseSort {
         super(array, updateArray, finishSorting, waitTimeout);
     }
 
-    async sort(){
+    async innerSort(){
         let length = this.array.length;
 
         for (let i = 1; i < length; i++) {

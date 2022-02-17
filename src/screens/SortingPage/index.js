@@ -28,9 +28,11 @@ function SortingPage() {
         "Merge Sort": MergeSort,
         "Quick Sort": QuickSort,
         "Heap Sort": HeapSort
+    }    
+    const algorithms = [];
+    for (let property in algorithmsMapping) {
+        algorithms.push(property);
     }
-
-    const algorithms = ["Bubble Sort", "Cocktail Sort", "Selection Sort", "Insertion Sort", "Gnome Sort", "Shell Sort", "Merge Sort", "Quick Sort", "Heap Sort"];
     const [algorithm, setAlgorithm] = useState('');
     const [sortingSleep, setSortingSleep] = useState(Defaults.sortingSleepDefault);
     const [startButtonDisabled, setStartButtonDisabled] = useState(true);

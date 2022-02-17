@@ -25,8 +25,10 @@ function PathfindingPage() {
         "Best First Search": BFS,
         "AStar(A*)": BFS
     }
-
-    const algorithms = ["Depth First Search", "Breadth First Search (Dijkstra)", "Best First Search", "AStar(A*)"];
+    const algorithms = [];
+    for (let property in algorithmsMapping) {
+        algorithms.push(property);
+    }
     const [algorithm, setAlgorithm] = useState('');
     const [pathfindingSleep, setPathfindingSleep] = useState(Defaults.pathfindingSleepDefault);
 

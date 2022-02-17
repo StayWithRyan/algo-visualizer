@@ -209,7 +209,6 @@ const getNodeLocation = (maze, type) => {
             }
         }
     }
-    throw "Node not found";
 }
 
 export { types, colors, createMaze, copyMaze, copyMazeWithoutStartAndTarget, 

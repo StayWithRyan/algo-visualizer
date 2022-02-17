@@ -9,6 +9,14 @@ class BaseSort {
         this.waitTimeout = waitTimeout;
     }
 
+    async sort () {
+        try{
+            await this.innerSort();
+        }
+        catch(_){
+            // This is ok. Used for stopping algorithm from executing
+        }
+    }
     swap(i, j) {
         let temp = this.array[i].value;
         this.array[i].value = this.array[j].value;

@@ -5,7 +5,7 @@ class SelectionSort extends BaseSort {
         super(array, updateArray, finishSorting, waitTimeout);
     }
 
-    async sort(){
+    async innerSort(){
         let length = this.array.length;
         let i, j, max_idx;
         for (i = length - 1; i >= 0; i--) {

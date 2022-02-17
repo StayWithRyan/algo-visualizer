@@ -26,7 +26,10 @@ function StringsearchingPage() {
         "Boyer Moore Algorithm": BoyerMooreAlgorithm,
         "Rabin-Karp Algorithm": RabinKarpAlgorithm
     }
-    const algorithms = ["Naive Algorithm", "Optimized Naive Algorithm", "KMP(Knuth Morris Pratt) Algorithm", "Boyer Moore Algorithm", "Rabin-Karp Algorithm"];
+    const algorithms = [];
+    for (let property in algorithmsMapping) {
+        algorithms.push(property);
+    }
     const [algorithm, setAlgorithm] = useState('');
 
     const [searchingSleep, setSearchingSleep] = useState(Defaults.searchingSleepDefault);
@@ -187,7 +190,7 @@ function StringsearchingPage() {
                     default={Defaults.searchingSleepDefault} step={Defaults.searchingSleepStep} onChange={setSearchingSleep} />
                 <BasicButton title="Start searching" onClick={handleStart} isDisabled={startButtonDisabled}/>
                 <BasicButton title="Stop searching" onClick={() => handleStop()} isDisabled={stopButtonDisabled}/>
-                <BasicButton title="Clear" onClick={() => handleClear()} isDisabled={clearButtonDisabled}/>
+                <BasicButton title="Clear" onClick={handleClear} isDisabled={clearButtonDisabled}/>
             </ConfigurationBar>
             {isSearching // pattern
                 ? <div className="textCard">

@@ -5,7 +5,7 @@ class GnomeSort extends BaseSort {
         super(array, updateArray, finishSorting, waitTimeout);
     }
 
-    async sort()
+    async innerSort()
     {
         let length = this.array.length;
         let index = 0;

@@ -5,7 +5,7 @@ class CocktailSort extends BaseSort {
         super(array, updateArray, finishSorting, waitTimeout);
     }
 
-    async sort()
+    async innerSort()
     {
         let swapped = true;
         let start = 0;

@@ -2,16 +2,12 @@ import {copyMaze, copyMazeWithoutStartAndTarget, types, setSingleNodeType} from 
 
 import Defaults from '../../../defaults';
 
-let delayTimeout = 1;
-
-function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
-}
+let delayTimeout = Defaults.pathfindingGeneratingDelayTimeout;
 
 function getRandomLine(max) {
     let value;
     do {
-        value = getRandomInt(max);
+        value = Defaults.getRandomInt(max);
     } while(value % 2 == 0);
 
     return value;
@@ -20,7 +16,7 @@ function getRandomLine(max) {
 function getRandomGap(max) {
     let value;
     do {
-        value = getRandomInt(max);
+        value = Defaults.getRandomInt(max);
     } while(value % 2 == 1);
 
     return value;
@@ -71,7 +67,7 @@ async function RecursiveDivisionInner(maze, x, y, h, w, setMaze, setMazePrev) {
         horizontalChance = 20;
     }
     
-    let isHorizontal = (getRandomInt(100) < horizontalChance);
+    let isHorizontal = (Defaults.getRandomInt(100) < horizontalChance);
 
     if(isHorizontal){
         let rowIndex = getRandomLine(h - 1);

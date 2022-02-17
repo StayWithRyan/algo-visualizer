@@ -5,13 +5,13 @@ class HeapSort extends BaseSort {
         super(array, updateArray, finishSorting, waitTimeout);
     }
 
-    async sort()
+    async innerSort()
     {
         let n = this.array.length;
 
         // Build heap
         for (let i = Math.floor(n / 2) - 1; i >= 0; i--){
-            await this.heapify(this.array, n, i);
+            await this.heapify(n, i);
         }
  
         // One by one extract an element from heap
@@ -21,7 +21,7 @@ class HeapSort extends BaseSort {
             await this.setSwapping(0, i);
 
             // call max heapify on the reduced heap
-            await this.heapify(this.array, i, 0);
+            await this.heapify(i, 0);
 
         }
         this.finishSorting();
@@ -29,7 +29,7 @@ class HeapSort extends BaseSort {
  
     // To heapify a subtree rooted with node i which is
     // an index in arr[]. n is size of heap
-    async heapify(arr, n, i)
+    async heapify(n, i)
     {
         let largest = i;
         let l = 2 * i + 1;
@@ -55,7 +55,7 @@ class HeapSort extends BaseSort {
             await this.setSwapping(largest, i);
  
             // Recursively heapify the affected sub-tree
-            await this.heapify(this.array, n, largest);
+            await this.heapify(n, largest);
         }
     }
 }

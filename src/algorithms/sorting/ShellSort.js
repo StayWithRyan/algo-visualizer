@@ -5,7 +5,7 @@ class ShellSort extends BaseSort {
         super(array, updateArray, finishSorting, waitTimeout);
     }
 
-    async sort() {
+    async innerSort() {
         let length = this.array.length;
   
         for (let gap = Math.floor(length/2); gap > 0; gap = Math.floor(gap/2))

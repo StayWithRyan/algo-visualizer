@@ -2,11 +2,7 @@ import {copyMaze, copyMazeWithoutStartAndTarget, types, setSingleNodeType} from 
 
 import Defaults from '../../../defaults';
 
-let delayTimeout = 1;
-
-function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
-}
+let delayTimeout = Defaults.pathfindingGeneratingDelayTimeout;
 
 function createSetsArray(maze) {
     let sets = [];
@@ -78,9 +74,9 @@ async function EllersAlgorithm(maze, setMaze, setMazePrev, setMazeSnapshot, hand
                             k++;
                         }
 
-                        gapIndexes.push(getRandomInt(setSize));
+                        gapIndexes.push(Defaults.getRandomInt(setSize));
                         for(let k = 0; k < 5; k ++){
-                            let newGap = getRandomInt(setSize);
+                            let newGap = Defaults.getRandomInt(setSize);
                             let gapAvailable = true;
                             for(let l = 0; l < gapIndexes.length; ++l){
                                 if(Math.abs(newGap - gapIndexes[l]) <= 1){
@@ -124,7 +120,7 @@ async function EllersAlgorithm(maze, setMaze, setMazePrev, setMazeSnapshot, hand
             }
             // randomly join adjacent cells
             for(let j = 2; j < w - 1; ++j) {
-                if(getRandomInt(10) < 6) {
+                if(Defaults.getRandomInt(10) < 6) {
                     sets[i][j] = sets[i][j - 1];
                 }
             }

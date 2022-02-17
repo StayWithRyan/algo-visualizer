@@ -1,5 +1,6 @@
 const Defaults = {
 
+    // General
     mainColor: "#9c27b0",
     textColor: "#dbd8e3",
     navBarColor: "#2a2438",
@@ -9,6 +10,7 @@ const Defaults = {
     navBarHeight: 45,
     configurationBarHeight: 60,
     
+    // Sorting
     sortingSleepMin: 10,
     sortingSleepMax: 2000,
     sortingSleepDefault: 500,
@@ -23,6 +25,7 @@ const Defaults = {
     arraySizeDefault: 10,
     arraySizeStep: 10,
 
+    // String-searching
     searchingSleepMin: 100,
     searchingSleepMax: 2000,
     searchingSleepDefault: 500,
@@ -34,10 +37,13 @@ const Defaults = {
     searchingMatchColor: "#07e35b",
     searchingNoMatchColor: "#ff6d59",
     
+    // Pathfinding
     pathfindingSleepMin: 10,
     pathfindingSleepMax: 300,
     pathfindingSleepDefault: 50,
     pathfindingSleepStep: 15,
+
+    pathfindingGeneratingDelayTimeout: 1,
 
     pathfindingElementSize: 30,
     pathfindingGridColor: "black",
@@ -48,7 +54,21 @@ const Defaults = {
     pathfindingEmptyColor: "white",
     pathfindingStartAndTargetColor: "purple",
 
-    delay : ms => new Promise(res => setTimeout(res, ms))
+    // Tree Based 
+    treebasedSleepMin: 100,
+    treebasedSleepMax: 1000,
+    treebasedSleepDefault: 100,
+    treebasedSleepStep: 15,
+
+    treeSizeMin: 5,
+    treeSizeDefault: 15,
+    treeSizeStep: 1,
+
+    treeNodeElementSize: 50,
+
+    delay : ms => new Promise(res => setTimeout(res, ms)),
+
+    getRandomInt : max => Math.floor(Math.random() * max)
 }
 
 export default Defaults;

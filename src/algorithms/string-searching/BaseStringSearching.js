@@ -18,15 +18,20 @@ class BaseStringSearching {
     }
 
     async search() {
-        await Defaults.delay(500);
+        try{
+            await Defaults.delay(500);
 
-        await this.innerSearch();
+            await this.innerSearch();
 
-        if(!this.found) {
-            await this.setPatternNoMatch();
+            if(!this.found) {
+                await this.setPatternNoMatch();
+            }
+            await Defaults.delay(1000);
+            this.finishSearching(this.pattern);
         }
-        await Defaults.delay(1000);
-        this.finishSearching(this.pattern);
+        catch(_) {
+            // This is ok. Used for stopping algorithm from executing
+        }
     }
 
     stopSearching(){

@@ -5,7 +5,7 @@ class MergeSort extends BaseSort {
         super(array, updateArray, finishSorting, waitTimeout);
     }
 
-    async sort(){
+    async innerSort(){
         await this.mergeSort(0, this.array.length - 1);
         this.finishSorting();
     }
