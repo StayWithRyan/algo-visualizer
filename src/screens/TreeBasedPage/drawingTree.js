@@ -1,23 +1,43 @@
 import Defaults from '../../defaults';
+import {nodeTypes, nodeColors, arrayTypes, arrayColors} from './treeBasedHelpers';
 
 let Rainbow = require('rainbowvis.js');
+
+const nodeSize = Defaults.treeNodeElementSize;
 
 class Animation {
     constructor() {
         this.stop = false;
         this.finished = false;
     }
-    async animate (context, x, y, value) {
+    
+    async animate(context, type, x, y, value) {
         this.stop = false;
-
         let rainbow = new Rainbow();
-        rainbow.setSpectrum("pink", "red");
+        let color;
+        if(type in arrayTypes) {
+            color = arrayColors[type];
+        }
+        else if (type in nodeTypes){
+            color = nodeColors[type];
+        }
+        else{
+            throw "WHAAAAAAAAAAAAAAAAAAT"
+        }
+        rainbow.setSpectrum(color[0], color[1]);
         let steps = 10;
         for(let i = 0; i < steps; ++i) {
             if(this.stop) {
                 return;
             }
-            drawNode(context, `#${rainbow.colourAt(i * steps)}`, x, y, value)
+            if(type in nodeTypes || type == arrayTypes.traversingStep){
+                context.strokeStyle = "white";
+                context.beginPath();
+                context.lineWidth = 2;
+                context.arc(x, y, nodeSize / 2, 0, Math.PI * 2, false);
+                context.stroke();
+                drawNode(context, `#${rainbow.colourAt(i * steps)}`, x, y, value, true);
+            }
 
             await Defaults.delay(20);
         }
@@ -34,76 +54,20 @@ const clearCanvas = (canvas) => {
     context.fillRect(0, 0, context.canvas.width, context.canvas.height);
 }
 
-const drawTraversal = (canvas, tree, maxTreeLevel, stepsArray) => {
+const draw = (canvas, tree, maxTreeLevel, array, isDrawing, arrayDrawFunction) => {
     const context = canvas.getContext('2d');
+    if(false == isDrawing){
+        let treeHeightOnCanvas = maxTreeLevel * (nodeSize * 1.2) + nodeSize / 2;
+        context.fillStyle = "white";
+        context.fillRect(0, 0, context.canvas.width, treeHeightOnCanvas);
 
-    let treeHeightOnCanvas = maxTreeLevel * (Defaults.treeNodeElementSize * 1.2) + Defaults.treeNodeElementSize / 2;
-    context.fillStyle = "white";
-    context.fillRect(0, 0, context.canvas.width, treeHeightOnCanvas);
-
-    drawTreeEdges(context, tree);
-    drawTreeNodes(context, tree);
-    drawStepsArray(context, stepsArray);
-}
-
-const drawHeapSort = (canvas, tree, maxTreeLevel, stepsArray) => {
-    const context = canvas.getContext('2d');
-
-    let treeHeightOnCanvas = maxTreeLevel * (Defaults.treeNodeElementSize * 1.2) + Defaults.treeNodeElementSize / 2;
-    context.fillStyle = "white";
-    context.fillRect(0, 0, context.canvas.width, treeHeightOnCanvas);
-
-    drawTreeEdges(context, tree);
-    drawTreeNodes(context, tree);
-    drawHeapSortArray(context, stepsArray);
-}
-
-const drawTreeNodes = (context, node) => {
-    if(node == null){
-        return;
+        drawTreeEdges(context, tree);
     }
 
-    drawNode(context, node.color, node.x, node.y, node.value)
-
-    drawTreeNodes(context, node.left)
-    drawTreeNodes(context, node.right)
+    drawTreeNodes(context, tree, isDrawing);
+    arrayDrawFunction(context, array);
 }
 
-const drawNode = (context, color, x, y, value) => {
-    context.beginPath();
-    context.fillStyle = color;
-    context.arc(x, y, Defaults.treeNodeElementSize / 2, 0, Math.PI * 2, false);
-    context.fill();
-
-    context.font = "36px serif";
-    context.fillStyle = "black";
-    if(value != null){
-        if(value < 10){
-            context.fillText(value, x - 18 / 2, y + 13);
-        }
-        else{
-            context.fillText(value, x - 18, y + 13);
-        }
-    }
-}
-
-
-const drawArrayBlock = (context, color, x, y, value) => {
-
-    context.fillStyle = color
-    context.fillRect(x, y, Defaults.treeNodeElementSize, Defaults.treeNodeElementSize);
-
-    context.font = "36px serif";
-    context.fillStyle = "black";
-    if(value != null){
-        if(value < 10){
-            context.fillText(value, x - 18 / 2 + Defaults.treeNodeElementSize / 2, y + 13 + Defaults.treeNodeElementSize / 2);
-        }
-        else{
-            context.fillText(value, x - 18 + Defaults.treeNodeElementSize / 2, y + 13 + Defaults.treeNodeElementSize / 2);
-        }
-    }
-}
 const drawTreeEdges = (context, node) => {
     if(node == null){
         return;
@@ -111,6 +75,8 @@ const drawTreeEdges = (context, node) => {
 
     if(node.parent != null){
         context.beginPath();
+        context.lineWidth = 1;
+        context.strokeStyle = "black";
         context.moveTo(node.x, node.y);
         context.lineTo(node.parent.x, node.parent.y);
         context.stroke();
@@ -120,48 +86,120 @@ const drawTreeEdges = (context, node) => {
     drawTreeEdges(context, node.right)
 }
 
-const drawStepsArray = (context, stepsArray) => {
-    let elementBoxSize =  Defaults.treeNodeElementSize * 1.1;
+const drawTreeNodes = (context, node, isDrawing) => {
+    if(node == null){
+        return;
+    }
+    if(node.needsDraw || isDrawing === false) {
+        if(node.type == nodeTypes.unvisited) {
+            drawNode(context, nodeColors[node.type], node.x, node.y, node.value, true);
+        }
+        else if(node.type == nodeTypes.justAdded) {
+            drawNode(context, nodeColors[node.type], node.x, node.y, node.value, true);
+        }
+        else if(node.type == nodeTypes.checking) {
+            drawNode(context, nodeColors[node.type], node.x, node.y, node.value, true);
+        }
+        else if(node.type == nodeTypes.swapping) {
+            drawNode(context, nodeColors[node.type], node.x, node.y, node.value, true);
+        }
+        else{
+            if(node.animation == null){
+                let animation = new Animation();
+                animation.animate(context, node.type, node.x, node.y, node.value);
+                node.animation = animation;
+            }
+        }
+    }
+
+    drawTreeNodes(context, node.left, isDrawing)
+    drawTreeNodes(context, node.right, isDrawing)
+}
+
+const drawNode = (context, color, x, y, value, withBorder) => {
+    context.beginPath();
+    context.fillStyle = color;
+    context.arc(x, y, nodeSize / 2, 0, Math.PI * 2, false);
+    context.fill();
+    if(withBorder){
+        context.lineWidth = 1;
+        context.strokeStyle = "black";
+        context.beginPath();
+        context.arc(x, y, nodeSize / 2, 0, Math.PI * 2, false);
+        context.stroke();
+    }
+
+
+    context.font = "36px serif";
+    context.fillStyle = Defaults.treeNodeTextColor;
+    if(value != null){
+        if(value < 10){
+            context.fillText(value, x - 18 / 2, y + 13); // center text on node
+        }
+        else{
+            context.fillText(value, x - 18, y + 13); // center text on node
+        }
+    }
+}
+
+const drawArray = (context, array) => {
+    let elementBoxSize =  nodeSize * 1.1;
     let maxInRow = Math.floor(context.canvas.width * 0.8 / elementBoxSize);
-    let x = (context.canvas.width - maxInRow * elementBoxSize) / 2  + Defaults.treeNodeElementSize / 2;
-    let y = context.canvas.height - Defaults.treeNodeElementSize * 3; // 3 rows
+    let x = (context.canvas.width - maxInRow * elementBoxSize) / 2  + nodeSize / 2;
+    let y = context.canvas.height - nodeSize * 3; // 3 rows
     let rowSize = 0;
 
-    for(let i = 0; i < stepsArray.length; ++i){
+    for(let i = 0; i < array.length; ++i){
         if(rowSize >= maxInRow) {
             rowSize = 0;
-            x =  (context.canvas.width - maxInRow * elementBoxSize) / 2  + Defaults.treeNodeElementSize / 2;
+            x =  (context.canvas.width - maxInRow * elementBoxSize) / 2  + nodeSize / 2;
             y += elementBoxSize;
         }
-        if(stepsArray[i].animation == null){
+        if(array[i].animation == null){
             let animation = new Animation();
-            animation.animate(context, x, y, stepsArray[i].value);
-            stepsArray[i].animation = animation;
+            animation.animate(context, array[i].type, x, y, array[i].value);
+            array[i].animation = animation;
         }
         x += elementBoxSize;
         rowSize++;
     }
 }
 
-const drawHeapSortArray = (context, stepsArray) => {
-    let elementBoxSize =  Defaults.treeNodeElementSize * 1.1;
+const drawHeapSortArray = (context, array) => {
+    let elementBoxSize =  nodeSize * 1.1;
     let maxInRow = Math.floor(context.canvas.width * 0.8 / elementBoxSize);
-    let x = (context.canvas.width - maxInRow * elementBoxSize) / 2  + Defaults.treeNodeElementSize / 2;
+    let x = (context.canvas.width - maxInRow * elementBoxSize) / 2  + nodeSize / 2;
     let y = context.canvas.height - elementBoxSize * 3; // 3 rows
     let rowSize = 0;
 
-    for(let i = 0; i < stepsArray.length; ++i){
+    for(let i = 0; i < array.length; ++i){
         if(rowSize >= maxInRow) {
             rowSize = 0;
-            x =  (context.canvas.width - maxInRow * elementBoxSize) / 2  + Defaults.treeNodeElementSize / 2;
+            x =  (context.canvas.width - maxInRow * elementBoxSize) / 2  + nodeSize / 2;
             y += elementBoxSize;
         }
-        drawArrayBlock(context, "pink", x, y, stepsArray[i]);
+        drawArrayBlock(context, arrayColors[array[i].type], x, y, array[i].value);
 
         x += elementBoxSize;
         rowSize++;
     }
 }
 
+const drawArrayBlock = (context, color, x, y, value) => {
 
-export {drawTraversal, drawHeapSort, clearCanvas}
+    context.fillStyle = color
+    context.fillRect(x, y, nodeSize, nodeSize);
+
+    context.font = "36px serif";
+    context.fillStyle = Defaults.treeNodeTextColor;
+    if(value != null){
+        if(value < 10){
+            context.fillText(value, x - 18 / 2 + nodeSize / 2, y + 13 + nodeSize / 2); // center text on box
+        }
+        else{
+            context.fillText(value, x - 18 + nodeSize / 2, y + 13 + nodeSize / 2); // center text on box
+        }
+    }
+}
+
+export {draw, drawArray, drawHeapSortArray, clearCanvas}

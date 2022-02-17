@@ -6,8 +6,8 @@ import BasicSelect from '../../components/BasicSelect'
 import BasicSlider from '../../components/BasicSlider';
 import BasicButton from '../../components/BasicButton';
 
-import {createTree, createAlmostCompleteTree, createHeapSortArray, resetColor, getTreeSizes} from './treeBasedHelpers'
-import {drawTraversal, drawHeapSort, clearCanvas} from './drawingTree'
+import {createTree, createEmptyAlmostCompleteTree, createHeapSortArray, resetTree, getTreeSizes} from './treeBasedHelpers'
+import {draw, drawArray, drawHeapSortArray, clearCanvas} from './drawingTree'
 
 import LNRTraversal from "../../algorithms/treeBased/LNRTraversal"
 import LRNTraversal from "../../algorithms/treeBased/LRNTraversal"
@@ -34,7 +34,7 @@ function TreeBasedPage() {
     const [treeSize, setTreeSize] = useState(Defaults.treeSizeDefault);
     const [tree, setTree] = useState(null);
     const [treeBasedAlgorithmObj, setTreeBasedAlgorithmObj] = useState(null);
-    const [stepsArray, setStepsArray] = useState([]);
+    const [array, setArray] = useState([]);
 
     const [startButtonDisabled, setStartButtonDisabled] = useState(true);
     const [stopButtonDisabled, setStopButtonDisabled] = useState(true);
@@ -45,23 +45,25 @@ function TreeBasedPage() {
     const canvasRef = useRef(null);
 
     useEffect(() => {
-        if(isHeapSort){
-            drawHeapSort(canvasRef.current, tree, maxTreeLevel, stepsArray);
-        }
-        else{
-            drawTraversal(canvasRef.current, tree, maxTreeLevel, stepsArray);
-        }
-    }, [tree, stepsArray]);
+        setTree(createTree(treeSize, maxTreeLevel));
+    }, []);
+
+    useEffect(() => {
+        draw(canvasRef.current, tree, maxTreeLevel, array, isDrawing, isHeapSort? drawHeapSortArray : drawArray);
+    }, [tree, array]);
     
     useEffect(() => {
+        if(algorithm == ""){
+            return;
+        }
         clearCanvas(canvasRef.current);
         if(isHeapSort){
-            setTree(createAlmostCompleteTree(treeSize));
-            setStepsArray(createHeapSortArray(treeSize));
+            setTree(createEmptyAlmostCompleteTree(treeSize));
+            setArray(createHeapSortArray(treeSize));
         }
         else{
             setTree(createTree(treeSize, maxTreeLevel));
-            setStepsArray([]);
+            setArray([]);
         }
     }, [isHeapSort]);
 
@@ -82,12 +84,12 @@ function TreeBasedPage() {
         setTreeSize(value);
         clearCanvas(canvasRef.current);
         if(isHeapSort){
-            setStepsArray(createHeapSortArray(value));
-            setTree(createAlmostCompleteTree(value));
+            setArray(createHeapSortArray(value));
+            setTree(createEmptyAlmostCompleteTree(value));
         }
         else{
             setTree(createTree(value, maxTreeLevel));
-            setStepsArray([]);
+            setArray([]);
         }
     }
 
@@ -97,10 +99,11 @@ function TreeBasedPage() {
         setStartButtonDisabled(true);
         setStopButtonDisabled(false);
         clearCanvas(canvasRef.current);
-
-        let newTree = resetColor(tree, setTree);
+        
+        let newTree = resetTree(tree, setTree);
+        draw(canvasRef.current, newTree, maxTreeLevel, array, false, isHeapSort? drawHeapSortArray : drawArray);
         const algorithmClass = algorithmsMapping[`${algorithm}`];
-        const algorithmObj = new algorithmClass(newTree, setTree, treeBasedSleep, stepsArray, setStepsArray, handleStop);
+        const algorithmObj = new algorithmClass(newTree, setTree, treeBasedSleep, array, setArray, handleStop);
         setTreeBasedAlgorithmObj(algorithmObj);
         algorithmObj.algorithm()
     }

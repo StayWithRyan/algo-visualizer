@@ -57,7 +57,7 @@ const Defaults = {
     // Tree Based 
     treebasedSleepMin: 100,
     treebasedSleepMax: 1000,
-    treebasedSleepDefault: 100,
+    treebasedSleepDefault: 1000,
     treebasedSleepStep: 15,
 
     treeSizeMin: 5,
@@ -66,8 +66,10 @@ const Defaults = {
 
     treeNodeElementSize: 50,
 
-    delay : ms => new Promise(res => setTimeout(res, ms)),
+    treeNodeTextColor: "black",
 
+    // general
+    delay : ms => new Promise(res => setTimeout(res, ms)),
     getRandomInt : max => Math.floor(Math.random() * max)
 }
 

@@ -1,8 +1,7 @@
-import { useThemeWithoutDefault } from '@mui/system';
 import Defaults from '../../defaults';
 
 class TreeNode {
-    constructor(value = null, parent = null) {
+    constructor({value = null, parent = null, type = nodeTypes.unvisited} = {}) {
         // null parent = root node
         if(parent == null){
             this.x = (window.innerWidth / 2);
@@ -14,16 +13,17 @@ class TreeNode {
         this.left = null;
         this.right = null;
         this.value = value;
-        this.color = "pink";
+        this.type = type;
+        this.needsDraw = false;
     }
 
     setValue(value) {
         this.value = value;
     }
 
-    setLeftChild(value = null) {
+    setLeftChild({value = null, type = nodeTypes.unvisited} = {}) {
         if(this.left == null){
-            this.left = new TreeNode(value, this);
+            this.left = new TreeNode({value, parent: this, type});
             this.left.x = this.x - this.width * 1/4;
             this.left.y = this.y + (Defaults.treeNodeElementSize * 1.2);
             this.left.level = this.level + 1;
@@ -34,9 +34,9 @@ class TreeNode {
         }
     }
 
-    setRightChild(value = null) {
+    setRightChild({value = null, type = nodeTypes.unvisited} = {}) {
         if(this.right == null){
-            this.right = new TreeNode(value, this);
+            this.right = new TreeNode({value, parent: this, type});
             this.right.x = this.x + this.width * 1/4;
             this.right.y = this.y + (Defaults.treeNodeElementSize * 1.2);
             this.right.level = this.level + 1;
@@ -46,6 +46,22 @@ class TreeNode {
             this.right.value = value;
         }
     }
+}
+
+const nodeTypes = {
+    unvisited: "unvisited",
+    visited: "visited",
+    justAdded: "justAdded",
+    checking: "checking",
+    swapping: "swapping"
+}
+
+const nodeColors = {
+    unvisited: "pink",
+    visited: ["pink", "red"],
+    justAdded: "brown",
+    checking: "yellow",
+    swapping: "red",
 }
 
 const getTreeSizes = () => {
@@ -62,7 +78,7 @@ const getTreeSizes = () => {
 }
 
 
-const createAlmostCompleteTree = (size) => {
+const createEmptyAlmostCompleteTree = (size) => {
     let tree = new TreeNode();
 
     let queue = [];
@@ -92,7 +108,7 @@ const createTree = (size, maxTreeLevel) => {
     }
     // select random value
     let nodeValueIndex = Defaults.getRandomInt(nodeValues.length);
-    let tree = new TreeNode(nodeValues[nodeValueIndex]);
+    let tree = new TreeNode({value: nodeValues[nodeValueIndex]});
     // remove selected value from array
     nodeValues.splice(nodeValueIndex, 1);
 
@@ -109,7 +125,7 @@ const createTree = (size, maxTreeLevel) => {
         if(nodeToPopulate.left == null && nodeToPopulate.level < maxTreeLevel){
             // select random value
             nodeValueIndex = Defaults.getRandomInt(nodeValues.length);
-            nodeToPopulate.setLeftChild(nodeValues[nodeValueIndex]);
+            nodeToPopulate.setLeftChild({value: nodeValues[nodeValueIndex]});
             // remove selected value from array
             nodeValues.splice(nodeValueIndex, 1);
             queue.push(nodeToPopulate.left);
@@ -118,7 +134,7 @@ const createTree = (size, maxTreeLevel) => {
         else if(nodeToPopulate.right == null && nodeToPopulate.level < maxTreeLevel){
             // select random value
             nodeValueIndex = Defaults.getRandomInt(nodeValues.length);
-            nodeToPopulate.setRightChild(nodeValues[nodeValueIndex]);            
+            nodeToPopulate.setRightChild({value: nodeValues[nodeValueIndex]});            
             // remove selected value from array
             nodeValues.splice(nodeValueIndex, 1);
             queue.splice(nodeIndexToPopulate, 1);
@@ -130,41 +146,52 @@ const createTree = (size, maxTreeLevel) => {
     return tree;
 }
 
-// color - color to set to each node after copying
-const copyTree = (tree, color) => {
-    let newTree = new TreeNode(tree.value);
-    copyTreeNode(newTree, tree, color, null);
+const copyTree = (tree) => {
+    let newTree = new TreeNode({value: tree.value});
+    copyTreeNode(newTree, tree, null);
     return newTree;
 }
 
-const copyTreeNode = (newNode, node, color, parent) => {
+const copyTreeNode = (newNode, node, parent) => {
     newNode.x = node.x;
     newNode.y = node.y;
     newNode.level = node.level;
     newNode.width = node.width;
     newNode.parent = parent;
     newNode.value = node.value;
-    if(color){
-        newNode.color = color;
-    }
-    else{
-        newNode.color = node.color; 
-    }
+    newNode.type = node.type;
+    newNode.animation = node.animation;
+    newNode.needsDraw = node.needsDraw;
 
     if(node.left){
-        newNode.setLeftChild(node.left.value);
-        copyTreeNode(newNode.left, node.left, color, newNode);
+        newNode.setLeftChild({value: node.left.value});
+        copyTreeNode(newNode.left, node.left, newNode);
     }
 
     if(node.right){
-        newNode.setRightChild(node.right.value);
-        copyTreeNode(newNode.right, node.right, color, newNode);
+        newNode.setRightChild({value: node.right.value});
+        copyTreeNode(newNode.right, node.right, newNode);
     }
 
 }
 
-const resetColor = (tree, setTree) => {
-    let newTree = copyTree(tree, "pink");
+const resetTree = (tree, setTree) => {
+    let newTree = copyTree(tree);
+
+    let queue = [];
+    queue.push(newTree);
+    while(queue.length > 0) {
+        let node = queue.shift();
+        node.type = nodeTypes.unvisited;
+        node.animation = null;
+        if(node.left != null) {
+            queue.push(node.left);
+        }
+        if(node.right != null) {
+            queue.push(node.right);
+        }
+    }
+
     setTree(newTree);
     return newTree;
 }
@@ -192,6 +219,7 @@ const addValueToTree = (tree, value) => {
     }
 }
 
+// array of nodes.
 const buildTreeFromArray = (array) => {
     let arrayCopy = [...array]
     let tree = new TreeNode();
@@ -221,7 +249,7 @@ const buildTreeFromArray = (array) => {
     return tree;
 }
 
-
+// array of nodes
 const transfortTreeIntoArray = (tree) => {
     let array = [];
 
@@ -242,24 +270,52 @@ const transfortTreeIntoArray = (tree) => {
     return array;
 }
 
-const pushToStepsArray = (array, node) => {
+const arrayTypes = {
+    traversingStep: "traversingStep",
+    arrayValue: "arrayValue",
+    justAdded: "justAdded",
+    checking: "checking",
+    swapping: "swapping",
+}
+
+const arrayColors = {
+    traversingStep: ["pink", "red"],
+    arrayValue: "pink",
+    justAdded: "brown",
+    checking: "yellow",
+    swapping: "red",
+}
+
+// Array that shown on tree based page in the bottom of screen
+const pushToArray = (array, node) => {
     let newArray = [];
     for(let i = 0; i < array.length; ++i){
-        newArray.push({value: array[i].value, color: array[i].color, animation: array[i].animation});
+        newArray.push({value: array[i].value, type: array[i].type, animation: array[i].animation});
     }
-    newArray.push({value: node.value, color: node.color, animation: null});
+    newArray.push({value: node.value, type: arrayTypes.traversingStep, animation: null});
 
     return newArray;
 }
+
 const createHeapSortArray = (size) => {
     const newArray = [];
     for(let i = 0; i < size; ++i){
         newArray.push(i);
     }
     let array = newArray.sort((a, b) => 0.5 - Math.random());
-    return array;
+    return array.map( value => { return {value, type: arrayTypes.arrayValue, animation: null}});
 }
 
+const copyArray = (array) => {
+    const newArray = [];
+    for(let i = 0; i < array.length; ++i){
+        newArray.push({value: array[i].value, type: array[i].type, animation: array[i].animation});
+    }
 
-export {TreeNode, createTree, createAlmostCompleteTree, copyTree, resetColor, transfortTreeIntoArray, 
-    buildTreeFromArray, addValueToTree, getTreeSizes, pushToStepsArray, createHeapSortArray};
+    return newArray;
+}
+
+export {TreeNode, createTree, createEmptyAlmostCompleteTree, copyTree, resetTree, transfortTreeIntoArray, 
+    buildTreeFromArray, addValueToTree, getTreeSizes, pushToArray, createHeapSortArray, copyArray,
+    nodeTypes, nodeColors, arrayTypes, arrayColors
+};

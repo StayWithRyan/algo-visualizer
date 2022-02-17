@@ -1,13 +1,14 @@
-import {copyTree, pushToStepsArray} from '../../screens/TreeBasedPage/treeBasedHelpers';
+import {copyTree, pushToArray, nodeTypes, copyArray} from '../../screens/TreeBasedPage/treeBasedHelpers';
+import Defaults from '../../defaults';
 
 class BaseTraversal {
-    constructor(tree, setTree, waitTimeout, stepsArray, setStepsArray, handleStop){
+    constructor(tree, setTree, waitTimeout, array, setArray, handleStop){
         this.stopFlag = false;
         this.tree = copyTree(tree);
         this.setTree = setTree;
         this.waitTimeout = waitTimeout;
-        this.stepsArray = stepsArray;
-        this.setStepsArray = setStepsArray;
+        this.array = copyArray(array);
+        this.setArray = setArray;
         this.handleStop = handleStop;
     }
 
@@ -25,9 +26,22 @@ class BaseTraversal {
         this.stopFlag = true;
     }
 
-    addNodeToStepsArray(node) {
-        this.stepsArray = pushToStepsArray(this.stepsArray, node);
-        this.setStepsArray(this.stepsArray);
+    addNodeToArray(node) {
+        this.array = pushToArray(this.array, node);
+        this.setArray(this.array);
+    }
+
+    async setVisiting(node) {
+        await Defaults.delay(this.waitTimeout);
+        if(this.stopFlag){
+            throw "Preventing from executing";
+        }
+
+        node.type = nodeTypes.visited;
+        node.needsDraw = true;
+        this.addNodeToArray(node);
+        this.setTree(copyTree(this.tree));
+        node.needsDraw = false;
     }
 
 }
