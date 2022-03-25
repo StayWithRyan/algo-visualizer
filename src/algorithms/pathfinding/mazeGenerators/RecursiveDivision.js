@@ -60,19 +60,19 @@ async function RecursiveDivisionInner(maze, x, y, h, w, setMaze, setMazePrev) {
         return newMaze;
     }
 
-    if(h > w * 2){
+    if(h > w * 2) {
         horizontalChance = 80;
     }
-    if(w > h * 2){
+    if(w > h * 2) {
         horizontalChance = 20;
     }
     
     let isHorizontal = (Defaults.getRandomInt(100) < horizontalChance);
 
-    if(isHorizontal){
+    if(isHorizontal) {
         let rowIndex = getRandomLine(h - 1);
         let gap = getRandomGap(w);
-        for(let i = 0; i < w; ++i){
+        for(let i = 0; i < w; ++i) {
             if(i == gap) {
                 continue;
             }
@@ -85,7 +85,7 @@ async function RecursiveDivisionInner(maze, x, y, h, w, setMaze, setMazePrev) {
     else {
         let columnIndex = getRandomLine(w - 1);
         let gap = getRandomGap(h);
-        for(let i = 0; i < h; ++i){
+        for(let i = 0; i < h; ++i) {
             if(i == gap) {
                 continue;
             }

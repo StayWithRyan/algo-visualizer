@@ -3,7 +3,7 @@ import Defaults from '../../defaults';
 import BaseStringSearching from './BaseStringSearching';
 
 class OptimizedNaiveAlgorithm extends BaseStringSearching {
-    constructor(pattern, setPattern, text, setText, finishSearching, waitTimeout, copyArray){
+    constructor(pattern, setPattern, text, setText, finishSearching, waitTimeout, copyArray) {
         super(pattern, setPattern, text, setText, finishSearching, waitTimeout, copyArray);
     }
 

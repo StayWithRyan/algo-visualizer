@@ -1,11 +1,11 @@
 import BaseSort from './BaseSort';
 
 class BubbleSort extends BaseSort {
-    constructor(array, updateArray, finishSorting, waitTimeout){
+    constructor(array, updateArray, finishSorting, waitTimeout) {
         super(array, updateArray, finishSorting, waitTimeout);
     }
 
-    async innerSort(){
+    async innerSort() {
         let length = this.array.length;
         for (let i = 0; i < length - 1; i++) {
             for (let j = 0; j < length - 1 - i; j++) {

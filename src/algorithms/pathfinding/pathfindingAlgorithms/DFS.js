@@ -10,7 +10,7 @@ class DFS extends BasePathfinding{
         this.visitedArray = this.createArrayWithValue(false);
     }
 
-    updatePath(path, pathCopy){
+    updatePath(path, pathCopy) {
         path.length = 0;
         pathCopy.forEach(element => {
             path.push(element)
@@ -31,16 +31,16 @@ class DFS extends BasePathfinding{
     };
 
     async DFSInner(currentI, currentJ, path) {
-        if(this.stop){
+        if(this.stop) {
             return false;
         }
-        if(this.visitedArray[currentI][currentJ]){
+        if(this.visitedArray[currentI][currentJ]) {
             return false;
         }
         path.push([currentI, currentJ]);
 
         let settingType = types.checking;
-        if(this.maze[currentI][currentJ].type == types.start){
+        if(this.maze[currentI][currentJ].type == types.start) {
             settingType = types.checkingStart;
         }
         else if(this.maze[currentI][currentJ].type == types.target) {
@@ -52,12 +52,12 @@ class DFS extends BasePathfinding{
         let pathCopy = [...path];
 
         this.visitedArray[currentI][currentJ] = true;
-        if(this.maze[currentI][currentJ].type == types.checkingTarget){
+        if(this.maze[currentI][currentJ].type == types.checkingTarget) {
             return true;
         }
         // up
-        if(currentI - 1 >= 0){
-            if(this.maze[currentI - 1][currentJ].type != types.block && this.visitedArray[currentI - 1][currentJ] == false){
+        if(currentI - 1 >= 0) {
+            if(this.maze[currentI - 1][currentJ].type != types.block && this.visitedArray[currentI - 1][currentJ] == false) {
                 if(await this.DFSInner(currentI - 1, currentJ, path)) {
                     return true;
                 }
@@ -65,8 +65,8 @@ class DFS extends BasePathfinding{
         }
         this.updatePath(path, pathCopy);
         // right
-        if(currentJ + 1 < this.maze[0].length){
-            if(this.maze[currentI][currentJ + 1].type != types.block && this.visitedArray[currentI][currentJ + 1] == false){
+        if(currentJ + 1 < this.maze[0].length) {
+            if(this.maze[currentI][currentJ + 1].type != types.block && this.visitedArray[currentI][currentJ + 1] == false) {
                 if(await this.DFSInner(currentI, currentJ + 1, path)) {
                     return true;
                 }
@@ -74,8 +74,8 @@ class DFS extends BasePathfinding{
         }
         this.updatePath(path, pathCopy);
         // down
-        if(currentI + 1 < this.maze.length){
-            if(this.maze[currentI + 1][currentJ].type != types.block && this.visitedArray[currentI + 1][currentJ] == false){
+        if(currentI + 1 < this.maze.length) {
+            if(this.maze[currentI + 1][currentJ].type != types.block && this.visitedArray[currentI + 1][currentJ] == false) {
                 if(await this.DFSInner(currentI + 1, currentJ, path)) {
                     return true;
                 }
@@ -83,8 +83,8 @@ class DFS extends BasePathfinding{
         }
         this.updatePath(path, pathCopy);
         // left
-        if(currentJ - 1 >= 0){
-            if(this.maze[currentI][currentJ - 1].type != types.block && this.visitedArray[currentI][currentJ - 1] == false){
+        if(currentJ - 1 >= 0) {
+            if(this.maze[currentI][currentJ - 1].type != types.block && this.visitedArray[currentI][currentJ - 1] == false) {
                 if(await this.DFSInner(currentI, currentJ - 1, path)) {
                     return true;
                 }

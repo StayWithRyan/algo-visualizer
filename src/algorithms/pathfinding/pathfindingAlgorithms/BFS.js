@@ -22,10 +22,10 @@ class BFS extends BasePathfinding{
         this.AStar = true;
     }
 
-    copyPathArray(array){
+    copyPathArray(array) {
         let newArray = [];
 
-        for(let i = 0 ; i <array.length; ++i){
+        for(let i = 0 ; i <array.length; ++i) {
             newArray.push([array[i][0], array[i][1]]);
         }
 
@@ -48,9 +48,9 @@ class BFS extends BasePathfinding{
         this.finishFinding();
     };
 
-    inQueue(i, j){
+    inQueue(i, j) {
         
-        for(let k = 0; k < this.queue.length; ++k){
+        for(let k = 0; k < this.queue.length; ++k) {
             if(this.queue[k][0] == i && this.queue[k][1] == j) {
                 return true;
             }
@@ -58,23 +58,23 @@ class BFS extends BasePathfinding{
         return false;
     }
 
-    inVisitedArray(i, j){
+    inVisitedArray(i, j) {
         return this.visitedArray[i][j];
     }
 
-    isBlock(i, j){
+    isBlock(i, j) {
         return this.maze[i][j].type == types.block;
     }
 
-    isNodeToVisit(i, j){
-        if(!this.inVisitedArray(i, j) && !this.inQueue(i, j) && !this.isBlock(i, j)){
+    isNodeToVisit(i, j) {
+        if(!this.inVisitedArray(i, j) && !this.inQueue(i, j) && !this.isBlock(i, j)) {
             return true;
         }
         return false;
     }
 
     queueNode(i, j, iFrom, jFrom) {
-        if(this.isNodeToVisit(i, j)){
+        if(this.isNodeToVisit(i, j)) {
             this.queue.push([i, j]);
             this.pathArray[i][j] = this.copyPathArray(this.pathArray[iFrom][jFrom]);
             this.pathArray[i][j].push([i, j]);
@@ -86,13 +86,13 @@ class BFS extends BasePathfinding{
 
         let lowestIndex = 0;
         let lowestValue = Math.abs(this.queue[0][0] - targetI) + Math.abs(this.queue[0][1] - targetJ);
-        if(isAStart){
+        if(isAStart) {
             lowestValue += this.pathArray[this.queue[0][0]][this.queue[0][1]].length;
         }
 
-        for(let i = 0; i < this.queue.length; ++i){
+        for(let i = 0; i < this.queue.length; ++i) {
             let value = Math.abs(this.queue[i][0] - targetI) + Math.abs(this.queue[i][1] - targetJ);
-            if(isAStart){
+            if(isAStart) {
                 value += this.pathArray[this.queue[i][0]][this.queue[i][1]].length;
             }
             if(value <= lowestValue) {
@@ -103,7 +103,7 @@ class BFS extends BasePathfinding{
 
         let newQueue = [];
 
-        for(let i = 0; i < this.queue.length; ++i){
+        for(let i = 0; i < this.queue.length; ++i) {
 
             if(lowestIndex != i) {
                 newQueue.push([this.queue[i][0], this.queue[i][1]]);
@@ -118,10 +118,10 @@ class BFS extends BasePathfinding{
     // true if found
     async visitNode() {
         let i, j;
-        if(this.greedy){
+        if(this.greedy) {
             [i, j] = this.getLowestHeuristicNode(false);
         }
-        else if(this.AStar){
+        else if(this.AStar) {
             [i, j] = this.getLowestHeuristicNode(true);
         }
         else{
@@ -131,7 +131,7 @@ class BFS extends BasePathfinding{
         this.visitedArray[i][j] = true;
 
         let settingType = types.checking;
-        if(this.maze[i][j].type == types.start){
+        if(this.maze[i][j].type == types.start) {
             settingType = types.checkingStart;
         }
         else if(this.maze[i][j].type == types.target) {
@@ -145,30 +145,30 @@ class BFS extends BasePathfinding{
         }
 
         // up
-        if(i - 1 >= 0){
+        if(i - 1 >= 0) {
             this.queueNode(i - 1, j, i, j);
         }
         // right
-        if(j + 1 < this.maze[0].length){
+        if(j + 1 < this.maze[0].length) {
             this.queueNode(i, j + 1, i, j);
         }
         // down
-        if(i + 1 < this.maze.length){
+        if(i + 1 < this.maze.length) {
             this.queueNode(i + 1, j, i, j);
         }
         // left
-        if(j - 1 >= 0){
+        if(j - 1 >= 0) {
             this.queueNode(i, j - 1, i, j);
         }
     }
 
     async BFS() {
-        while(this.queue.length > 0){
-            if(this.stop){
+        while(this.queue.length > 0) {
+            if(this.stop) {
                 return [];
             }
             let pathToTarget = await this.visitNode();
-            if(pathToTarget){
+            if(pathToTarget) {
                 return pathToTarget;
             }
         }

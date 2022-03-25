@@ -1,11 +1,11 @@
 import BaseSort from './BaseSort';
 
 class SelectionSort extends BaseSort {
-    constructor(array, updateArray, finishSorting, waitTimeout){
+    constructor(array, updateArray, finishSorting, waitTimeout) {
         super(array, updateArray, finishSorting, waitTimeout);
     }
 
-    async innerSort(){
+    async innerSort() {
         let length = this.array.length;
         let i, j, max_idx;
         for (i = length - 1; i >= 0; i--) {

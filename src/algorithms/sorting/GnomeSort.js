@@ -1,7 +1,7 @@
 import BaseSort from './BaseSort';
 
 class GnomeSort extends BaseSort {
-    constructor(array, updateArray, finishSorting, waitTimeout){
+    constructor(array, updateArray, finishSorting, waitTimeout) {
         super(array, updateArray, finishSorting, waitTimeout);
     }
 

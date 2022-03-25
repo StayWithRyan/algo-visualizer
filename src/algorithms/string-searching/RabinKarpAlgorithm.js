@@ -4,7 +4,7 @@ import BaseStringSearching from './BaseStringSearching';
 let d = 256;
 let q = 5;
 class RabinKarpAlgorithm extends BaseStringSearching {
-    constructor(pattern, setPattern, text, setText, finishSearching, waitTimeout, copyArray){
+    constructor(pattern, setPattern, text, setText, finishSearching, waitTimeout, copyArray) {
         super(pattern, setPattern, text, setText, finishSearching, waitTimeout, copyArray);
     }
 

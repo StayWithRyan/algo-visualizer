@@ -69,7 +69,7 @@ function StringsearchingPage() {
     }
 
     const inputValidation = (string) => {
-        if(string.trim() != string){
+        if(string.trim() != string) {
             return false;
         }
         let maxLength = (window.innerWidth / 100 * 80) / 30; // 80 is textBox width
@@ -81,13 +81,13 @@ function StringsearchingPage() {
     }
 
     const handlePatternChange = (value) => {
-        if(inputValidation(value)){
+        if(inputValidation(value)) {
             setPattern(createCharactersArray(value));
         }
     };
 
     const handleTextChange = (value) => {
-        if(inputValidation(value)){
+        if(inputValidation(value)) {
             setText(createCharactersArray(value));
         }
     };
@@ -110,9 +110,9 @@ function StringsearchingPage() {
     }
     
     const updatePatternWhileSearching = (value, index) => {
-        if (index != null){
+        if (index != null) {
             let newPattern = [];
-            for(let i = 0; i < index; i++){
+            for(let i = 0; i < index; i++) {
                 newPattern.push({character : "a", color: "invisible"});
             }
             
@@ -121,7 +121,7 @@ function StringsearchingPage() {
     
             });
             let charactersLeft = text.length - newPattern.length;
-            for(let i = 0; i < charactersLeft; i++){
+            for(let i = 0; i < charactersLeft; i++) {
                 newPattern.push({character : "a", color: "invisible"});
     
             }
@@ -150,13 +150,13 @@ function StringsearchingPage() {
     };
 
     const handleStop = (patternValue) => {
-        if(searchingAlgorithmObj){
+        if(searchingAlgorithmObj) {
             searchingAlgorithmObj.stopSearching();
         }
         setIsSearching(false);
         // reset color
         let newArray = copyArray(text);
-        for(let i = 0; i < newArray.length; i++){
+        for(let i = 0; i < newArray.length; i++) {
             newArray[i].color = Defaults.searchingDefaultColor;
         }
 
@@ -165,10 +165,10 @@ function StringsearchingPage() {
         if (patternValue) {
             newArray = copyArray(patternValue);
         }
-        else if(searchingAlgorithmObj){
+        else if(searchingAlgorithmObj) {
             newArray = copyArray(searchingAlgorithmObj.pattern);
         }
-        for(let i = 0; i < newArray.length; i++){
+        for(let i = 0; i < newArray.length; i++) {
             newArray[i].color = Defaults.searchingDefaultColor;
         }
         setPattern(newArray);
@@ -197,7 +197,7 @@ function StringsearchingPage() {
                     <div className="textBox" style ={{marginTop: "200px"}}>
                         {pattern.map(
                             elem => {
-                                if (elem.color === "invisible"){
+                                if (elem.color === "invisible") {
                                     return <span style={{backgroundColor: "white", color: "white"}}>{elem.character}</span>;
                                 }
                                 else {

@@ -70,7 +70,8 @@ const Defaults = {
 
     // general
     delay : ms => new Promise(res => setTimeout(res, ms)),
-    getRandomInt : max => Math.floor(Math.random() * max)
+    getRandomInt : max => Math.floor(Math.random() * max),
+    stopError: "Preventing from executing"
 }
 
 export default Defaults;

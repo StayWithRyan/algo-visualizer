@@ -1,11 +1,11 @@
 import BaseSort from './BaseSort';
 
 class QuickSort extends BaseSort {
-    constructor(array, updateArray, finishSorting, waitTimeout){
+    constructor(array, updateArray, finishSorting, waitTimeout) {
         super(array, updateArray, finishSorting, waitTimeout);
     }
 
-    async innerSort(){
+    async innerSort() {
         await this.quickSort(0, this.array.length - 1);
         this.finishSorting();
     }
@@ -24,7 +24,7 @@ class QuickSort extends BaseSort {
                 }
             }
         }
-        if(i + 1 !== high){
+        if(i + 1 !== high) {
             this.swap(i + 1, high);
             await this.setSwapping(i + 1, high);
         }

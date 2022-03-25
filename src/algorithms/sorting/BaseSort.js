@@ -1,7 +1,7 @@
 import Defaults from '../../defaults';
 
 class BaseSort {
-    constructor(array, updateArray, finishSorting, waitTimeout){
+    constructor(array, updateArray, finishSorting, waitTimeout) {
         this.stop = false;
         this.array = [...array];
         this.updateArray = updateArray;
@@ -13,8 +13,13 @@ class BaseSort {
         try{
             await this.innerSort();
         }
-        catch(_){
-            // This is ok. Used for stopping algorithm from executing
+        catch(e) {
+            if(e ==  Defaults.stopError) {
+                // This is ok. Used for stopping algorithm from executing
+            }
+            else{
+                throw e;
+            }
         }
     }
     swap(i, j) {
@@ -24,13 +29,13 @@ class BaseSort {
     }
      
 
-    stopSorting(){
+    stopSorting() {
         this.stop = true;
     }
 
-    async setSingleChecking(i){        
-        if(this.stop === true){
-            throw "Preventing sorting from executing";
+    async setSingleChecking(i) {        
+        if(this.stop === true) {
+            throw Defaults.stopError;
         }
         this.array[i].color = Defaults.sortingCheckingColor;
         let newArray = [...this.array];
@@ -40,8 +45,8 @@ class BaseSort {
     }
 
     async setChecking(i, j) {
-        if(this.stop === true){
-            throw "Preventing sorting from executing";
+        if(this.stop === true) {
+            throw Defaults.stopError;
         }
         this.array[i].color = Defaults.sortingCheckingColor;
         this.array[j].color = Defaults.sortingCheckingColor;
@@ -52,9 +57,9 @@ class BaseSort {
         this.array[j].color = Defaults.sortingDefaultColor;
     }
 
-    async setSingleSwapping(i){
-        if(this.stop === true){
-            throw "Preventing sorting from executing";
+    async setSingleSwapping(i) {
+        if(this.stop === true) {
+            throw Defaults.stopError;
         }
         this.array[i].color = Defaults.sortingSwappingColor;
         let newArray = [...this.array];
@@ -62,9 +67,9 @@ class BaseSort {
         await Defaults.delay(this.waitTimeout);
         this.array[i].color = Defaults.sortingDefaultColor;
     }
-    async setSwapping(i, j){
-        if(this.stop === true){
-            throw "Preventing sorting from executing";
+    async setSwapping(i, j) {
+        if(this.stop === true) {
+            throw Defaults.stopError;
         }
         this.array[i].color = Defaults.sortingSwappingColor;
         this.array[j].color = Defaults.sortingSwappingColor;

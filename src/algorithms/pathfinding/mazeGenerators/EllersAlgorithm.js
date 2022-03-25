@@ -6,9 +6,9 @@ let delayTimeout = Defaults.pathfindingGeneratingDelayTimeout;
 
 function createSetsArray(maze) {
     let sets = [];
-    for(let i = 0 ; i < maze.length; ++i){
+    for(let i = 0 ; i < maze.length; ++i) {
         let row = [];
-        for(let j = 0 ; j < maze[0].length; ++j){
+        for(let j = 0 ; j < maze[0].length; ++j) {
             row.push(0);
         }
         sets.push(row);
@@ -54,43 +54,43 @@ async function EllersAlgorithm(maze, setMaze, setMazePrev, setMazeSnapshot, hand
             let prevSet = 0;
             let setSize = 0;
             for(let j = 1; j < w - 1; ++j) {
-                if(sets[i - 1][j] == 0){
+                if(sets[i - 1][j] == 0) {
                     newMaze = setSingleNodeType(newMaze, i, j, types.block, setMaze, setMazePrev); 
                     sets[i][j] = 0;
                     await Defaults.delay(delayTimeout);
                 }
                 else{
-                    if(prevSet != sets[i - 1][j]){
+                    if(prevSet != sets[i - 1][j]) {
                         setSize = 0;
                         setIndex = 0;
                         gapIndexes = [];
                     }
-                    if(setSize == 0){
+                    if(setSize == 0) {
                         let k = j;
                         let setValue = sets[i - 1][k];
 
-                        while( k < w - 1 && sets[i - 1][k] == setValue){
+                        while( k < w - 1 && sets[i - 1][k] == setValue) {
                             setSize += 1;
                             k++;
                         }
 
                         gapIndexes.push(Defaults.getRandomInt(setSize));
-                        for(let k = 0; k < 5; k ++){
+                        for(let k = 0; k < 5; k ++) {
                             let newGap = Defaults.getRandomInt(setSize);
                             let gapAvailable = true;
-                            for(let l = 0; l < gapIndexes.length; ++l){
-                                if(Math.abs(newGap - gapIndexes[l]) <= 1){
+                            for(let l = 0; l < gapIndexes.length; ++l) {
+                                if(Math.abs(newGap - gapIndexes[l]) <= 1) {
                                     gapAvailable = false;
                                 }
 
                             }
-                            if(gapAvailable){
+                            if(gapAvailable) {
                                 gapIndexes.push(newGap);
                             }
                         }
                     }
 
-                    if(gapIndexes.includes(setIndex)){
+                    if(gapIndexes.includes(setIndex)) {
                         sets[i][j] = sets[i - 1][j];
                     }
                     else{
@@ -106,11 +106,11 @@ async function EllersAlgorithm(maze, setMaze, setMazePrev, setMazeSnapshot, hand
         else{
             // get new sets from sets above
             for(let j = 1; j < w - 1; ++j) {
-                if(i == 1){
+                if(i == 1) {
                     sets[i][j] = ++setCounter;
                 }
                 else{
-                    if(sets[i - 1][j] != 0){
+                    if(sets[i - 1][j] != 0) {
                         sets[i][j] = sets[i - 1][j];
                     }
                     else{
@@ -127,7 +127,7 @@ async function EllersAlgorithm(maze, setMaze, setMazePrev, setMazeSnapshot, hand
 
             // set blocks between sets
             for(let j = 2; j < w - 2; ++j) {
-                if(sets[i][j] != sets[i][j - 1] && newMaze[i][j - 1].type != types.block && sets[i - 1][j] == 0 && newMaze[i][j].type == types.empty){
+                if(sets[i][j] != sets[i][j - 1] && newMaze[i][j - 1].type != types.block && sets[i - 1][j] == 0 && newMaze[i][j].type == types.empty) {
                     newMaze = setSingleNodeType(newMaze, i, j, types.block, setMaze, setMazePrev); 
                     sets[i][j] = 0;
                     await Defaults.delay(delayTimeout);

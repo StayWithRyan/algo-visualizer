@@ -1,19 +1,19 @@
 import BaseTraversal from './BaseTraversal';
+import Defaults from '../../../defaults';
 
 class NLRTraversal extends BaseTraversal {
-    constructor(tree, setTree, waitTimeout, array, setArray, handleStop){
-        super(tree, setTree, waitTimeout, array, setArray, handleStop);
-        this.array = [];
+    constructor(tree, array, waitTimeout, handleStop, drawFunction) {
+        super(tree, array, waitTimeout, handleStop, drawFunction);
     }
 
     async algorithmlInner(node) {
         await this.setVisiting(node);
 
-        if(node.left){
+        if(node.left) {
             await this.algorithmlInner(node.left)
         }
         
-        if(node.right){
+        if(node.right) {
             await this.algorithmlInner(node.right)
         }
     }

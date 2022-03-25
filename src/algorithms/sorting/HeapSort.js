@@ -1,7 +1,7 @@
 import BaseSort from './BaseSort';
 
 class HeapSort extends BaseSort {
-    constructor(array, updateArray, finishSorting, waitTimeout){
+    constructor(array, updateArray, finishSorting, waitTimeout) {
         super(array, updateArray, finishSorting, waitTimeout);
     }
 
@@ -10,7 +10,7 @@ class HeapSort extends BaseSort {
         let n = this.array.length;
 
         // Build heap
-        for (let i = Math.floor(n / 2) - 1; i >= 0; i--){
+        for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
             await this.heapify(n, i);
         }
  

@@ -6,7 +6,7 @@ import BaseStringSearching from './BaseStringSearching';
 
 
 class BoyerMooreAlgorithm extends BaseStringSearching {
-    constructor(pattern, setPattern, text, setText, finishSearching, waitTimeout, copyArray){
+    constructor(pattern, setPattern, text, setText, finishSearching, waitTimeout, copyArray) {
         super(pattern, setPattern, text, setText, finishSearching, waitTimeout, copyArray);
     }
 
@@ -27,7 +27,7 @@ class BoyerMooreAlgorithm extends BaseStringSearching {
      
 
     getBadCharHeuristicValue(value) {
-        if(this.badchar.hasOwnProperty(value)){
+        if(this.badchar.hasOwnProperty(value)) {
             return this.badchar[value];
         }
         else{

@@ -43,7 +43,7 @@ function SortingPage() {
     const [isSorting, setIsSorting] = useState(false);
     const createArray = (size) => {
         const newArray = [];
-        for(let i = 1; i <= size; ++i){
+        for(let i = 1; i <= size; ++i) {
             newArray.push(i);
         }
         let array = newArray.sort((a, b) => 0.5 - Math.random());
@@ -53,7 +53,7 @@ function SortingPage() {
     const [array, setArray] = useState(createArray(Defaults.arraySizeDefault));
     const handleAlgorithmChange = (value) => {
         setAlgorithm(value);
-        if(isSorting === false){
+        if(isSorting === false) {
             setStartButtonDisabled(false);
         }
     };
@@ -74,14 +74,14 @@ function SortingPage() {
     };
 
     const handleStop = () => {
-        if(sortingObj){
+        if(sortingObj) {
             sortingObj.stopSorting();
         }
         setIsSorting(false);
         setStartButtonDisabled(false);
         setStopButtonDisabled(true);
         const newArray = [...array];
-        for(let i = 0; i < newArray.length; i++){
+        for(let i = 0; i < newArray.length; i++) {
             newArray[i].color = Defaults.sortingDefaultColor;
         }
         setArray(newArray);

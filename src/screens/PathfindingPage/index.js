@@ -72,7 +72,7 @@ function PathfindingPage() {
 
     const handleAlgorithmChange = (value) => {
         setAlgorithm(value);
-        if(startButtonDisabled){
+        if(startButtonDisabled) {
             setStartButtonDisabled(false);
         }
     };
@@ -91,10 +91,10 @@ function PathfindingPage() {
         const algorithmClass = algorithmsMapping[`${algorithm}`];
         const algorithmObj = new algorithmClass(newMaze, setMaze, setMazePrev, handleStop, pathfindingSleep);
         setPathfindingObj(algorithmObj);
-        if(algorithm == "Best First Search"){
+        if(algorithm == "Best First Search") {
             algorithmObj.setGreedy();
         }
-        if(algorithm == "AStar(A*)"){
+        if(algorithm == "AStar(A*)") {
             algorithmObj.setAStar();
         }
         algorithmObj.find();
@@ -102,7 +102,7 @@ function PathfindingPage() {
     };
     
     const handleStop = () => {
-        if(pathfindingObj){
+        if(pathfindingObj) {
             pathfindingObj.stopFinding();
         }
 
@@ -117,7 +117,7 @@ function PathfindingPage() {
     
     const handleGeneratingAlgorithmChange = (value) => {
         setGeneratingAlgorithm(value);
-        if(generateButtonDisabled){
+        if(generateButtonDisabled) {
             setGenerateButtonDisabled(false);
         }
     };
@@ -141,30 +141,30 @@ function PathfindingPage() {
     };
 
     const handleMove = (e) => {
-        if(isDrawing){
+        if(isDrawing) {
             return;
         }
 
-        if(isUserDrawing || isMovingStartNode || isMovingTargetNode){
+        if(isUserDrawing || isMovingStartNode || isMovingTargetNode) {
 
-            if(handleDrawing(e)){
+            if(handleDrawing(e)) {
                 return;
             }
 
             let [i, j] = getPosition(canvasRef.current, e);
 
             setResetButtonDisabled(false);
-            if(isMovingStartNode){
+            if(isMovingStartNode) {
                 updateNode(i,j, types.start, maze, setMaze, setMazePrev, mazeSnapshot, setMazeSnapshot);
             }
-            else if(isMovingTargetNode){
+            else if(isMovingTargetNode) {
                 updateNode(i,j, types.target, maze, setMaze, setMazePrev, mazeSnapshot, setMazeSnapshot);
             }
         }
     }
 
     const handleUp = (e) => {
-        if(isDrawing){
+        if(isDrawing) {
             return;
         }
 
@@ -177,22 +177,22 @@ function PathfindingPage() {
 
     const handleDrawing = (e) => {
         let [i, j] = getPosition(canvasRef.current, e);
-        if(onBoarder(canvasRef.current, e)){
+        if(onBoarder(canvasRef.current, e)) {
             return true;
         }
-        if(maze[i][j].type === types.start || maze[i][j].type ===  types.target){
+        if(maze[i][j].type === types.start || maze[i][j].type ===  types.target) {
             return true;
         }
 
-        if(isUserDrawing){
+        if(isUserDrawing) {
             setResetButtonDisabled(false);
-            if(isDrawingBlock){
-                if(maze[i][j].type != types.block){
+            if(isDrawingBlock) {
+                if(maze[i][j].type != types.block) {
                     updateNode(i,j, types.block, maze, setMaze, setMazePrev, mazeSnapshot, setMazeSnapshot);
                 }
             }
             else {
-                if(maze[i][j].type != types.empty){
+                if(maze[i][j].type != types.empty) {
                     updateNode(i,j, types.empty, maze, setMaze, setMazePrev, mazeSnapshot, setMazeSnapshot);
                 }
             }
@@ -201,20 +201,20 @@ function PathfindingPage() {
     }
 
     const handleDown = (e) => {
-        if(isDrawing){
+        if(isDrawing) {
             return;
         }
 
         let newMaze = cleanMazeAfterSearching(maze, setMaze, setMazePrev);
 
         let [i, j] = getPosition(canvasRef.current, e)
-        if(newMaze[i][j].type === types.start){
+        if(newMaze[i][j].type === types.start) {
             setIsMovingStartNode(true);
         }
-        else if(newMaze[i][j].type === types.target){
+        else if(newMaze[i][j].type === types.target) {
             setIsMovingTargetNode(true);
         }
-        else if(newMaze[i][j].type === types.block){
+        else if(newMaze[i][j].type === types.block) {
             setIsUserDrawing(true); 
             setIsDrawingBlock(false);
         }
@@ -225,7 +225,7 @@ function PathfindingPage() {
     }
 
     const handleLeave = () => {
-        if(isDrawing){
+        if(isDrawing) {
             return;
         }
         

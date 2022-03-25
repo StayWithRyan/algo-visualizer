@@ -1,17 +1,17 @@
 import BaseSort from './BaseSort';
 
 class MergeSort extends BaseSort {
-    constructor(array, updateArray, finishSorting, waitTimeout){
+    constructor(array, updateArray, finishSorting, waitTimeout) {
         super(array, updateArray, finishSorting, waitTimeout);
     }
 
-    async innerSort(){
+    async innerSort() {
         await this.mergeSort(0, this.array.length - 1);
         this.finishSorting();
     }
 
     async mergeSort(l, r) {
-        if(l>=r){
+        if(l>=r) {
             return;
         }
         let m =l+ parseInt((r-l)/2);
@@ -53,7 +53,7 @@ class MergeSort extends BaseSort {
             j++;
         }
 
-        for(let i = 0; i < mergedArray.length; i++){
+        for(let i = 0; i < mergedArray.length; i++) {
             this.array[l + i].value = mergedArray[i];
             await this.setSingleSwapping(l + i);
         }

@@ -1,7 +1,7 @@
 import BaseSort from './BaseSort';
 
 class ShellSort extends BaseSort {
-    constructor(array, updateArray, finishSorting, waitTimeout){
+    constructor(array, updateArray, finishSorting, waitTimeout) {
         super(array, updateArray, finishSorting, waitTimeout);
     }
 
@@ -12,9 +12,9 @@ class ShellSort extends BaseSort {
         {
             for (let i = gap; i < length; i++) {
 
-                for(let j = i; j >= gap; j-=gap){
+                for(let j = i; j >= gap; j-=gap) {
                     await this.setChecking(j - gap, j);
-                    if(this.array[j - gap].value > this.array[j].value){
+                    if(this.array[j - gap].value > this.array[j].value) {
                         this.swap(j - gap, j);
                         await this.setSwapping(j - gap, j);
                     }

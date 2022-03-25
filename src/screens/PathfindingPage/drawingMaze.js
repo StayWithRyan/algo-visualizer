@@ -13,7 +13,7 @@ class Animation {
         const context = canvas.getContext('2d');
 
         let rainbow = new Rainbow();
-        if(isNaN(saturation)){
+        if(isNaN(saturation)) {
             rainbow.setSpectrum(colors[type][0], colors[type][1]);
         }
         else{
@@ -33,22 +33,22 @@ class Animation {
             context.fillRect(x + 1 + ( (steps - i - 1) / 2), y + 1 + ( (steps - i - 1) / 2), (elemSize - steps) + i, (elemSize - steps) + i);
 
             // start & target images
-            if(type == types.checkingStart){
+            if(type == types.checkingStart) {
                 drawStartNode(canvas, x, y, "none");
             }
-            else if(type == types.pathStart){
+            else if(type == types.pathStart) {
                 drawStartNode(canvas, x, y,  "none");
             }
-            else if(type == types.checkingTarget){
+            else if(type == types.checkingTarget) {
                 drawTargetNode(canvas, x, y, "none", colors[types.checking][1]);
             }
-            else if(type == types.pathTarget){
+            else if(type == types.pathTarget) {
                 drawTargetNode(canvas, x, y, "none", colors[types.path][1]);
             }
             await Defaults.delay(20);
         }
     }
-    stopAnimation(){
+    stopAnimation() {
         this.stop = true;
     }
 }
@@ -106,7 +106,7 @@ const draw = (canvas, maze, mazePrev) => {
     for(let i = 0 ; i < maze.length; ++i) {
         for(let j = 0 ; j < maze[0].length; ++j) {
             if(maze[i][j].type == types.start && mazePrev[i][j].type != types.start) {
-                if(maze[i][j].animation){
+                if(maze[i][j].animation) {
                     maze[i][j].animation.stopAnimation();
                     maze[i][j].animation = null;
                 }
@@ -114,7 +114,7 @@ const draw = (canvas, maze, mazePrev) => {
                 drawStartNode(canvas, maze[i][j].x, maze[i][j].y, colors[types.empty]);
             }
             else if(maze[i][j].type == types.target && mazePrev[i][j].type != types.target) {
-                if(maze[i][j].animation){
+                if(maze[i][j].animation) {
                     maze[i][j].animation.stopAnimation();
                     maze[i][j].animation = null;
                 }
@@ -122,7 +122,7 @@ const draw = (canvas, maze, mazePrev) => {
                 drawTargetNode(canvas, maze[i][j].x, maze[i][j].y, colors[types.empty], colors[types.empty]);
             }
             else if(maze[i][j].type == types.empty && mazePrev[i][j].type != types.empty) {
-                if(maze[i][j].animation){
+                if(maze[i][j].animation) {
                     maze[i][j].animation.stopAnimation();
                     maze[i][j].animation = null;
                 }
@@ -134,7 +134,7 @@ const draw = (canvas, maze, mazePrev) => {
                 context.fillRect(maze[i][j].x + 1, maze[i][j].y + 1, elemSize - 1, elemSize - 1)
             }
             else if(maze[i][j].type != mazePrev[i][j].type) {
-                if(maze[i][j].animation === null){
+                if(maze[i][j].animation === null) {
                     let animation = new Animation();
                     animation.animate(canvas, maze[i][j].x, maze[i][j].y, maze[i][j].type, maze[i][j].saturation);
                     maze[i][j].animation = animation;
@@ -153,10 +153,10 @@ const firstDraw = (canvas, maze) => {
 
     for(let i = 0 ; i < maze.length; ++i) {
         for(let j = 0 ; j < maze[0].length; ++j) {
-            if(maze[i][j].type === types.start){
+            if(maze[i][j].type === types.start) {
                 drawStartNode(canvas, maze[i][j].x, maze[i][j].y, colors[types.empty]);
             }
-            else if(maze[i][j].type === types.target){
+            else if(maze[i][j].type === types.target) {
                 drawTargetNode(canvas, maze[i][j].x, maze[i][j].y, colors[types.empty], colors[types.empty]);
             }
             else if(maze[i][j].type === types.empty) {
