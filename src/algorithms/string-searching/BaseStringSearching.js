@@ -1,4 +1,5 @@
-import Defaults from '../../defaults';
+import Constants from '../../constants';
+import SearchingConstants from '../../screens/StringsearchingPage/constants';
 
 class BaseStringSearching {
     constructor(pattern, setPattern, text, setText, finishSearching, waitTimeout, copyArray) {
@@ -16,18 +17,18 @@ class BaseStringSearching {
 
     async search() {
         try{
-            await Defaults.delay(500);
+            await Constants.delay(500);
 
             await this.innerSearch();
 
             if(!this.found) {
                 await this.setPatternNoMatch();
             }
-            await Defaults.delay(1000);
+            await Constants.delay(1000);
             this.finishSearching(this.pattern);
         }
         catch(e) {
-            if(e == Defaults.stopError) {
+            if(e == Constants.stopError) {
                 // This is ok. Used for stopping algorithm from executing
             }
             else{
@@ -42,21 +43,21 @@ class BaseStringSearching {
 
     async setChecking(i, j) {
         if(this.stop === true) {
-            throw Defaults.stopError;
+            throw Constants.stopError;
         }
-        this.text[i].color = Defaults.searchingCheckingColor;
-        this.pattern[j].color = Defaults.searchingCheckingColor;
+        this.text[i].color = SearchingConstants.checkingColor;
+        this.pattern[j].color = SearchingConstants.checkingColor;
 
         let newText =  this.copyArray(this.text);
         let newPattern =  this.copyArray(this.pattern);
         this.setText(newText);
         this.setPattern(newPattern, this.patternLocation);
-        await Defaults.delay(this.waitTimeout);
+        await Constants.delay(this.waitTimeout);
     }
 
     async setPatternLocation(i) {
         if(this.stop === true) {
-            throw Defaults.stopError;
+            throw Constants.stopError;
         }
         
         let newPattern = this.copyArray(this.pattern);
@@ -67,18 +68,18 @@ class BaseStringSearching {
         else{
             this.setPattern(newPattern, this.patternLocation);
         }
-        await Defaults.delay(this.waitTimeout);
+        await Constants.delay(this.waitTimeout);
     }
     
     setDefaultColor() {
         if(this.stop === true) {
-            throw Defaults.stopError;
+            throw Constants.stopError;
         }
         for(let i = 0; i < this.text.length; ++i) {
-            this.text[i].color = Defaults.searchingDefaultColor;
+            this.text[i].color = SearchingConstants.defaultColor;
         }
         for(let i = 0; i < this.pattern.length; ++i) {
-            this.pattern[i].color = Defaults.searchingDefaultColor;
+            this.pattern[i].color = SearchingConstants.defaultColor;
         }
         let newText = this.copyArray(this.text);
         let newPattern = this.copyArray(this.pattern);
@@ -88,48 +89,48 @@ class BaseStringSearching {
 
     async setPatternNoMatch() {
         if(this.stop === true) {
-            throw Defaults.stopError;
+            throw Constants.stopError;
         }
         for(let i = 0; i < this.pattern.length; ++i) {
-            this.pattern[i].color = Defaults.searchingNoMatchColor;
+            this.pattern[i].color = SearchingConstants.noMatchColor;
         }
         let newPattern = this.copyArray(this.pattern);
         this.setPattern(newPattern, this.patternLocation);
 
-        await Defaults.delay(this.waitTimeout);
+        await Constants.delay(this.waitTimeout);
     }
 
     async setPatternPreprocessing() {
         if(this.stop === true) {
-            throw Defaults.stopError;
+            throw Constants.stopError;
         }
         for(let i = 0; i < this.pattern.length; ++i) {
-            this.pattern[i].color = Defaults.searchingCheckingHashColor;
+            this.pattern[i].color = SearchingConstants.checkingHashColor;
         }
         let newPattern = this.copyArray(this.pattern);
         this.setPattern(newPattern);
 
-        await Defaults.delay(this.waitTimeout);
+        await Constants.delay(this.waitTimeout);
     }
 
     async setTextMatch(begin, end) {
-        await this.setTextColor(begin, end, Defaults.searchingMatchColor)
+        await this.setTextColor(begin, end, SearchingConstants.matchColor)
     }
 
     async setCheckingHash(begin, end) {
-        await this.setTextColor(begin, end, Defaults.searchingCheckingHashColor)
+        await this.setTextColor(begin, end, SearchingConstants.checkingHashColor)
     }
 
     async setTextColor(begin, end, color) {
         if(this.stop === true) {
-            throw Defaults.stopError;
+            throw Constants.stopError;
         }
         for(let i = begin; i < end; ++i) {
             this.text[i].color = color;
         }
         let newText = this.copyArray(this.text);
         this.setText(newText);
-        await Defaults.delay(this.waitTimeout);
+        await Constants.delay(this.waitTimeout);
     }
 }
 

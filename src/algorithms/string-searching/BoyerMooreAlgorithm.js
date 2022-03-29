@@ -1,9 +1,4 @@
-import { breakpoints } from '@mui/system';
-import Defaults from '../../defaults';
-
 import BaseStringSearching from './BaseStringSearching';
-
-
 
 class BoyerMooreAlgorithm extends BaseStringSearching {
     constructor(pattern, setPattern, text, setText, finishSearching, waitTimeout, copyArray) {

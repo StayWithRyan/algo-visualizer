@@ -1,12 +1,13 @@
 import BaseSort from './BaseSort';
+import {array} from "../../screens/SortingPage/sortingHelpers";
 
 class ShellSort extends BaseSort {
-    constructor(array, updateArray, finishSorting, waitTimeout) {
-        super(array, updateArray, finishSorting, waitTimeout);
+    constructor(finishSorting, waitTimeout) {
+        super(finishSorting, waitTimeout);
     }
 
     async innerSort() {
-        let length = this.array.length;
+        let length = array.length;
   
         for (let gap = Math.floor(length/2); gap > 0; gap = Math.floor(gap/2))
         {
@@ -14,7 +15,7 @@ class ShellSort extends BaseSort {
 
                 for(let j = i; j >= gap; j-=gap) {
                     await this.setChecking(j - gap, j);
-                    if(this.array[j - gap].value > this.array[j].value) {
+                    if(array[j - gap].value > array[j].value) {
                         this.swap(j - gap, j);
                         await this.setSwapping(j - gap, j);
                     }

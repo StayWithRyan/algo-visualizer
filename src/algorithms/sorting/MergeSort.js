@@ -1,12 +1,13 @@
 import BaseSort from './BaseSort';
+import {array} from "../../screens/SortingPage/sortingHelpers";
 
 class MergeSort extends BaseSort {
-    constructor(array, updateArray, finishSorting, waitTimeout) {
-        super(array, updateArray, finishSorting, waitTimeout);
+    constructor(finishSorting, waitTimeout) {
+        super(finishSorting, waitTimeout);
     }
 
     async innerSort() {
-        await this.mergeSort(0, this.array.length - 1);
+        await this.mergeSort(0, array.length - 1);
         this.finishSorting();
     }
 
@@ -29,32 +30,32 @@ class MergeSort extends BaseSort {
         let mergedArray = [];
     
         while (i < n1 && j < n2) {
-            if (this.array[l + i].value <= this.array[m + 1 + j].value) {
-                mergedArray.push(this.array[l + i].value);
+            if (array[l + i].value <= array[m + 1 + j].value) {
+                mergedArray.push(array[l + i].value);
                 await this.setSingleChecking(l + i);
                 i++;
             }
             else {
-                mergedArray.push(this.array[m + 1 + j].value);
+                mergedArray.push(array[m + 1 + j].value);
                 await this.setSingleChecking(m + 1 + j);
                 j++;
             }
         }
 
         while (i < n1) {
-            mergedArray.push(this.array[l + i].value);
+            mergedArray.push(array[l + i].value);
             await this.setSingleChecking(l + i);
             i++;
         }
     
         while (j < n2) {
-            mergedArray.push(this.array[m + 1 + j].value);
+            mergedArray.push(array[m + 1 + j].value);
             await this.setSingleChecking(m + 1 + j);
             j++;
         }
 
         for(let i = 0; i < mergedArray.length; i++) {
-            this.array[l + i].value = mergedArray[i];
+            array[l + i].value = mergedArray[i];
             await this.setSingleSwapping(l + i);
         }
     }

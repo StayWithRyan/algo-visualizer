@@ -1,5 +1,3 @@
-import Defaults from '../../defaults';
-
 import BaseStringSearching from './BaseStringSearching';
 
 class NaiveAlgorithm extends BaseStringSearching {

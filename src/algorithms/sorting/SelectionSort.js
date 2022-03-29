@@ -1,18 +1,19 @@
 import BaseSort from './BaseSort';
+import {array} from "../../screens/SortingPage/sortingHelpers";
 
 class SelectionSort extends BaseSort {
-    constructor(array, updateArray, finishSorting, waitTimeout) {
-        super(array, updateArray, finishSorting, waitTimeout);
+    constructor(finishSorting, waitTimeout) {
+        super(finishSorting, waitTimeout);
     }
 
     async innerSort() {
-        let length = this.array.length;
+        let length = array.length;
         let i, j, max_idx;
         for (i = length - 1; i >= 0; i--) {
             max_idx = i;
             for (j = 0; j < i; j++) {
                 await this.setChecking(j, max_idx);
-                if (this.array[j].value > this.array[max_idx].value) {
+                if (array[j].value > array[max_idx].value) {
                     max_idx = j;
                 }
             }

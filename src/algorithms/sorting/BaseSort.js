@@ -1,10 +1,10 @@
-import Defaults from '../../defaults';
+import Constants from '../../constants';
+import {CheckingElementType, RegularElementType, SwappingElementType} from "../../screens/SortingPage/Elements/ArrayElementTypes";
+import {array} from "../../screens/SortingPage/sortingHelpers";
 
 class BaseSort {
-    constructor(array, updateArray, finishSorting, waitTimeout) {
+    constructor(finishSorting, waitTimeout) {
         this.stop = false;
-        this.array = [...array];
-        this.updateArray = updateArray;
         this.finishSorting = finishSorting;
         this.waitTimeout = waitTimeout;
     }
@@ -14,7 +14,7 @@ class BaseSort {
             await this.innerSort();
         }
         catch(e) {
-            if(e ==  Defaults.stopError) {
+            if(e ==  Constants.stopError) {
                 // This is ok. Used for stopping algorithm from executing
             }
             else{
@@ -23,61 +23,52 @@ class BaseSort {
         }
     }
     swap(i, j) {
-        let temp = this.array[i].value;
-        this.array[i].value = this.array[j].value;
-        this.array[j].value = temp;
+        let temp = array[i].value;
+        array[i].value = array[j].value;
+        array[j].value = temp;
     }
      
-
     stopSorting() {
         this.stop = true;
     }
 
     async setSingleChecking(i) {        
         if(this.stop === true) {
-            throw Defaults.stopError;
+            throw Constants.stopError;
         }
-        this.array[i].color = Defaults.sortingCheckingColor;
-        let newArray = [...this.array];
-        this.updateArray(newArray);
-        await Defaults.delay(this.waitTimeout);
-        this.array[i].color = Defaults.sortingDefaultColor;
+        array[i].setType(CheckingElementType);
+        await Constants.delay(this.waitTimeout);
+        array[i].setType(RegularElementType);
     }
 
     async setChecking(i, j) {
         if(this.stop === true) {
-            throw Defaults.stopError;
+            throw Constants.stopError;
         }
-        this.array[i].color = Defaults.sortingCheckingColor;
-        this.array[j].color = Defaults.sortingCheckingColor;
-        let newArray = [...this.array];
-        this.updateArray(newArray);
-        await Defaults.delay(this.waitTimeout);
-        this.array[i].color = Defaults.sortingDefaultColor;
-        this.array[j].color = Defaults.sortingDefaultColor;
+        array[i].setType(CheckingElementType);
+        array[j].setType(CheckingElementType);
+        await Constants.delay(this.waitTimeout);
+        array[i].setType(RegularElementType);
+        array[j].setType(RegularElementType);
     }
 
     async setSingleSwapping(i) {
         if(this.stop === true) {
-            throw Defaults.stopError;
+            throw Constants.stopError;
         }
-        this.array[i].color = Defaults.sortingSwappingColor;
-        let newArray = [...this.array];
-        this.updateArray(newArray);
-        await Defaults.delay(this.waitTimeout);
-        this.array[i].color = Defaults.sortingDefaultColor;
+        array[i].setType(SwappingElementType);
+        await Constants.delay(this.waitTimeout);
+        array[i].setType(RegularElementType);
     }
     async setSwapping(i, j) {
         if(this.stop === true) {
-            throw Defaults.stopError;
+            throw Constants.stopError;
         }
-        this.array[i].color = Defaults.sortingSwappingColor;
-        this.array[j].color = Defaults.sortingSwappingColor;
-        let newArray = [...this.array];
-        this.updateArray(newArray);
-        await Defaults.delay(this.waitTimeout);
-        this.array[i].color = Defaults.sortingDefaultColor;
-        this.array[j].color = Defaults.sortingDefaultColor;
+        array[i].setType(SwappingElementType);
+        array[j].setType(SwappingElementType);
+        await Constants.delay(this.waitTimeout);
+        array[i].setType(RegularElementType);
+        array[j].setType(RegularElementType);
     }
 }
 

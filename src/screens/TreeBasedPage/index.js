@@ -1,14 +1,11 @@
-import './style.css';
-
 import ConfigurationBar from "../../components/ConfigurationBar";
 import {useState, useEffect, useRef} from 'react';
 import BasicSelect from '../../components/BasicSelect'
 import BasicSlider from '../../components/BasicSlider';
 import BasicButton from '../../components/BasicButton';
 
-import {
-    createTree, createHeapSortTree, createArray, createTreeSortTree, createTournamentSortTree,
-    createTreeSortArray, resetTreeTypes, resetArrayTypes, getTreeSizes
+import { createTree, createHeapSortTree, createArray, createTournamentSortTree,
+    createTreeSortArray, resetTreeTypes, emptyArray, emptyTree, resetArrayTypes, getTreeSizes
 } from './treeBasedHelpers'
 import {draw, clearCanvas} from './drawingTree'
 
@@ -19,7 +16,8 @@ import HeapSort from "../../algorithms/treeBased/sorting/HeapSort"
 import TreeSort from "../../algorithms/treeBased/sorting/TreeSort"
 import TournamentSort from "../../algorithms/treeBased/sorting/TournamentSort"
 
-import Defaults from '../../defaults';
+import Constants from '../../constants';
+import TreeBasedConstants from './constants';
 
 function TreeBasedPage() {
     const algorithmsMapping = {
@@ -37,15 +35,13 @@ function TreeBasedPage() {
     let sameTreeAlgorithms = ["", "In-order tree traversal(LNR)", "Pre-order tree traversal(NLR)", "Post-order tree traversal(LRN)"];
     const [algorithm, setAlgorithm] = useState('');
     const [algorithmPrev, setAlgorithmPrev] = useState('');
-    const [treeBasedSleep, setTreeBasedSleep] = useState(Defaults.treebasedSleepDefault);
-    const [treeSize, setTreeSize] = useState(Defaults.treeSizeDefault);
-    const [tree, setTree] = useState(null);
+    const [treeBasedSleep, setTreeBasedSleep] = useState(TreeBasedConstants.sleepDefault);
+    const [treeSize, setTreeSize] = useState(TreeBasedConstants.treeSizeDefault);
     let [treeSizeMax, treeMaxLevel] = getTreeSizes();
     if(algorithm == "TreeSort" || algorithm == "TournamentSort"){
         treeSizeMax = (treeSizeMax + 1) / 2;
     }
     const [treeBasedAlgorithmObj, setTreeBasedAlgorithmObj] = useState(null);
-    const [array, setArray] = useState([]);
 
     const [startButtonDisabled, setStartButtonDisabled] = useState(true);
     const [stopButtonDisabled, setStopButtonDisabled] = useState(true);
@@ -55,43 +51,12 @@ function TreeBasedPage() {
 
     const canvasRef = useRef(null);
 
-    const updateTreeAndArray = (size, isReset = false) => {
-        clearCanvas(canvasRef.current);
-
-        let newArray;
-        let newTree;
-        if(algorithm == "HeapSort") {
-            newTree = createHeapSortTree(size);
-            newArray = isReset? resetArrayTypes(array): createArray(size);
-        }
-        else if(algorithm == "TreeSort") {
-            newTree = createTreeSortTree();
-            newArray = isReset? resetArrayTypes(array) : createTreeSortArray(Math.min(treeSizeMax, size), treeMaxLevel);
-        }
-        else if(sameTreeAlgorithms.includes(algorithm)) {
-            newTree = isReset? resetTreeTypes(tree) : createTree(size, treeMaxLevel);
-            newArray = [];
-        }
-        else if(algorithm == "TournamentSort") {
-            newTree = isReset? tree : createTournamentSortTree({lastLevelSize: Math.min(treeSizeMax, size)});
-            newArray = [];
-        }
-        else {
-            throw "Invalid algorithm for drawing?????"
-        }
-        setArray(newArray);
-        setTree(newTree);
-        draw(canvasRef.current, newTree, newArray, true);
-
-        return [newTree, newArray];
-    }
-
     useEffect(() => {
-        let newTree = createTree(treeSize, treeMaxLevel);
-        setTree(newTree);
-        draw(canvasRef.current, newTree, array, true);
+        createTree(treeSize, treeMaxLevel);
+        let intervalId = setInterval(() =>  draw(canvasRef.current), Constants.drawInterval);
+        return () => clearInterval(intervalId);
     }, []);
-    
+
     useEffect(() => {
         if(algorithm == "") {
             return;
@@ -105,6 +70,25 @@ function TreeBasedPage() {
 
     }, [algorithm]);
 
+    const updateTreeAndArray = (size, isReset = false) => {
+        if(algorithm == "HeapSort") {
+            createHeapSortTree(size);
+            isReset? resetArrayTypes() : createArray(size);
+        }
+        else if(algorithm == "TreeSort") {
+            emptyTree();
+            isReset? resetArrayTypes() : createTreeSortArray(Math.min(treeSizeMax, size), treeMaxLevel);
+        }
+        else if(sameTreeAlgorithms.includes(algorithm)) {
+            isReset? resetTreeTypes() : createTree(size, treeMaxLevel);
+            emptyArray();
+        }
+        else if(algorithm == "TournamentSort") {
+            createTournamentSortTree({lastLevelSize: Math.min(treeSizeMax, size)});
+            emptyArray();
+        }
+    }
+
     const handleAlgorithmChange = (value) => {
         setAlgorithmPrev(algorithm);
         setAlgorithm(value);
@@ -114,6 +98,9 @@ function TreeBasedPage() {
     }
 
     const handleSizeChange = (value) => {
+        if(algorithm !== "") {
+            setStartButtonDisabled(false);
+        }
         setTreeSize(value);
         updateTreeAndArray(value);
     }
@@ -123,17 +110,10 @@ function TreeBasedPage() {
         setIsDrawing(true);
         setStartButtonDisabled(true);
         setStopButtonDisabled(false);
-        const drawFunction = (passedTree, passedArray, clear) => {
-            if(clear) {
-                clearCanvas(canvasRef.current);
-            }
-            draw(canvasRef.current, passedTree, passedArray, false);
-        }
-
-        let [newTree, newArray] = updateTreeAndArray(treeSize, true);
+        updateTreeAndArray(treeSize, true);
 
         const algorithmClass = algorithmsMapping[`${algorithm}`];
-        const algorithmObj = new algorithmClass(newTree, newArray, treeBasedSleep, handleStop, drawFunction);
+        const algorithmObj = new algorithmClass(handleStop, treeBasedSleep);
         setTreeBasedAlgorithmObj(algorithmObj);
         algorithmObj.algorithm()
     }
@@ -144,20 +124,20 @@ function TreeBasedPage() {
         }
 
         setIsDrawing(false);
-        setStartButtonDisabled(false);
+        setStartButtonDisabled(algorithm === "TreeSort");
         setStopButtonDisabled(true);
     }
 
-    let canvasHeight = window.innerHeight - Defaults.navBarHeight - Defaults.configurationBarHeight - 20;
+    let canvasHeight = window.innerHeight - Constants.navBarHeight - Constants.configurationBarHeight - 20;
 
     return (
         <>
             <ConfigurationBar>
                 <BasicSelect title ="Algorithm" isDisabled={isDrawing} onChange = {handleAlgorithmChange} value = {algorithm} values = {algorithms}  />
-                <BasicSlider title="Tree size" isDisabled={isDrawing} min={Defaults.treeSizeMin} max={treeSizeMax}
-                    default={Defaults.treeSizeDefault} step={Defaults.treeSizeStep} onChange={handleSizeChange} />
-                <BasicSlider title="Sleep time(ms)" isDisabled={isDrawing} min={Defaults.treebasedSleepMin} max={Defaults.treebasedSleepMax} 
-                    default={Defaults.treebasedSleepDefault} step={Defaults.treebasedSleepStep} onChange={setTreeBasedSleep} />
+                <BasicSlider title="Tree size" isDisabled={isDrawing} min={TreeBasedConstants.treeSizeMin} max={treeSizeMax}
+                    default={TreeBasedConstants.treeSizeDefault} step={TreeBasedConstants.treeSizeStep} onChange={handleSizeChange} />
+                <BasicSlider title="Sleep time(ms)" isDisabled={isDrawing} min={TreeBasedConstants.sleepMin} max={TreeBasedConstants.sleepMax} 
+                    default={TreeBasedConstants.sleepDefault} step={TreeBasedConstants.sleepStep} onChange={setTreeBasedSleep} />
                 <BasicButton title="Start searching" onClick={handleStart} isDisabled={startButtonDisabled}/>
                 <BasicButton title="Stop searching" onClick={handleStop} isDisabled={stopButtonDisabled}/>
             </ConfigurationBar>

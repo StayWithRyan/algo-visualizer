@@ -7,7 +7,7 @@ import NavLink from "../../components/NavLink"
 
 import {useState} from 'react';
 
-import Defaults from '../../defaults';
+import Constants from '../../constants';
 
 function NavBar() {
     const pagesMapping = {
@@ -30,7 +30,7 @@ function NavBar() {
     
     return (
         <>
-            <div className="NavBar" style = {{height: Defaults.navBarHeight, backgroundColor: Defaults.navBarColor}} >
+            <div className="NavBar" style = {{height: Constants.navBarHeight, backgroundColor: Constants.navBarColor}} >
                 {pages.map(
                     page => <NavLink key = {page} text = {page} onSelect = {() => onSelectPage(page)} isSelected = {selectedPage === page}/>
                 )}

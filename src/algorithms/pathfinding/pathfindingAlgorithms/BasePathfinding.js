@@ -1,14 +1,16 @@
-import {copyMaze, types, setSingleNodeType} from '../../../screens/PathfindingPage/mazeHelpers';
-import Defaults from '../../../defaults';
+import Constants from '../../../constants';
+import {
+    CheckingElementType, StartElementType, TargetElementType,
+    CheckingStartElementType, CheckingTargetElementType, PathElementType,
+    PathStartElementType, PathTargetElementType
+} from '../../../screens/PathfindingPage/Elements/MazeElementTypes';
+import {maze} from '../../../screens/PathfindingPage/mazeHelpers';
 
 class BasePathfinding {
-    constructor(maze, setMaze, setMazePrev, finishFinding, waitTimeout) {
-        this.maze = copyMaze(maze);
-        this.setMaze = setMaze;
-        this.setMazePrev = setMazePrev;
+    constructor(finishFinding, waitTimeout) {
         this.finishFinding = finishFinding;
-        this.stop = false;
         this.waitTimeout = waitTimeout;
+        this.stop = false;
     }
 
     stopFinding() {
@@ -17,9 +19,9 @@ class BasePathfinding {
 
     createArrayWithValue(value) {
         let array = [];
-        for(let i = 0 ; i < this.maze.length; ++i) {
+        for(let i = 0 ; i < maze.length; ++i) {
             let row = [];
-            for(let j = 0 ; j < this.maze[0].length; ++j) {
+            for(let j = 0 ; j < maze[0].length; ++j) {
                 row.push(value);
             }
             array.push(row);
@@ -28,22 +30,34 @@ class BasePathfinding {
     }
 
     async showPath(path) {
-        await Defaults.delay(200);
+        await Constants.delay(200);
         let len = path.length;
         for(let i = 0; i < len; ++i) {
             if(this.stop) {
                 return false;
             }
-            let type = types.path;
-            if(this.maze[path[i][0]][path[i][1]].type == types.checkingStart) {
-                type = types.pathStart;
+            let classType = PathElementType;
+            if(maze[path[i][0]][path[i][1]].type instanceof CheckingStartElementType) {
+                classType = PathStartElementType;
             }
-            else if(this.maze[path[i][0]][path[i][1]].type == types.checkingTarget) {
-                type = types.pathTarget;
+            else if(maze[path[i][0]][path[i][1]].type instanceof CheckingTargetElementType) {
+                classType = PathTargetElementType;
             }
-            setSingleNodeType(this.maze, path[i][0], path[i][1], type, this.setMaze, this.setMazePrev, i / len); 
-            await Defaults.delay(this.waitTimeout);
+            maze[path[i][0]][path[i][1]].setType(classType);
+            await Constants.delay(this.waitTimeout);
         }
+    }
+
+    async setChecking(i, j) {
+        let classType = CheckingElementType;
+        if(maze[i][j].type instanceof StartElementType) {
+            classType = CheckingStartElementType;
+        }
+        else if(maze[i][j].type instanceof TargetElementType) {
+            classType = CheckingTargetElementType;
+        }
+        maze[i][j].setType(classType);
+        await Constants.delay(this.waitTimeout);
     }
 }
 

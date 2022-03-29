@@ -1,44 +1,44 @@
 import BaseSorting from './BaseSorting';
-import {types} from '../../../screens/TreeBasedPage/treeBasedHelpers';
-import Defaults from '../../../defaults';
+import Constants from '../../../constants';
+import {AddedNodeType, CheckingNodeType, DoneNodeType, RegularNodeType} from '../../../screens/TreeBasedPage/Elements/Tree/TreeNodeTypes';
+import TreeNode from '../../../screens/TreeBasedPage/Elements/Tree/TreeNode';
+import {AddedElementType, CheckingElementType, DoneElementType} from '../../../screens/TreeBasedPage/Elements/Array/ArrayElementTypes';
+import ArrayElement from '../../../screens/TreeBasedPage/Elements/Array/ArrayElement';
+import {tree, setNewTree, array} from '../../../screens/TreeBasedPage/treeBasedHelpers';
 
 class TreeSort extends BaseSorting {
-    constructor(tree, array, waitTimeout, handleStop, drawFunction) {
-        super(tree, array, waitTimeout, handleStop, drawFunction);
+    constructor(handleStop, waitTimeout) {
+        super(handleStop, waitTimeout);
     }
+
     async algorithmlInner() {
-        for(let i = 0; i < this.array.length; ++i){
-            this.array[i].type = types.checking;
-            this.drawFunction(this.tree, this.array);
-            let node = await this.insert(this.tree, this.array[i].value);
-            this.array[i].type = types.added;
-            node.type = types.added;
-            this.drawFunction(this.tree, this.array);
-            await Defaults.delay(this.waitTimeout);
-            node.type = types.regular;
+        for(let i = 0; i < array.length; ++i){
+            array[i].setType(CheckingElementType)
+            let node = await this.insert(tree, array[i].value);
+            array[i].setType(AddedElementType);
+            node.setType(AddedNodeType);
+            await Constants.delay(this.waitTimeout);
+            node.setType(RegularNodeType);
         }
-        this.array.length = 0;
-        this.drawFunction(this.tree, this.array);
-        await Defaults.delay(this.waitTimeout);
-        this.LNR(this.tree);
+        array.length = 0;
+        await Constants.delay(this.waitTimeout);
+        this.LNR(tree);
     }
 
     async insert(node, valueToAdd) {
-        // first node will be empty
-        if(node.value == null) {
-            node.value = valueToAdd;
-            node.type = types.regular;
-            return node;
+        if(node === null) {
+            // first node
+            setNewTree(new TreeNode(valueToAdd, RegularNodeType));
+            return tree;
         }
 
-        node.type = types.checking;
-        this.drawFunction(this.tree, this.array);
-        await Defaults.delay(this.waitTimeout);
-        node.type = types.regular;
+        node.setType(CheckingNodeType);
+        await Constants.delay(this.waitTimeout);
+        node.setType(RegularNodeType);
 
         if(node.value > valueToAdd) {
             if(node.left == null) {
-                node.setLeftChild({value: valueToAdd, parent: node});
+                node.setLeftChild(valueToAdd, RegularNodeType);
                 return node.left;
             }
             else {
@@ -47,7 +47,7 @@ class TreeSort extends BaseSorting {
         }
         else {
             if(node.right == null) {
-                node.setRightChild({value: valueToAdd, parent: node});
+                node.setRightChild(valueToAdd, RegularNodeType);
                 return node.right;
             }
             else {
@@ -58,19 +58,14 @@ class TreeSort extends BaseSorting {
 
     async LNR(node) {
         if(this.stopFlag) {
-            throw Defaults.stopError;
+            throw Constants.stopError;
         }
-
         if(node.left) {
             await this.LNR(node.left)
         }
-
-        node.type = types.done;
-        this.array.push({value: node.value, type: types.done});
-        this.drawFunction(this.tree, this.array);
-
-        await Defaults.delay(this.waitTimeout);
-
+        node.setType(DoneNodeType);
+        array.push(new ArrayElement(node.value, DoneElementType));
+        await Constants.delay(this.waitTimeout);
         if(node.right) {
             await this.LNR(node.right)
         }

@@ -1,5 +1,3 @@
-import Defaults from '../../defaults';
-
 import BaseStringSearching from './BaseStringSearching';
 
 class KMPAlgorithm extends BaseStringSearching {

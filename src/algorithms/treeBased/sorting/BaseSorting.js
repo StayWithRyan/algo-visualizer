@@ -1,14 +1,10 @@
-import {types} from '../../../screens/TreeBasedPage/treeBasedHelpers';
-import Defaults from '../../../defaults';
+import Constants from '../../../constants';
 
 class BaseSorting {
-    constructor(tree, array, waitTimeout, handleStop, drawFunction) {
+    constructor(handleStop, waitTimeout) {
         this.stopFlag = false;
-        this.tree = tree;
-        this.array = array;
-        this.waitTimeout = waitTimeout;
         this.handleStop = handleStop;
-        this.drawFunction = drawFunction;
+        this.waitTimeout = waitTimeout;
     }
 
     async algorithm() {
@@ -17,7 +13,7 @@ class BaseSorting {
             this.handleStop();
         }
         catch(e) {
-            if(e ==  Defaults.stopError) {
+            if(e ==  Constants.stopError) {
                 // This is ok. Used for stopping algorithm from executing
             }
             else{

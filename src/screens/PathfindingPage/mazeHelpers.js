@@ -1,107 +1,77 @@
-import Defaults from '../../defaults';
+import PathfindingConstants from './constants';
+import Constants from '../../constants';
+import {EmptyElementType, StartElementType, TargetElementType, CheckingElementType, CheckingStartElementType, 
+    CheckingTargetElementType, PathElementType, PathStartElementType, PathTargetElementType
+} from './Elements/MazeElementTypes';
 
-import {firstDraw} from './drawingMaze';
+import MazeElement from './Elements/MazeElement';
 
-const types = {
-    empty: "empty",
-    block: "block",
-    start: "start",
-    checkingStart: "checkingStart",
-    pathStart: "pathStart",
-    target: "target",
-    checkingTarget: "checkingTarget",
-    pathTarget: "pathTarget",
-    checking: "checking",
-    path: "path"
-}
-
-const colors = {
-    empty: Defaults.pathfindingEmptyColor,
-    block: Defaults.pathfindingBlockColor,
-    start: Defaults.pathfindingStartAndTargetColor,
-    checkingStart: Defaults.pathfindingCheckingColor,
-    pathStart: Defaults.pathfindingPathColor,
-    target: Defaults.pathfindingStartAndTargetColor,
-    checkingTarget : Defaults.pathfindingCheckingColor,
-    pathTarget : Defaults.pathfindingPathColor,
-    checking: Defaults.pathfindingCheckingColor,
-    path: Defaults.pathfindingPathColor,
-}
-
-let elemSize = Defaults.pathfindingElementSize;
+let elemSize = PathfindingConstants.elementSize;
+let maze = null;
+//SnapShot of blocks. Need to remember blocks positions when moving start and target nodes.
+let mazeSnapshot = null;
 
 const createMaze = () => {
-    // h and w to fit maze on screen
-    let h = window.innerHeight - Defaults.navBarHeight - Defaults.configurationBarHeight - 40;
-    let w = window.innerWidth - 20;
+    let rows = getEven((window.innerHeight - Constants.navBarHeight - Constants.configurationBarHeight - 40 - elemSize) / elemSize);
+    let columns = getEven((window.innerWidth - 20 - elemSize) / elemSize);
+
     let maze = [];
 
-    for(let i = 0; i < h - elemSize; i += elemSize) {
+    for(let i = 0; i < rows; i ++) {
         let row = []
-        for(let j = 0; j < w - elemSize; j += elemSize) {
-            row.push({type: types.empty, x: j, y: i, animation: null});
-        }
-        if(row.length % 2 == 0) {
-            row.pop();
+        for(let j = 0; j < columns; j ++) {
+            row.push(new MazeElement());
         }
         maze.push(row);
     }
-
-    // setting start and target
-    let row = parseInt(maze.length / 2);
-    if(row % 2 == 0) {
-        row--;
-    }
-    let shiftFromWall = parseInt(maze[0].length / 7);
-    if(shiftFromWall % 2 == 0) {
-        shiftFromWall--;
-    }
-    let startNode = maze [row] [shiftFromWall];
-    let targetNode = maze [row] [maze[0].length - shiftFromWall - 1];
-    startNode.type = types.start;
-    targetNode.type = types.target;
-
-    if(maze.length % 2 == 0) {
-        maze.pop();
-    }
-
+    setStartAndTargetNodes(maze);
     return maze;
 }
 
-const copyMaze = (maze) => {
-    let newMaze = [];
-    maze.forEach(row => {
-        let newRow = [];
-        row.forEach(elem => {
-            newRow.push({type: elem.type, x: elem.x, y: elem.y, animation: elem.animation, saturation: elem.saturation})
-        });
-        newMaze.push(newRow);
-
-    });
-
-    return newMaze;
+// 9.56 -> 8
+const getEven = (number) => {
+    number = Math.floor(number);
+    if(number % 2 == 0) {
+        number--;
+    }
+    return number;
 }
 
-const copyMazeWithoutStartAndTarget = (maze) => {
-    let newMaze = [];
-    maze.forEach(row => {
-        let newRow = [];
-        row.forEach(elem => {
-            if(elem.type == types.start || elem.type == types.target) {
-                newRow.push({type: types.empty, x: elem.x, y: elem.y, animation: elem.animation, saturation: elem.saturation})
-            }
-            else{
-                newRow.push({type: elem.type, x: elem.x, y: elem.y, animation: elem.animation, saturation: elem.saturation})
-            }
-        });
-        newMaze.push(newRow);
-
-    });
-
-    return newMaze;
+const setStartAndTargetNodes = (maze) => {
+    let row = getEven(maze.length / 2);
+    let shiftFromWall = getEven(maze[0].length / 7);
+    maze[row][shiftFromWall].setType(StartElementType);
+    maze[row][maze[0].length - shiftFromWall - 1].setType(TargetElementType);
 }
 
-const getPosition = (canvas, event) => {
+const makeSnapshot = () => {
+    let mazeSnapshot = [];
+    for(let i = 0; i < maze.length; ++i){
+        let row = [];
+        for(let j = 0; j < maze[i].length; ++j){
+            row.push(EmptyElementType)
+        }
+        mazeSnapshot.push(row);
+    }
+    return mazeSnapshot;
+}
+
+const draw = (canvas, drawBackground = false) => {
+    console.log("draw")
+    if(drawBackground) {
+        const context = canvas.getContext('2d');
+        context.fillStyle = PathfindingConstants.gridColor;
+        context.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
+    for(let i = 0 ; i < maze.length; ++i) {
+        for(let j = 0 ; j < maze[0].length; ++j) {
+            maze[i][j].draw(canvas, j * elemSize, i * elemSize);
+        }
+    }
+}
+
+const getMousePosition = (canvas, event) => {
     let y = event.clientY - canvas.offsetTop;
     let x = event.clientX - canvas.offsetLeft;
     let i = parseInt(y / elemSize);
@@ -109,7 +79,7 @@ const getPosition = (canvas, event) => {
     return [i, j];
 }
 
-const onBoarder = (canvas, event) => {
+const isOnBoarder = (canvas, event) => {
     let y = event.clientY - canvas.offsetTop;
     let x = event.clientX - canvas.offsetLeft;
     if(parseInt(x / elemSize) === x / elemSize || parseInt(y / elemSize) === y / elemSize) {
@@ -118,98 +88,65 @@ const onBoarder = (canvas, event) => {
     return false;
 }
 
-const updateNode = (i, j, type, maze, setMaze, setMazePrev, mazeSnapshot, setMazeSnapshot) => {
-    let newMaze = copyMaze(maze);
-
-    if(type !== types.start && type !== types.target) {
-        let newMazeSnapshot = copyMaze(mazeSnapshot);
-        newMazeSnapshot[i][j].type = type;
-        setMazeSnapshot(newMazeSnapshot);
+// use this method when setting blocks\removing blocks. It also updates snapshot
+const updateElement = (i, j, classToSet) => {
+    if(classToSet !== StartElementType && classToSet !== TargetElementType) {
+        mazeSnapshot[i][j] = classToSet;
     }
 
-    // clear prev start or target node
-    if(type === types.start || type === types.target) {
-        for(let k = 0; k < newMaze.length; ++k) {
-            for(let l = 0; l < newMaze[0].length; ++l) {
-                if(newMaze[k][l].type === type) {
-                    newMaze[k][l].type = mazeSnapshot[k][l].type;
-                    newMaze[k][l].animation = null;
+    if(classToSet === StartElementType || classToSet === TargetElementType) {
+        for(let k = 0; k < maze.length; ++k) {
+            for(let l = 0; l < maze[0].length; ++l) {
+                if(maze[k][l].type instanceof classToSet) {
+                    maze[k][l].setType(mazeSnapshot[k][l])
+                    if(maze[k][l].type.preventFromAnimating) {
+                        maze[k][l].type.preventFromAnimating();
+                    }
                 }
             }
         }
     }
-    newMaze[i][j].type = type;
-    setMazePrev(maze);
-    setMaze(newMaze);
+    
+    maze[i][j].setType(classToSet);
 }
 
-const resetMaze = (setMaze, setMazePrev, setMazeSnapshot, canvas) => {
-    let newMaze = createMaze();
-
-    setMazePrev(newMaze);
-    setMaze(newMaze);
-    setMazeSnapshot(copyMazeWithoutStartAndTarget(newMaze));
-    firstDraw(canvas, newMaze);
-
-    return newMaze;
+const resetMaze = () => {
+    for(let i = 0; i < maze.length; ++i) {
+        for(let j = 0; j < maze[0].length; ++j) {
+            maze[i][j].setType(EmptyElementType);
+        }
+    }
+    setStartAndTargetNodes(maze);
+    mazeSnapshot = makeSnapshot();
 }
 
-const cleanMazeAfterSearching = (maze, setMaze, setMazePrev) => {
-    let newMaze = copyMaze(maze);
-    let prevMaze = copyMaze(maze);
-    for(let i = 0; i < newMaze.length; ++i) {
-        for(let j = 0; j < newMaze[0].length; ++j) {
-            if(newMaze[i][j].type == types.checking || newMaze[i][j].type == types.path) {
-                newMaze[i][j].animation = null;
-                newMaze[i][j].type = types.empty;
+const cleanMazeAfterSearching = () => {
+    for(let i = 0; i < maze.length; ++i) {
+        for(let j = 0; j < maze[0].length; ++j) {
+            if(maze[i][j].type instanceof CheckingElementType || maze[i][j].type instanceof PathElementType) {
+                maze[i][j].setType(EmptyElementType);
             }
-            else if(newMaze[i][j].type == types.checkingStart) {
-                newMaze[i][j].animation = null;
-                newMaze[i][j].type = types.start;
+            else if(maze[i][j].type instanceof CheckingStartElementType || maze[i][j].type instanceof PathStartElementType) {
+                maze[i][j].setType(StartElementType);
             }
-            else if(newMaze[i][j].type == types.pathStart) {
-                newMaze[i][j].animation = null;
-                newMaze[i][j].type = types.start;
-            }
-            else if(newMaze[i][j].type == types.checkingTarget) {
-                newMaze[i][j].animation = null;
-                newMaze[i][j].type = types.target;
-            }
-            else if(newMaze[i][j].type == types.pathTarget) {
-                newMaze[i][j].animation = null;
-                newMaze[i][j].type = types.target;
+            else if(maze[i][j].type instanceof CheckingTargetElementType || maze[i][j].type instanceof PathTargetElementType) {
+                maze[i][j].setType(TargetElementType);
             }
         }
     }
-    
-    setMazePrev(prevMaze);
-    setMaze(newMaze);
-    
-    return newMaze;
 }
 
-
-const setSingleNodeType = (maze, i, j, type, setMaze, setMazePrev, saturation) => {
-    let mazePrev = copyMaze(maze);
-    let newMaze = copyMaze(maze);
-    newMaze[i][j].type = type;
-    newMaze[i][j].saturation = saturation;
-    maze[i][j].type = type;
-    setMazePrev(mazePrev);
-    setMaze(newMaze);
-
-    return newMaze;
-}
-
-const getNodeLocation = (maze, type) => {
+const getNodeLocation = (classToFind) => {
     for(let i = 0; i < maze.length; ++i) {
         for(let j = 0; j < maze[0].length; ++j) {
-            if(maze[i][j].type == type) {
+            if(maze[i][j].type instanceof classToFind) {
                 return [i, j];
             }
         }
     }
 }
 
-export { types, colors, createMaze, copyMaze, copyMazeWithoutStartAndTarget, 
-    getPosition, onBoarder, updateNode, resetMaze, setSingleNodeType, getNodeLocation, cleanMazeAfterSearching};
+maze = createMaze();
+mazeSnapshot = makeSnapshot();
+
+export {maze, getMousePosition, isOnBoarder, updateElement, resetMaze, getNodeLocation, cleanMazeAfterSearching, draw};

@@ -1,13 +1,14 @@
 import BaseSort from './BaseSort';
+import {array} from "../../screens/SortingPage/sortingHelpers";
 
 class GnomeSort extends BaseSort {
-    constructor(array, updateArray, finishSorting, waitTimeout) {
-        super(array, updateArray, finishSorting, waitTimeout);
+    constructor(finishSorting, waitTimeout) {
+        super(finishSorting, waitTimeout);
     }
 
     async innerSort()
     {
-        let length = this.array.length;
+        let length = array.length;
         let index = 0;
    
         while (index < length) {
@@ -15,7 +16,7 @@ class GnomeSort extends BaseSort {
                 index++;
             }
             await this.setChecking(index, index - 1);
-            if (this.array[index].value >= this.array[index - 1].value) {
+            if (array[index].value >= array[index - 1].value) {
                 index++;
             }
             else {

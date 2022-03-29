@@ -1,23 +1,23 @@
-import {types} from '../../../screens/TreeBasedPage/treeBasedHelpers';
-import Defaults from '../../../defaults';
+import Constants from '../../../constants';
+import {VisitedNodeType} from '../../../screens/TreeBasedPage/Elements/Tree/TreeNodeTypes';
+import {VisitedElementType} from '../../../screens/TreeBasedPage/Elements/Array/ArrayElementTypes';
+import {array, tree} from '../../../screens/TreeBasedPage/treeBasedHelpers';
+import ArrayElement from '../../../screens/TreeBasedPage/Elements/Array/ArrayElement';
 
 class BaseTraversal {
-    constructor(tree, array, waitTimeout, handleStop, drawFunction) {
+    constructor(handleStop, waitTimeout) {
         this.stopFlag = false;
-        this.tree = tree;
-        this.array = array;
-        this.waitTimeout = waitTimeout;
         this.handleStop = handleStop;
-        this.drawFunction = drawFunction;
+        this.waitTimeout = waitTimeout;
     }
 
     async algorithm() {
         try{
-            await this.algorithmlInner(this.tree);
+            await this.traversal(tree);
             this.handleStop();
         }
         catch(e) {
-            if(e ==  Defaults.stopError) {
+            if(e ==  Constants.stopError) {
                 // This is ok. Used for stopping algorithm from executing
             }
             else{
@@ -31,14 +31,12 @@ class BaseTraversal {
     }
 
     async setVisiting(node) {
-        await Defaults.delay(this.waitTimeout);
+        await Constants.delay(this.waitTimeout);
         if(this.stopFlag) {
-            throw Defaults.stopError;
+            throw Constants.stopError;
         }
-
-        node.type = types.visited;
-        this.array.push({value: node.value, type: types.visited, animation: null});
-        this.drawFunction(this.tree, this.array);
+        node.setType(VisitedNodeType);
+        array.push(new ArrayElement(node.value, VisitedElementType));
     }
 
 }

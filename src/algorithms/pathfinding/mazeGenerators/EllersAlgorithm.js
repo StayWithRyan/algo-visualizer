@@ -1,10 +1,12 @@
-import {copyMaze, copyMazeWithoutStartAndTarget, types, setSingleNodeType} from '../../../screens/PathfindingPage/mazeHelpers';
+import Constants from '../../../constants';
+import PathfindingConstants from '../../../screens/PathfindingPage/constants';
+import {EmptyElementType, BlockElementType} from '../../../screens/PathfindingPage/Elements/MazeElementTypes';
+import {maze, updateElement} from '../../../screens/PathfindingPage/mazeHelpers';
+import {createBorders} from './mazeGeneratorsHelpers';
 
-import Defaults from '../../../defaults';
+let delayTimeout = PathfindingConstants.generatingDelayTimeout;
 
-let delayTimeout = Defaults.pathfindingGeneratingDelayTimeout;
-
-function createSetsArray(maze) {
+function createSetsArray() {
     let sets = [];
     for(let i = 0 ; i < maze.length; ++i) {
         let row = [];
@@ -16,36 +18,14 @@ function createSetsArray(maze) {
     return sets;
 }
 
-async function EllersAlgorithm(maze, setMaze, setMazePrev, setMazeSnapshot, handleFinishGenerating) {
-    let newMaze = copyMaze(maze);
+async function EllersAlgorithm(handleFinishGenerating) {
+    await createBorders()
 
-    
-    for(let i = 0; i < newMaze[0].length; ++i) {
-        newMaze = setSingleNodeType(newMaze, 0, i, types.block, setMaze, setMazePrev); 
-        await Defaults.delay(delayTimeout);
-    }
-
-    for(let i = 1; i < newMaze.length; ++i) {
-        newMaze = setSingleNodeType(newMaze, i, newMaze[0].length - 1, types.block, setMaze, setMazePrev); 
-        await Defaults.delay(delayTimeout);
-    }
-
-    for(let i = newMaze[0].length - 2; i >= 0; --i) {
-        newMaze = setSingleNodeType(newMaze,  newMaze.length - 1, i, types.block, setMaze, setMazePrev); 
-        await Defaults.delay(delayTimeout);
-    }
-
-    for(let i = newMaze.length - 2; i >= 0; --i) {
-        newMaze = setSingleNodeType(newMaze, i, 0, types.block, setMaze, setMazePrev); 
-        await Defaults.delay(delayTimeout);
-    }
-
-
-    let sets = createSetsArray(maze);
+    let sets = createSetsArray();
     let setCounter = 0;
 
-    let h = newMaze.length;
-    let w = newMaze[0].length;
+    let h = maze.length;
+    let w = maze[0].length;
 
     for(let i = 1; i < h - 2; ++i) {
         if(i % 2 == 0) {
@@ -55,9 +35,9 @@ async function EllersAlgorithm(maze, setMaze, setMazePrev, setMazeSnapshot, hand
             let setSize = 0;
             for(let j = 1; j < w - 1; ++j) {
                 if(sets[i - 1][j] == 0) {
-                    newMaze = setSingleNodeType(newMaze, i, j, types.block, setMaze, setMazePrev); 
+                    updateElement(i, j, BlockElementType);
                     sets[i][j] = 0;
-                    await Defaults.delay(delayTimeout);
+                    await Constants.delay(delayTimeout);
                 }
                 else{
                     if(prevSet != sets[i - 1][j]) {
@@ -74,9 +54,9 @@ async function EllersAlgorithm(maze, setMaze, setMazePrev, setMazeSnapshot, hand
                             k++;
                         }
 
-                        gapIndexes.push(Defaults.getRandomInt(setSize));
+                        gapIndexes.push(Constants.getRandomInt(setSize));
                         for(let k = 0; k < 5; k ++) {
-                            let newGap = Defaults.getRandomInt(setSize);
+                            let newGap = Constants.getRandomInt(setSize);
                             let gapAvailable = true;
                             for(let l = 0; l < gapIndexes.length; ++l) {
                                 if(Math.abs(newGap - gapIndexes[l]) <= 1) {
@@ -94,9 +74,9 @@ async function EllersAlgorithm(maze, setMaze, setMazePrev, setMazeSnapshot, hand
                         sets[i][j] = sets[i - 1][j];
                     }
                     else{
-                        newMaze = setSingleNodeType(newMaze, i, j, types.block, setMaze, setMazePrev); 
+                        updateElement(i, j, BlockElementType);
                         sets[i][j] = 0;
-                        await Defaults.delay(delayTimeout);
+                        await Constants.delay(delayTimeout);
                     }
                     setIndex++;
                 }
@@ -120,17 +100,17 @@ async function EllersAlgorithm(maze, setMaze, setMazePrev, setMazeSnapshot, hand
             }
             // randomly join adjacent cells
             for(let j = 2; j < w - 1; ++j) {
-                if(Defaults.getRandomInt(10) < 6) {
+                if(Constants.getRandomInt(10) < 6) {
                     sets[i][j] = sets[i][j - 1];
                 }
             }
 
             // set blocks between sets
             for(let j = 2; j < w - 2; ++j) {
-                if(sets[i][j] != sets[i][j - 1] && newMaze[i][j - 1].type != types.block && sets[i - 1][j] == 0 && newMaze[i][j].type == types.empty) {
-                    newMaze = setSingleNodeType(newMaze, i, j, types.block, setMaze, setMazePrev); 
+                if(sets[i][j] != sets[i][j - 1] && !(maze[i][j - 1].type instanceof BlockElementType) && sets[i - 1][j] == 0 && maze[i][j].type instanceof EmptyElementType) {
+                    updateElement(i, j, BlockElementType);
                     sets[i][j] = 0;
-                    await Defaults.delay(delayTimeout);
+                    await Constants.delay(delayTimeout);
                 }
             }
 
@@ -143,8 +123,7 @@ async function EllersAlgorithm(maze, setMaze, setMazePrev, setMazeSnapshot, hand
         }
     }
 
-    await Defaults.delay(200);
-    setMazeSnapshot(copyMazeWithoutStartAndTarget(newMaze))
+    await Constants.delay(200);
     handleFinishGenerating();
 
 };

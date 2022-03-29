@@ -1,23 +1,21 @@
-import {copyMaze, copyMazeWithoutStartAndTarget, types, setSingleNodeType} from '../../../screens/PathfindingPage/mazeHelpers';
+import {StartElementType, TargetElementType, BlockElementType} from '../../../screens/PathfindingPage/Elements/MazeElementTypes';
+import PathfindingConstants from '../../../screens/PathfindingPage/constants';
+import Constants from '../../../constants';
+import {maze, updateElement} from '../../../screens/PathfindingPage/mazeHelpers';
 
-import Defaults from '../../../defaults';
-
-async function BasicRandomMaze (maze, setMaze, setMazePrev, setMazeSnapshot, handleFinishGenerating) {
-    let newMaze = copyMaze(maze);
-
-    for(let i = 0; i < newMaze.length; ++i) {
-        for(let j = 0; j < newMaze[0].length; ++j) {
-            if(Defaults.getRandomInt(3) == 0) { // 33%
-                if(newMaze[i][j].type != types.start && newMaze[i][j].type != types.target) {
-                    newMaze = setSingleNodeType(newMaze, i, j, types.block, setMaze, setMazePrev); 
-                    await Defaults.delay(Defaults.pathfindingGeneratingDelayTimeout);
+async function BasicRandomMaze (handleFinishGenerating) {
+    for(let i = 0; i < maze.length; ++i) {
+        for(let j = 0; j < maze[0].length; ++j) {
+            if(Constants.getRandomInt(3) == 0) { // 33%
+                if( !(maze[i][j].type instanceof StartElementType) && !(maze[i][j].type instanceof TargetElementType)) {
+                    updateElement(i, j, BlockElementType);
+                    await Constants.delay(PathfindingConstants.generatingDelayTimeout);
                 }
             }
         }
     }
 
-    await Defaults.delay(200);
-    setMazeSnapshot(copyMazeWithoutStartAndTarget(newMaze));
+    await Constants.delay(200);
     handleFinishGenerating();
 };
   

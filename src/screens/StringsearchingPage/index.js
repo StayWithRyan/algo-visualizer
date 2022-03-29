@@ -8,7 +8,8 @@ import BasicButton from '../../components/BasicButton';
 
 import {useState, useEffect} from 'react';
 
-import Defaults from '../../defaults';
+import Constants from '../../constants';
+import SearchingConstants from './constants';
 
 
 import NaiveAlgorithm from '../../algorithms/string-searching/NaiveAlgorithm';
@@ -32,7 +33,7 @@ function StringsearchingPage() {
     }
     const [algorithm, setAlgorithm] = useState('');
 
-    const [searchingSleep, setSearchingSleep] = useState(Defaults.searchingSleepDefault);
+    const [searchingSleep, setSearchingSleep] = useState(SearchingConstants.sleepDefault);
     const [startButtonDisabled, setStartButtonDisabled] = useState(true);
     const [stopButtonDisabled, setStopButtonDisabled] = useState(true);
     const [clearButtonDisabled, setClearButtonDisabled] = useState(true);
@@ -94,7 +95,7 @@ function StringsearchingPage() {
     const createCharactersArray = (string) => {
         let charactersArray = [];
         for(let i = 0; i < string.length; ++i) {
-            charactersArray.push({character: string[i], color: Defaults.searchingDefaultColor})
+            charactersArray.push({character: string[i], color: SearchingConstants.defaultColor})
         }
 
         return charactersArray;
@@ -157,7 +158,7 @@ function StringsearchingPage() {
         // reset color
         let newArray = copyArray(text);
         for(let i = 0; i < newArray.length; i++) {
-            newArray[i].color = Defaults.searchingDefaultColor;
+            newArray[i].color = SearchingConstants.defaultColor;
         }
 
         setText(newArray);
@@ -169,7 +170,7 @@ function StringsearchingPage() {
             newArray = copyArray(searchingAlgorithmObj.pattern);
         }
         for(let i = 0; i < newArray.length; i++) {
-            newArray[i].color = Defaults.searchingDefaultColor;
+            newArray[i].color = SearchingConstants.defaultColor;
         }
         setPattern(newArray);
 
@@ -186,8 +187,8 @@ function StringsearchingPage() {
         <>
             <ConfigurationBar>
                 <BasicSelect title ="Searching algorithm" isDisabled={isSearching} onChange = {setAlgorithm} value = {algorithm} values = {algorithms}  />
-                <BasicSlider title="Sleep time(ms)" isDisabled={isSearching} min={Defaults.searchingSleepMin} max={Defaults.searchingSleepMax} 
-                    default={Defaults.searchingSleepDefault} step={Defaults.searchingSleepStep} onChange={setSearchingSleep} />
+                <BasicSlider title="Sleep time(ms)" isDisabled={isSearching} min={SearchingConstants.sleepMin} max={SearchingConstants.sleepMax} 
+                    default={SearchingConstants.sleepDefault} step={SearchingConstants.sleepStep} onChange={setSearchingSleep} />
                 <BasicButton title="Start searching" onClick={handleStart} isDisabled={startButtonDisabled}/>
                 <BasicButton title="Stop searching" onClick={() => handleStop()} isDisabled={stopButtonDisabled}/>
                 <BasicButton title="Clear" onClick={handleClear} isDisabled={clearButtonDisabled}/>
@@ -208,7 +209,7 @@ function StringsearchingPage() {
                     </div>
                 </div>     
                 : <div className="textCard">
-                    <input type="text" className="textBox" placeholder="String to search" style={{borderBottom: `5px solid ${Defaults.mainColor}`}}
+                    <input type="text" className="textBox" placeholder="String to search" style={{borderBottom: `5px solid ${Constants.mainColor}`}}
                         value={convertCharactersArrayToString(pattern)} onChange={(event) => handlePatternChange(event.target.value)}
                     />
                 </div>
@@ -220,7 +221,7 @@ function StringsearchingPage() {
                     </div>
                 </div>     
                 : <div className="textCard">
-                    <input type="text" className="textBox" placeholder="Text"  style={{borderBottom: `5px solid ${Defaults.mainColor}`}}
+                    <input type="text" className="textBox" placeholder="Text"  style={{borderBottom: `5px solid ${Constants.mainColor}`}}
                         value={convertCharactersArrayToString(text)} onChange={(event) => handleTextChange(event.target.value)}
                     />
                 </div>

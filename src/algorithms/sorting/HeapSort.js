@@ -1,13 +1,14 @@
 import BaseSort from './BaseSort';
+import {array} from "../../screens/SortingPage/sortingHelpers";
 
 class HeapSort extends BaseSort {
-    constructor(array, updateArray, finishSorting, waitTimeout) {
-        super(array, updateArray, finishSorting, waitTimeout);
+    constructor(finishSorting, waitTimeout) {
+        super(finishSorting, waitTimeout);
     }
 
     async innerSort()
     {
-        let n = this.array.length;
+        let n = array.length;
 
         // Build heap
         for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
@@ -37,14 +38,14 @@ class HeapSort extends BaseSort {
         
         if(l < n) {
             await this.setChecking(largest, l);
-            if (this.array[l].value > this.array[largest].value) {
+            if (array[l].value > array[largest].value) {
                 largest = l;
             }
         }
 
         if(r < n) {
             await this.setChecking(largest, r);
-            if (this.array[r].value > this.array[largest].value) {
+            if (array[r].value > array[largest].value) {
                 largest = r;
             }
         }

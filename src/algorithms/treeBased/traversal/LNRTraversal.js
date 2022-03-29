@@ -1,24 +1,24 @@
 import BaseTraversal from './BaseTraversal';
-import Defaults from '../../../defaults';
+import Constants from '../../../constants';
 
 class LNRTraversal extends BaseTraversal {
-    constructor(tree, array, waitTimeout, handleStop, drawFunction) {
-        super(tree, array, waitTimeout, handleStop, drawFunction);
+    constructor(handleStop, waitTimeout) {
+        super(handleStop, waitTimeout);
     }
 
-    async algorithmlInner(node) {
+    async traversal(node) {
         if(this.stopFlag) {
-            throw Defaults.stopError;
+            throw Constants.stopError;
         }
 
         if(node.left) {
-            await this.algorithmlInner(node.left)
+            await this.traversal(node.left)
         }
 
         await this.setVisiting(node);
 
         if(node.right) {
-            await this.algorithmlInner(node.right)
+            await this.traversal(node.right)
         }
     }
 }
