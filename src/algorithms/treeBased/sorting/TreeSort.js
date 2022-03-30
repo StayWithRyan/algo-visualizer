@@ -4,36 +4,33 @@ import {AddedNodeType, CheckingNodeType, DoneNodeType, RegularNodeType} from '..
 import TreeNode from '../../../screens/TreeBasedPage/Elements/Tree/TreeNode';
 import {AddedElementType, CheckingElementType, DoneElementType} from '../../../screens/TreeBasedPage/Elements/Array/ArrayElementTypes';
 import ArrayElement from '../../../screens/TreeBasedPage/Elements/Array/ArrayElement';
-import {tree, setNewTree, array} from '../../../screens/TreeBasedPage/treeBasedHelpers';
+import {addStep} from '../../../screens/TreeBasedPage/treeBasedHelpers';
+
 
 class TreeSort extends BaseSorting {
-    constructor(handleStop, waitTimeout) {
-        super(handleStop, waitTimeout);
-    }
-
-    async algorithmlInner() {
-        for(let i = 0; i < array.length; ++i){
-            array[i].setType(CheckingElementType)
-            let node = await this.insert(tree, array[i].value);
-            array[i].setType(AddedElementType);
+    algorithmlInner() {
+        for(let i = 0; i < this.array.length; ++i){
+            this.array[i].setType(CheckingElementType)
+            let node = this.insert(this.tree, this.array[i].value);
+            this.array[i].setType(AddedElementType);
             node.setType(AddedNodeType);
-            await Constants.delay(this.waitTimeout);
+            addStep(this.tree, this.array);
             node.setType(RegularNodeType);
         }
-        array.length = 0;
-        await Constants.delay(this.waitTimeout);
-        this.LNR(tree);
+        this.array.length = 0;
+        addStep(this.tree, this.array);
+        this.LNR(this.tree);
     }
 
-    async insert(node, valueToAdd) {
+    insert(node, valueToAdd) {
         if(node === null) {
             // first node
-            setNewTree(new TreeNode(valueToAdd, RegularNodeType));
-            return tree;
+            this.tree = new TreeNode(valueToAdd, RegularNodeType);
+            return this.tree;
         }
 
         node.setType(CheckingNodeType);
-        await Constants.delay(this.waitTimeout);
+        addStep(this.tree, this.array);
         node.setType(RegularNodeType);
 
         if(node.value > valueToAdd) {
@@ -42,7 +39,7 @@ class TreeSort extends BaseSorting {
                 return node.left;
             }
             else {
-                return await this.insert(node.left, valueToAdd);
+                return this.insert(node.left, valueToAdd);
             }
         }
         else {
@@ -51,23 +48,23 @@ class TreeSort extends BaseSorting {
                 return node.right;
             }
             else {
-                return await this.insert(node.right, valueToAdd);
+                return this.insert(node.right, valueToAdd);
             }
         }
     }
 
-    async LNR(node) {
+    LNR(node) {
         if(this.stopFlag) {
             throw Constants.stopError;
         }
         if(node.left) {
-            await this.LNR(node.left)
+            this.LNR(node.left)
         }
         node.setType(DoneNodeType);
-        array.push(new ArrayElement(node.value, DoneElementType));
-        await Constants.delay(this.waitTimeout);
+        this.array.push(new ArrayElement(node.value, DoneElementType));
+        addStep(this.tree, this.array);
         if(node.right) {
-            await this.LNR(node.right)
+            this.LNR(node.right)
         }
     }
 }

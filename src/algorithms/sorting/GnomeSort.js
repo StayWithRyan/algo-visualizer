@@ -1,12 +1,7 @@
 import BaseSort from './BaseSort';
 
 class GnomeSort extends BaseSort {
-    constructor(array) {
-        super(array);
-    }
-
-    innerSort()
-    {
+    innerSort() {
         let length = this.array.length;
         let index = 0;
    

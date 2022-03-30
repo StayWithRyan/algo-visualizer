@@ -8,11 +8,59 @@ import {RegularElementType} from './Elements/Array/ArrayElementTypes';
 
 let tree = null;
 
-const setNewTree = (newTree) => {
-    tree = newTree;
+let array = [];
+let treeSteps = [];
+let arraySteps = [];
+
+const clearSteps = () => {
+    treeSteps.length = 0;
+    arraySteps.length = 0;
 }
 
-let array = [];
+const addStep = (treeToStep, arrayToStep) => {
+    treeSteps.push(copyTree(treeToStep));
+    arraySteps.push(copyArray(arrayToStep));
+}
+
+const applyStep = (index) => {
+    tree = treeSteps[index];
+    array = arraySteps[index];
+}
+
+const copyTree = (tree) => {
+    if(tree === null) {
+        return null;
+    }
+    let newTree = copyTreeNode(tree);
+    if(tree.left) {
+        newTree.left = copyTree(tree.left);
+        newTree.left.parent = newTree;
+    }
+    if(tree.right) {
+        newTree.right = copyTree(tree.right);
+        newTree.right.parent = newTree;
+    }
+    return newTree;
+}
+
+const copyTreeNode = (node) => {
+    let newNode = new TreeNode();
+    newNode.level = node.level;
+    newNode.value = node.value;
+    newNode.id = node.id;
+    newNode.type = node.type;
+    return newNode;
+}
+
+const copyArray = (arrayToCopy) => {
+    let newArray = []
+    for(let i = 0; i < arrayToCopy.length; ++i) {
+        let newElem = new ArrayElement(arrayToCopy[i].value);
+        newElem.type = arrayToCopy[i].type;
+        newArray.push(newElem)
+    }
+    return newArray;
+}
 
 const getTreeSizes = () => {
     let lastLevelMaxElements = Math.floor(window.innerWidth / (TreeBasedConstants.elementSize - 5));
@@ -49,7 +97,7 @@ const createHeapSortTree = (size) => {
     }
 }
 
-const createTournamentSortTree = ({lastLevelSize, arrayParam}) => {
+const createTournamentSortTree = ({lastLevelSize = null, arrayParam = null}) => {
     const addNodeToTournamentSortTree = (tree, level) => {
         let queue = [];
         queue.push(tree);
@@ -75,7 +123,7 @@ const createTournamentSortTree = ({lastLevelSize, arrayParam}) => {
         }
     }
 
-    tree = new TreeNode(null, InvisibleNodeType);
+    let newTree = new TreeNode(null, InvisibleNodeType);
     let array = [];
     if(arrayParam == null) {
         for(let i = 0; i < lastLevelSize; ++i) {
@@ -101,17 +149,24 @@ const createTournamentSortTree = ({lastLevelSize, arrayParam}) => {
 
     for(let i = 0; i < levelSizes.length; ++i) {
         for(let j = 0; j < levelSizes[i]; ++j) {
-            addNodeToTournamentSortTree(tree, i + 2);
+            addNodeToTournamentSortTree(newTree, i + 2);
         }
     }
-    let lastLevelNodes = getNodesFromLevel(levelSizes.length + 1);
+    let lastLevelNodes = getNodesFromLevel(newTree, levelSizes.length + 1);
     for(let i = 0; i < lastLevelNodes.length; ++i) {
         lastLevelNodes[i].setType(RegularNodeType)
         lastLevelNodes[i].value = array[i].value;
     }
+    
+    if(arrayParam == null) {
+        tree = newTree;
+    }
+    else {
+        return newTree;
+    }
 }
 
-const getNodesFromLevel = (level) => {
+const getNodesFromLevel = (tree, level) => {
     let nodes = [];
 
     let queue = [];
@@ -272,7 +327,7 @@ const resetArrayTypes = () => {
     }
 }
 
-const getNodeById = (id) => {
+const getNodeById = (tree, id) => {
     let queue = [];
     queue.push(tree);
     while(queue.length > 0) {
@@ -297,6 +352,8 @@ const emptyTree = () => {
     tree = null;
 }
 
-export {tree, emptyTree, setNewTree, array, emptyArray, createTree, createHeapSortTree, createTournamentSortTree, getNodeById,
+export {
+    tree, treeSteps, arraySteps, clearSteps, addStep, applyStep, copyTree, copyArray,
+    emptyTree, array, emptyArray, createTree, createHeapSortTree, createTournamentSortTree, getNodeById,
     resetTreeTypes, resetArrayTypes, getTreeSizes, createArray, createTreeSortArray, getNodesFromLevel, getTreeMaxLevel
 };

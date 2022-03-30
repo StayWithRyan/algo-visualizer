@@ -1,10 +1,6 @@
 import BaseSort from './BaseSort';
 
 class QuickSort extends BaseSort {
-    constructor(array) {
-        super(array);
-    }
-
     innerSort() {
         this.quickSort(0, this.array.length - 1);
     }

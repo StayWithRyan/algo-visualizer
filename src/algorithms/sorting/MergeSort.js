@@ -1,10 +1,6 @@
 import BaseSort from './BaseSort';
 
 class MergeSort extends BaseSort {
-    constructor(array) {
-        super(array);
-    }
-
     innerSort() {
         this.mergeSort(0, this.array.length - 1);
     }

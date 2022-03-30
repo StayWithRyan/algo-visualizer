@@ -20,7 +20,7 @@ import GnomeSort from '../../algorithms/sorting/GnomeSort';
 import Constants from '../../constants';
 import SortingConstants from './constants';
 import {
-    array, steps, clearSteps, copyArray, applyStep,
+    steps, clearSteps, applyStep,
     resetArrayTypes, createArray, draw
 } from './sortingHelpers';
 
@@ -71,7 +71,7 @@ function SortingPage() {
         setStopButtonEnabled(true);
         clearSteps();
         const algorithmClass = algorithmsMapping[`${algorithm}`];
-        const algorithmObj = new algorithmClass(copyArray(array));
+        const algorithmObj = new algorithmClass();
         algorithmObj.sort();
         resetPlayBar();
         setIsSorting(true);
@@ -95,7 +95,7 @@ function SortingPage() {
                 <BasicSlider title="Sleep time(ms)" isDisabled={!sleepEnabled} min={SortingConstants.sleepMin} max={SortingConstants.sleepMax} 
                     default={SortingConstants.sleepDefault} step={SortingConstants.sleepStep} onChange={setSortingSleep} />
                 {isSorting 
-                    ? <PlayBar enabled={isSorting} stepsLength={steps.length} setStep={applyStep} setSleepEnabled={setSleepEnabled} sleepTimeout={sortingSleep}/>
+                    ? <PlayBar stepsLength={steps.length} setStep={applyStep} setSleepEnabled={setSleepEnabled} sleepTimeout={sortingSleep}/>
                     : <BasicButton title="Start sorting" onClick={handleStart} isDisabled={!startButtonEnabled}/>
                 }
                 <BasicButton title="Stop sorting" onClick={handleStop} isDisabled={!stopButtonEnabled}/>

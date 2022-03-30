@@ -1,12 +1,7 @@
 import BaseSort from './BaseSort';
 
 class CocktailSort extends BaseSort {
-    constructor(array) {
-        super(array);
-    }
-
-    innerSort()
-    {
+    innerSort() {
         let swapped = true;
         let start = 0;
         let end = this.array.length;

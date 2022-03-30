@@ -14,13 +14,13 @@ const resetPlayBar = () => {
     autoplayStopped = false;
 }
 
-function PlayBar({stepsLength, setStep, enabled = false, setSleepEnabled, sleepTimeout}) {
+function PlayBar({stepsLength, setStep, setSleepEnabled, sleepTimeout}) {
 
     let [running, setRunning] = useState(false);
     useEffect(() => {
         setSleepEnabled(!running);
     }, [running])
-    const [nextStepEnabled, setNextStepEnabled] = useState(enabled);
+    const [nextStepEnabled, setNextStepEnabled] = useState(true);
     const [prevStepEnabled, setPrevStepEnabled] = useState(false);
 
     const updateButtonsEnables = (running) => {

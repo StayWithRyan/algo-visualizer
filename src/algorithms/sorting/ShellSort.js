@@ -1,10 +1,6 @@
 import BaseSort from './BaseSort';
 
 class ShellSort extends BaseSort {
-    constructor(array) {
-        super(array);
-    }
-
     innerSort() {
         let length = this.array.length;
   

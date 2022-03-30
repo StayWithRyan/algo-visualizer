@@ -4,10 +4,13 @@ import BasicSelect from '../../components/BasicSelect'
 import BasicSlider from '../../components/BasicSlider';
 import BasicButton from '../../components/BasicButton';
 
-import { createTree, createHeapSortTree, createArray, createTournamentSortTree,
+import { 
+    treeSteps, applyStep, clearSteps,
+    createTree, createHeapSortTree, createArray, createTournamentSortTree,
     createTreeSortArray, resetTreeTypes, emptyArray, emptyTree, resetArrayTypes, getTreeSizes
 } from './treeBasedHelpers'
-import {draw, clearCanvas} from './drawingTree'
+import {draw} from './drawingTree'
+import {PlayBar, resetPlayBar} from '../../components/PlayBar';
 
 import LNRTraversal from "../../algorithms/treeBased/traversal/LNRTraversal"
 import LRNTraversal from "../../algorithms/treeBased/traversal/LRNTraversal"
@@ -41,11 +44,10 @@ function TreeBasedPage() {
     if(algorithm == "TreeSort" || algorithm == "TournamentSort"){
         treeSizeMax = (treeSizeMax + 1) / 2;
     }
-    const [treeBasedAlgorithmObj, setTreeBasedAlgorithmObj] = useState(null);
 
     const [startButtonDisabled, setStartButtonDisabled] = useState(true);
     const [stopButtonDisabled, setStopButtonDisabled] = useState(true);
-
+    const [sleepEnabled, setSleepEnabled] = useState(true);
     // is our program performing drawing
     const [isDrawing, setIsDrawing] = useState(false);
 
@@ -84,8 +86,10 @@ function TreeBasedPage() {
             emptyArray();
         }
         else if(algorithm == "TournamentSort") {
-            createTournamentSortTree({lastLevelSize: Math.min(treeSizeMax, size)});
-            emptyArray();
+            if(!isReset) {
+                createTournamentSortTree({lastLevelSize: Math.min(treeSizeMax, size)});
+                emptyArray();
+            }
         }
     }
 
@@ -106,23 +110,19 @@ function TreeBasedPage() {
     }
 
     const handleStart = () => {
-        
-        setIsDrawing(true);
         setStartButtonDisabled(true);
         setStopButtonDisabled(false);
         updateTreeAndArray(treeSize, true);
-
+        clearSteps();
         const algorithmClass = algorithmsMapping[`${algorithm}`];
-        const algorithmObj = new algorithmClass(handleStop, treeBasedSleep);
-        setTreeBasedAlgorithmObj(algorithmObj);
-        algorithmObj.algorithm()
+        const algorithmObj = new algorithmClass();
+        algorithmObj.algorithm();
+        console.log(treeSteps.length)
+        resetPlayBar();
+        setIsDrawing(true);
     }
 
     const handleStop = () => {
-        if(treeBasedAlgorithmObj) {
-            treeBasedAlgorithmObj.stop();
-        }
-
         setIsDrawing(false);
         setStartButtonDisabled(algorithm === "TreeSort");
         setStopButtonDisabled(true);
@@ -136,9 +136,12 @@ function TreeBasedPage() {
                 <BasicSelect title ="Algorithm" isDisabled={isDrawing} onChange = {handleAlgorithmChange} value = {algorithm} values = {algorithms}  />
                 <BasicSlider title="Tree size" isDisabled={isDrawing} min={TreeBasedConstants.treeSizeMin} max={treeSizeMax}
                     default={TreeBasedConstants.treeSizeDefault} step={TreeBasedConstants.treeSizeStep} onChange={handleSizeChange} />
-                <BasicSlider title="Sleep time(ms)" isDisabled={isDrawing} min={TreeBasedConstants.sleepMin} max={TreeBasedConstants.sleepMax} 
+                <BasicSlider title="Sleep time(ms)" isDisabled={!sleepEnabled} min={TreeBasedConstants.sleepMin} max={TreeBasedConstants.sleepMax} 
                     default={TreeBasedConstants.sleepDefault} step={TreeBasedConstants.sleepStep} onChange={setTreeBasedSleep} />
-                <BasicButton title="Start searching" onClick={handleStart} isDisabled={startButtonDisabled}/>
+                {isDrawing 
+                    ? <PlayBar stepsLength={treeSteps.length} setStep={applyStep} setSleepEnabled={setSleepEnabled} sleepTimeout={treeBasedSleep}/>
+                    : <BasicButton title="Start searching" onClick={handleStart} isDisabled={startButtonDisabled}/>
+                }
                 <BasicButton title="Stop searching" onClick={handleStop} isDisabled={stopButtonDisabled}/>
             </ConfigurationBar>
             <canvas ref={canvasRef} height={canvasHeight} width={window.innerWidth}/>

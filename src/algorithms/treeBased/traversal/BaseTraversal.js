@@ -1,42 +1,24 @@
 import Constants from '../../../constants';
 import {VisitedNodeType} from '../../../screens/TreeBasedPage/Elements/Tree/TreeNodeTypes';
 import {VisitedElementType} from '../../../screens/TreeBasedPage/Elements/Array/ArrayElementTypes';
-import {array, tree} from '../../../screens/TreeBasedPage/treeBasedHelpers';
+import {array, tree, copyArray, copyTree, addStep} from '../../../screens/TreeBasedPage/treeBasedHelpers';
 import ArrayElement from '../../../screens/TreeBasedPage/Elements/Array/ArrayElement';
 
 class BaseTraversal {
-    constructor(handleStop, waitTimeout) {
-        this.stopFlag = false;
-        this.handleStop = handleStop;
-        this.waitTimeout = waitTimeout;
+    constructor() {
+        this.array = copyArray(array);
+        this.tree = copyTree(tree);
     }
 
-    async algorithm() {
-        try{
-            await this.traversal(tree);
-            this.handleStop();
-        }
-        catch(e) {
-            if(e ==  Constants.stopError) {
-                // This is ok. Used for stopping algorithm from executing
-            }
-            else{
-                throw e;
-            }
-        }
+    algorithm() {
+        addStep(this.tree, this.array);
+        this.traversal(this.tree);
     }
 
-    stop() {
-        this.stopFlag = true;
-    }
-
-    async setVisiting(node) {
-        await Constants.delay(this.waitTimeout);
-        if(this.stopFlag) {
-            throw Constants.stopError;
-        }
+    setVisiting(node) {
         node.setType(VisitedNodeType);
-        array.push(new ArrayElement(node.value, VisitedElementType));
+        this.array.push(new ArrayElement(node.value, VisitedElementType));
+        addStep(this.tree, this.array);
     }
 
 }

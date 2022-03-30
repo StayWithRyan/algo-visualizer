@@ -1,47 +1,36 @@
-import {
-    setTimeout, addValueToTree, getTreeSize,
-    setJustAdded, setAdded, setChecking, setSwapping, setDone
-} from './HeapSortHelpers';
-import {getNodeById, tree, array} from '../../../screens/TreeBasedPage/treeBasedHelpers';
+import {getNodeById, addStep} from '../../../screens/TreeBasedPage/treeBasedHelpers';
 import Constants from '../../../constants';
 import BaseSorting from './BaseSorting';
 
 class HeapSort extends BaseSorting {
-    constructor(handleStop, waitTimeout) {
-        super(handleStop, waitTimeout);
-    }
-
-    async algorithmlInner() {
-        
-        await setTimeout(this.waitTimeout);
-
+    algorithmlInner() {  
         // Build heap
-        for(let i = 0; i < array.length; ++i) {
-            let addedNode = addValueToTree(array[i].value);
-            await setJustAdded(addedNode);
-            addedNode = await this.heapifyUp(addedNode);
-            await setAdded(addedNode);
+        for(let i = 0; i < this.array.length; ++i) {
+            let addedNode = this.addValueToTree(this.array[i].value);
+            this.setJustAdded(addedNode);
+            addedNode = this.heapifyUp(addedNode);
+            this.setAdded(addedNode);
         }
 
-        let treeSize = getTreeSize();
+        let treeSize = this.getTreeSize();
         for (let i = treeSize - 1; i > 0; i--) {
-            await Constants.delay(this.waitTimeout);
-            let lastNode = getNodeById(i);
-            await setSwapping(tree, lastNode);
-            await setDone(lastNode);
-            lastNode = await this.heapify(tree, i);
-            await setAdded(lastNode);
+            //addStep(this.tree, this.array);
+            let lastNode = getNodeById(this.tree, i);
+            this.setSwapping(this.tree, lastNode);
+            this.setDone(lastNode);
+            lastNode = this.heapify(this.tree, i);
+            this.setAdded(lastNode);
         }
 
-        await setDone(tree);
+        this.setDone(this.tree);
     }
 
-    async heapify(node, indexEnd) {
+    heapify(node, indexEnd) {
         let largest = node;
         
         if(node.left) {
             if(node.left.id < indexEnd) {
-                await setChecking(node.left, node);
+                this.setChecking(node.left, node);
                 if (node.left.value > largest.value) {
                     largest = node.left;
                 }
@@ -50,7 +39,7 @@ class HeapSort extends BaseSorting {
 
         if(node.right) {
             if(node.right.id < indexEnd) {
-                await setChecking(node.right, node);
+                this.setChecking(node.right, node);
                 if (node.right.value > largest.value) {
                     largest = node.right;
                 }
@@ -58,27 +47,53 @@ class HeapSort extends BaseSorting {
         }
 
         if (largest != node) {
-            await setSwapping(node, largest);
-            return await this.heapify(largest, indexEnd);
+            this.setSwapping(node, largest);
+            return this.heapify(largest, indexEnd);
         } else {
             return node;
         }
     }
 
-    async heapifyUp(node)
+    heapifyUp(node)
     {
         if(node.parent == null) {
             return node;
         }
-        await setChecking(node, node.parent);
+        this.setChecking(node, node.parent);
         if(node.parent.value >= node.value) {
             return node;
         }
 
-        await setSwapping(node, node.parent);
+        this.setSwapping(node, node.parent);
 
-        return await this.heapifyUp(node.parent);
+        return this.heapifyUp(node.parent);
         
+    }
+
+    // adds value to first node with value null
+    addValueToTree(value) {
+        let queue = [];
+        queue.push(this.tree);
+        while(queue.length > 0) {
+            let node = queue.shift();
+            if(node.value == null) {
+                node.value = value;
+                return node;
+            }
+            if(node.left != null) {
+                queue.push(node.left);
+            }
+            if(node.right != null) {
+                queue.push(node.right);
+            }
+        }
+    }
+
+    getTreeSize(node = this.tree) {
+        if(node == null){
+            return 0;
+        }
+        return 1 + this.getTreeSize(node.left) + this.getTreeSize(node.right);
     }
 }
 

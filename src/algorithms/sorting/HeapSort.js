@@ -1,12 +1,7 @@
 import BaseSort from './BaseSort';
 
 class HeapSort extends BaseSort {
-    constructor(array) {
-        super(array);
-    }
-
-    innerSort()
-    {
+    innerSort() {
         let n = this.array.length;
 
         // Build heap
@@ -28,8 +23,7 @@ class HeapSort extends BaseSort {
  
     // To heapify a subtree rooted with node i which is
     // an index in arr[]. n is size of heap
-    heapify(n, i)
-    {
+    heapify(n, i) {
         let largest = i;
         let l = 2 * i + 1;
         let r = 2 * i + 2;

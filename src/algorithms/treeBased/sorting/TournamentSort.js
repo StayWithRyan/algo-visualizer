@@ -1,5 +1,5 @@
 import BaseSorting from './BaseSorting';
-import {createTournamentSortTree, getNodesFromLevel, getTreeMaxLevel} from '../../../screens/TreeBasedPage/treeBasedHelpers';
+import {createTournamentSortTree, getNodesFromLevel, getTreeMaxLevel, addStep} from '../../../screens/TreeBasedPage/treeBasedHelpers';
 import Constants from '../../../constants';
 import {
     AddedNodeType, CheckingNodeType, 
@@ -7,58 +7,54 @@ import {
 } from '../../../screens/TreeBasedPage/Elements/Tree/TreeNodeTypes';
 import {DoneElement, DoneElementType} from '../../../screens/TreeBasedPage/Elements/Array/ArrayElementTypes';
 import ArrayElement from '../../../screens/TreeBasedPage/Elements/Array/ArrayElement';
-import {tree, setNewTree, array} from '../../../screens/TreeBasedPage/treeBasedHelpers';
 
 class TournamentSort extends BaseSorting {
-    constructor(handleStop, waitTimeout) {
-        super(handleStop, waitTimeout);
-    }
-
-    async algorithmlInner() {
-        let lastLevel = getTreeMaxLevel(tree);
-        let nodes = getNodesFromLevel(lastLevel);
+    algorithmlInner() {
+        let lastLevel = getTreeMaxLevel(this.tree);
+        let nodes = getNodesFromLevel(this.tree, lastLevel);
         let arraySize = nodes.length;
         for(let i = 0; i < arraySize - 1; ++i) {
-            await this.buildTournament();
-            array.push(new ArrayElement(tree.value, DoneElementType));
-            lastLevel = getTreeMaxLevel(tree);
-            nodes = getNodesFromLevel(lastLevel);
+            this.buildTournament();
+            this.array.push(new ArrayElement(this.tree.value, DoneElementType));
+            lastLevel = getTreeMaxLevel(this.tree);
+            nodes = getNodesFromLevel(this.tree, lastLevel);
             let nextlastLevelNodex = [];
             for(let i = 0; i < nodes.length; ++i){
-                if(nodes[i].value != tree.value) {
+                if(nodes[i].value != this.tree.value) {
                     nextlastLevelNodex.push(new ArrayElement(nodes[i].value));
                 }
             }
-            createTournamentSortTree({arrayParam: nextlastLevelNodex});
-            await Constants.delay(this.waitTimeout);
+            this.tree = createTournamentSortTree({arrayParam: nextlastLevelNodex});
+            addStep(this.tree, this.array);
         }
 
-        tree.setType(AddedNodeType)
-        await Constants.delay(this.waitTimeout);
-        array.push(new ArrayElement(tree.value, DoneElementType));
-        setNewTree(null);
+        this.tree.setType(AddedNodeType);
+        addStep(this.tree, this.array);
+        this.array.push(new ArrayElement(this.tree.value, DoneElementType));
+        this.tree = null;
+        addStep(this.tree, this.array);
     }
 
-    async buildTournament() {
-        let lastLevel = getTreeMaxLevel(tree);
+    buildTournament() {
+        let lastLevel = getTreeMaxLevel(this.tree);
         while(lastLevel > 1) {
-            let nodes = getNodesFromLevel(lastLevel);
+            let nodes = getNodesFromLevel(this.tree, lastLevel);
             for(let i = 0; i < nodes.length; i += 2) {
                 let minNode = nodes[i];
 
                 nodes[i].setType(CheckingNodeType);
-                await Constants.delay(this.waitTimeout);
+                addStep(this.tree, this.array);
 
                 if(i + 1 < nodes.length) {
                     if(nodes[i + 1].value < minNode.value) {
                         minNode = nodes[i + 1];
                     }
                     nodes[i + 1].setType(CheckingNodeType);
-                    await Constants.delay(this.waitTimeout);
+                    addStep(this.tree, this.array);
                 }
                 minNode.parent.setType(AddedNodeType);
                 minNode.parent.value = minNode.value;
-                await Constants.delay(this.waitTimeout);
+                addStep(this.tree, this.array);
                 minNode.parent.setType(RegularNodeType);
             }
             lastLevel--;
