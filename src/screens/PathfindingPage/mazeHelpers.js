@@ -57,7 +57,6 @@ const makeSnapshot = () => {
 }
 
 const draw = (canvas, drawBackground = false) => {
-    console.log("draw")
     if(drawBackground) {
         const context = canvas.getContext('2d');
         context.fillStyle = PathfindingConstants.gridColor;

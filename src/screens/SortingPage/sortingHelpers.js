@@ -2,6 +2,19 @@ import ArrayElement from "./Elements/ArrayElement"
 import {RegularElementType} from "./Elements/ArrayElementTypes"
 
 let array = [];
+let steps = [];
+
+const clearSteps = () => {
+    steps.length = 0;
+}
+
+const addStep = (arrayToStep) => {
+    steps.push(copyArray(arrayToStep));
+}
+
+const applyStep = (index) => {
+    array = steps[index];
+}
 
 const createArray = (size) => {
     array.length = 0;
@@ -15,6 +28,17 @@ const createArray = (size) => {
     }
 }
 
+const copyArray = (arrayToCopy) => {
+    let newArray = []
+    for(let i = 0; i < arrayToCopy.length; ++i) {
+        let newElem = new ArrayElement(arrayToCopy[i].value);
+        newElem.type = arrayToCopy[i].type;
+        newArray.push(newElem)
+    }
+
+    return newArray;
+}
+
 const resetArrayTypes = () => {
     for(let i = 0; i < array.length; ++i) {
         array[i].setType(RegularElementType);
@@ -22,7 +46,6 @@ const resetArrayTypes = () => {
 }
 
 const draw = (canvas) => {
-    console.log("draw")
     const context = canvas.getContext('2d');
 
     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -37,4 +60,7 @@ const draw = (canvas) => {
 
 }
 
-export {array, resetArrayTypes, createArray, draw};
+export {
+    array, steps, clearSteps, addStep, applyStep,
+    resetArrayTypes, createArray, copyArray, draw
+};

@@ -2,7 +2,6 @@ import TreeBasedConstants from './constants';
 import {tree, array} from "./treeBasedHelpers";
 
 const draw = (canvas) => {
-    console.log("draw")
     clearCanvas(canvas);
 
     drawTreeNodes(canvas, tree);

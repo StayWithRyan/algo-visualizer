@@ -1,23 +1,21 @@
 import BaseSort from './BaseSort';
-import {array} from "../../screens/SortingPage/sortingHelpers";
 
 class BubbleSort extends BaseSort {
-    constructor(finishSorting, waitTimeout) {
-        super(finishSorting, waitTimeout);
+    constructor(array) {
+        super(array);
     }
 
-    async innerSort() {
-        let length = array.length;
+    innerSort() {
+        let length = this.array.length;
         for (let i = 0; i < length - 1; i++) {
             for (let j = 0; j < length - 1 - i; j++) {
-                await this.setChecking(j, j + 1);
-                if (array[j].value > array[j + 1].value) {
+                this.setChecking(j, j + 1);
+                if (this.array[j].value > this.array[j + 1].value) {
                     this.swap(j, j + 1);
-                    await this.setSwapping(j, j + 1);
+                    this.setSwapping(j, j + 1);
                 }
             }
         }
-        this.finishSorting();
     }
 
 }

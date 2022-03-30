@@ -18,7 +18,7 @@ export default function BasicButton(props) {
             onClick={isDisabled? () => null : props.onClick } 
             className={isDisabled? "BasicDisabledButton": "BasicButton"}
         >
-            <InputLabel className={isDisabled? "BasicDisabledButtonText": "BasicButtonText"} style={{ color: Constants.textColor, height: "20px" }}>{props.title}</InputLabel>
+            <InputLabel className={isDisabled? "": "BasicButtonText"} style={{ color: Constants.textColor, height: "20px" }}>{props.title}</InputLabel>
         </button>
     );
 }

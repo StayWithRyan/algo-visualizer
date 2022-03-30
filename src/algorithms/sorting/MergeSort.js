@@ -1,27 +1,25 @@
 import BaseSort from './BaseSort';
-import {array} from "../../screens/SortingPage/sortingHelpers";
 
 class MergeSort extends BaseSort {
-    constructor(finishSorting, waitTimeout) {
-        super(finishSorting, waitTimeout);
+    constructor(array) {
+        super(array);
     }
 
-    async innerSort() {
-        await this.mergeSort(0, array.length - 1);
-        this.finishSorting();
+    innerSort() {
+        this.mergeSort(0, this.array.length - 1);
     }
 
-    async mergeSort(l, r) {
-        if(l>=r) {
+    mergeSort(l, r) {
+        if(l >= r) {
             return;
         }
-        let m =l+ parseInt((r-l)/2);
-        await this.mergeSort(l,m);
-        await this.mergeSort(m+1,r);
-        await this.merge(l,m,r);
+        let m = l + parseInt((r - l) / 2);
+        this.mergeSort(l, m);
+        this.mergeSort(m+1, r);
+        this.merge(l, m, r);
     }
 
-    async merge(l, m, r) {
+    merge(l, m, r) {
         let n1 = m - l + 1;
         let n2 = r - m;
     
@@ -30,33 +28,33 @@ class MergeSort extends BaseSort {
         let mergedArray = [];
     
         while (i < n1 && j < n2) {
-            if (array[l + i].value <= array[m + 1 + j].value) {
-                mergedArray.push(array[l + i].value);
-                await this.setSingleChecking(l + i);
+            if (this.array[l + i].value <= this.array[m + 1 + j].value) {
+                mergedArray.push(this.array[l + i].value);
+                this.setSingleChecking(l + i);
                 i++;
             }
             else {
-                mergedArray.push(array[m + 1 + j].value);
-                await this.setSingleChecking(m + 1 + j);
+                mergedArray.push(this.array[m + 1 + j].value);
+                this.setSingleChecking(m + 1 + j);
                 j++;
             }
         }
 
         while (i < n1) {
-            mergedArray.push(array[l + i].value);
-            await this.setSingleChecking(l + i);
+            mergedArray.push(this.array[l + i].value);
+            this.setSingleChecking(l + i);
             i++;
         }
     
         while (j < n2) {
-            mergedArray.push(array[m + 1 + j].value);
-            await this.setSingleChecking(m + 1 + j);
+            mergedArray.push(this.array[m + 1 + j].value);
+            this.setSingleChecking(m + 1 + j);
             j++;
         }
 
         for(let i = 0; i < mergedArray.length; i++) {
-            array[l + i].value = mergedArray[i];
-            await this.setSingleSwapping(l + i);
+            this.array[l + i].value = mergedArray[i];
+            this.setSingleSwapping(l + i);
         }
     }
   
