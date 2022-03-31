@@ -1,4 +1,4 @@
-import {addStep, tree, copyTree, array, copyArray} from '../../../screens/TreeBasedPage/treeBasedHelpers';
+import {addStep} from '../../../screens/TreeBasedPage/treeBasedHelpers';
 import {
     JustAddedNodeType, AddedNodeType, CheckingNodeType,
     SwappingNodeType, DoneNodeType, RegularNodeType
@@ -9,9 +9,9 @@ import {
 } from '../../../screens/TreeBasedPage/Elements/Array/ArrayElementTypes';
 
 class BaseSorting {
-    constructor() {
-        this.tree = copyTree(tree);
-        this.array = copyArray(array);
+    constructor(tree, array) {
+        this.tree = tree;
+        this.array = array;
     }
 
     algorithm() {

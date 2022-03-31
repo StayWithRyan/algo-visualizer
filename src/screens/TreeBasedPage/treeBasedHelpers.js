@@ -6,9 +6,6 @@ import TreeNode from './Elements/Tree/TreeNode';
 import ArrayElement from './Elements/Array/ArrayElement';
 import {RegularElementType} from './Elements/Array/ArrayElementTypes';
 
-let tree = null;
-
-let array = [];
 let treeSteps = [];
 let arraySteps = [];
 
@@ -22,9 +19,8 @@ const addStep = (treeToStep, arrayToStep) => {
     arraySteps.push(copyArray(arrayToStep));
 }
 
-const applyStep = (index) => {
-    tree = treeSteps[index];
-    array = arraySteps[index];
+const getStep = (index) => {
+    return [treeSteps[index], arraySteps[index]];
 }
 
 const copyTree = (tree) => {
@@ -62,7 +58,7 @@ const copyArray = (arrayToCopy) => {
     return newArray;
 }
 
-const getTreeSizes = () => {
+const getTreeSizes = (algorithm) => {
     let lastLevelMaxElements = Math.floor(window.innerWidth / (TreeBasedConstants.elementSize - 5));
     let treeSizeMax = 1;
     let treeMaxLevel = 0;
@@ -72,12 +68,16 @@ const getTreeSizes = () => {
     }
     while(treeSizeMax < lastLevelMaxElements);
     treeSizeMax--;
+
+    if(algorithm == "TreeSort" || algorithm == "TournamentSort"){
+        treeSizeMax = (treeSizeMax + 1) / 2;
+    }
     return [treeSizeMax, treeMaxLevel];
 }
 
 // create empty almost complete tree
 const createHeapSortTree = (size) => {
-    tree = new TreeNode();
+    let tree = new TreeNode();
 
     let queue = [];
     queue.push(tree);
@@ -95,6 +95,8 @@ const createHeapSortTree = (size) => {
             queue.push(nodeToPopulate.right);
         }
     }
+
+    return tree;
 }
 
 const createTournamentSortTree = ({lastLevelSize = null, arrayParam = null}) => {
@@ -158,12 +160,7 @@ const createTournamentSortTree = ({lastLevelSize = null, arrayParam = null}) => 
         lastLevelNodes[i].value = array[i].value;
     }
     
-    if(arrayParam == null) {
-        tree = newTree;
-    }
-    else {
-        return newTree;
-    }
+    return newTree;
 }
 
 const getNodesFromLevel = (tree, level) => {
@@ -195,12 +192,15 @@ const createTree = (size, treeMaxLevel) => {
     for(let i = 0; i < size; ++i) {
         nodeValues.push(i);
     }
-    // select random value
-    let nodeValueIndex = Constants.getRandomInt(nodeValues.length);
-    tree = new TreeNode(nodeValues[nodeValueIndex], RegularNodeType);
-    // remove selected value from array
-    nodeValues.splice(nodeValueIndex, 1);
 
+    const getRandomValue = () => {
+        let nodeValueIndex = Constants.getRandomInt(nodeValues.length);
+        let value = nodeValues[nodeValueIndex];
+        // remove selected value from array
+        nodeValues.splice(nodeValueIndex, 1);
+        return value;
+    }
+    let tree = new TreeNode(getRandomValue(), RegularNodeType);
     let queue = [];
     queue.push(tree);
     let currentTreeSize = 1;
@@ -210,28 +210,22 @@ const createTree = (size, treeMaxLevel) => {
         nodeIndexToPopulate = Constants.getRandomInt(queue.length);
         let nodeToPopulate = queue[nodeIndexToPopulate];
         if(nodeToPopulate.left == null && nodeToPopulate.level < treeMaxLevel) {
-            // select random value
-            nodeValueIndex = Constants.getRandomInt(nodeValues.length);
-            nodeToPopulate.setLeftChild(nodeValues[nodeValueIndex], RegularNodeType);
-            // remove selected value from array
-            nodeValues.splice(nodeValueIndex, 1);
+            nodeToPopulate.setLeftChild(getRandomValue(), RegularNodeType);
             queue.push(nodeToPopulate.left);
             currentTreeSize++;
         }
         else if(nodeToPopulate.right == null && nodeToPopulate.level < treeMaxLevel) {
-            // select random value
-            nodeValueIndex = Constants.getRandomInt(nodeValues.length);
-            nodeToPopulate.setRightChild(nodeValues[nodeValueIndex], RegularNodeType);    
-            // remove selected value from array
-            nodeValues.splice(nodeValueIndex, 1);
+            nodeToPopulate.setRightChild(getRandomValue(), RegularNodeType);    
             queue.splice(nodeIndexToPopulate, 1);
             queue.push(nodeToPopulate.right);
             currentTreeSize++;
         }
     }
+
+    return tree;
 }
 
-const resetTreeTypes = () => {
+const resetTreeTypes = (tree) => {
     let queue = [];
     queue.push(tree);
     while(queue.length > 0) {
@@ -244,10 +238,12 @@ const resetTreeTypes = () => {
             queue.push(node.right);
         }
     }
+
+    return tree;
 }
 
 const createArray = (size) => {
-    array.length = 0;
+    let array = [];
 
     for(let i = 0; i < size; ++i) {
         array.push(i);
@@ -257,6 +253,8 @@ const createArray = (size) => {
     for(let i = 0; i < size; ++i) {
         array[i] = new ArrayElement(array[i]);
     }
+
+    return array;
 }
 
 const createTreeSortArray = (size, treeMaxLevel) => {
@@ -294,7 +292,7 @@ const createTreeSortArray = (size, treeMaxLevel) => {
         }
     }
 
-    array.length = 0;
+    let array = [];
     for(let i = 0; i < size; ++i) {
         array.push(i);
     }
@@ -311,6 +309,8 @@ const createTreeSortArray = (size, treeMaxLevel) => {
     for(let i = 0; i < size; ++i) {
         array[i] = new ArrayElement(array[i]);
     }
+
+    return array;
 }
 
 const getTreeMaxLevel = (node) => {
@@ -321,10 +321,12 @@ const getTreeMaxLevel = (node) => {
     return Math.max(node.level, getTreeMaxLevel(node.left), getTreeMaxLevel(node.right));
 }
 
-const resetArrayTypes = () => {
+const resetArrayTypes = (array) => {
     for(let i = 0; i < array.length; ++i) {
         array[i].setType(RegularElementType);
     }
+
+    return array;
 }
 
 const getNodeById = (tree, id) => {
@@ -344,16 +346,8 @@ const getNodeById = (tree, id) => {
     }
 }
 
-const emptyArray = () => {
-    array.length = 0;
-}
-
-const emptyTree = () => {
-    tree = null;
-}
-
 export {
-    tree, treeSteps, arraySteps, clearSteps, addStep, applyStep, copyTree, copyArray,
-    emptyTree, array, emptyArray, createTree, createHeapSortTree, createTournamentSortTree, getNodeById,
+    treeSteps, arraySteps, clearSteps, addStep, getStep, copyTree, copyArray,
+    createTree, createHeapSortTree, createTournamentSortTree, getNodeById,
     resetTreeTypes, resetArrayTypes, getTreeSizes, createArray, createTreeSortArray, getNodesFromLevel, getTreeMaxLevel
 };

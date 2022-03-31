@@ -1,12 +1,11 @@
 import TreeBasedConstants from './constants';
-import {tree, array} from "./treeBasedHelpers";
 
-const draw = (canvas) => {
+const draw = (canvas, tree, array) => {
     clearCanvas(canvas);
 
     drawTreeNodes(canvas, tree);
     drawTreeEdges(canvas, tree);
-    drawArray(canvas);
+    drawArray(canvas, array);
 }
 
 const clearCanvas = (canvas) => {
@@ -95,7 +94,7 @@ const drawEdge = (canvas, fromX, fromY, toX, toY) => {
 }
 
 
-const drawArray = (canvas) => {
+const drawArray = (canvas, array) => {
     let elementBoxSize =  TreeBasedConstants.elementSize * 1.1;
     let maxInRow = Math.floor(canvas.width * 0.8 / elementBoxSize);
     let x = (canvas.width - maxInRow * elementBoxSize) / 2  + TreeBasedConstants.elementSize / 2;

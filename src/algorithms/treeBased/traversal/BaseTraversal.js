@@ -1,13 +1,12 @@
-import Constants from '../../../constants';
 import {VisitedNodeType} from '../../../screens/TreeBasedPage/Elements/Tree/TreeNodeTypes';
 import {VisitedElementType} from '../../../screens/TreeBasedPage/Elements/Array/ArrayElementTypes';
-import {array, tree, copyArray, copyTree, addStep} from '../../../screens/TreeBasedPage/treeBasedHelpers';
+import {addStep} from '../../../screens/TreeBasedPage/treeBasedHelpers';
 import ArrayElement from '../../../screens/TreeBasedPage/Elements/Array/ArrayElement';
 
 class BaseTraversal {
-    constructor() {
-        this.array = copyArray(array);
-        this.tree = copyTree(tree);
+    constructor(tree, array) {
+        this.array = array;
+        this.tree = tree;
     }
 
     algorithm() {

@@ -75,16 +75,13 @@ function SortingPage() {
         runAlgorithm(newArray, algorithm);
     };
 
-    const handleSleepChange = (value) => {
-        setSortingSleep(value);
-    };
-
     const runAlgorithm = (array, algorithm) => {
         clearSteps();
         const algorithmClass = algorithmsMapping[`${algorithm}`];
         const algorithmObj = new algorithmClass(copyArray(array));
         algorithmObj.sort();
         resetPlayBar(steps.length);
+        // to update PlayBar
         forceUpdate();
     };
 
@@ -102,7 +99,7 @@ function SortingPage() {
                 <BasicSlider title="Array size"  isDisabled={autoplayRunning} min={SortingConstants.arraySizeMin} max={SortingConstants.arraySizeMax}
                     default={SortingConstants.arraySizeDefault} step={SortingConstants.arraySizeStep} onChange={handleSizeChange} />
                 <BasicSlider title="Sleep time(ms)"  min={SortingConstants.sleepMin} max={SortingConstants.sleepMax} 
-                    default={SortingConstants.sleepDefault} step={SortingConstants.sleepStep} onChange={handleSleepChange} />
+                    default={SortingConstants.sleepDefault} step={SortingConstants.sleepStep} onChange={setSortingSleep} />
                 <PlayBar setStep={applyStep} setRunningAutoplay={setAutoplayRunning}/>
                     
                 
