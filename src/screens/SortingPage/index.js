@@ -1,11 +1,11 @@
 import './style.css';
 
 import ConfigurationBar from "../../components/ConfigurationBar";
-import {useState, useRef, useEffect} from 'react';
+import {useState, useRef, useEffect, useCallback} from 'react';
 import BasicSelect from '../../components/BasicSelect'
 import BasicSlider from '../../components/BasicSlider';
 import BasicButton from '../../components/BasicButton';
-import {PlayBar, resetPlayBar} from '../../components/PlayBar';
+import {PlayBar, resetPlayBar, setAutoplaySleep} from '../../components/PlayBar';
 
 import BubbleSort from '../../algorithms/sorting/BubbleSort';
 import SelectionSort from '../../algorithms/sorting/SelectionSort';
@@ -20,85 +20,92 @@ import GnomeSort from '../../algorithms/sorting/GnomeSort';
 import Constants from '../../constants';
 import SortingConstants from './constants';
 import {
-    steps, clearSteps, applyStep,
-    resetArrayTypes, createArray, draw
+    steps, clearSteps, getStep, copyArray, createArray, draw, resetArrayTypes
 } from './sortingHelpers';
 
+const algorithmsMapping = {
+    "Bubble Sort": BubbleSort,
+    "Cocktail Sort": CocktailSort,
+    "Selection Sort": SelectionSort,
+    "Insertion Sort": InsertionSort,
+    "Gnome Sort": GnomeSort,
+    "Shell Sort": ShellSort,
+    "Merge Sort": MergeSort,
+    "Quick Sort": QuickSort,
+    "Heap Sort": HeapSort
+}    
+const algorithms = [];
+for (let property in algorithmsMapping) {
+    algorithms.push(property);
+}
+
 function SortingPage() {
-    const algorithmsMapping = {
-        "Bubble Sort": BubbleSort,
-        "Cocktail Sort": CocktailSort,
-        "Selection Sort": SelectionSort,
-        "Insertion Sort": InsertionSort,
-        "Gnome Sort": GnomeSort,
-        "Shell Sort": ShellSort,
-        "Merge Sort": MergeSort,
-        "Quick Sort": QuickSort,
-        "Heap Sort": HeapSort
-    }    
-    const algorithms = [];
-    for (let property in algorithmsMapping) {
-        algorithms.push(property);
-    }
-    const [algorithm, setAlgorithm] = useState('');
+    const [algorithm, setAlgorithm] = useState(algorithms[0]);
+    const [array, setArray] = useState(createArray(SortingConstants.arraySizeDefault));
     const [sortingSleep, setSortingSleep] = useState(SortingConstants.sleepDefault);
-    const [startButtonEnabled, setStartButtonEnabled] = useState(false);
-    const [stopButtonEnabled, setStopButtonEnabled] = useState(false);
+    const [autoplayRunning, setAutoplayRunning] = useState(false);
+
+    const [, updateState] = useState();
+    const forceUpdate = useCallback(() => updateState({}), []);
 
     const canvasRef = useRef(null);
-    const [isSorting, setIsSorting] = useState(false);
-    const [sleepEnabled, setSleepEnabled] = useState(true);
 
     useEffect(() => {
-        createArray(SortingConstants.arraySizeDefault);
-        let intervalId = setInterval(() =>  draw(canvasRef.current), Constants.drawInterval);
-        return () => clearInterval(intervalId);
+        runAlgorithm(array, algorithm);
     }, []);
+
+    useEffect(() => {
+        setAutoplaySleep(sortingSleep);
+    }, [sortingSleep]);
+
+    useEffect(() => {
+        let intervalId = setInterval(() =>  {draw(canvasRef.current, array)}, Constants.drawInterval);
+        return () => clearInterval(intervalId);
+    }, [array]);
 
     const handleAlgorithmChange = (value) => {
         setAlgorithm(value);
-        if(isSorting === false) {
-            setStartButtonEnabled(true);
-        }
+        resetArrayTypes(array);
+        runAlgorithm(array, value);
     };
 
     const handleSizeChange = (value) => {
-        createArray(value);
+        let newArray = createArray(value);
+        setArray(newArray);
+        runAlgorithm(newArray, algorithm);
     };
 
-    const handleStart = () => {
-        setStartButtonEnabled(false);
-        setStopButtonEnabled(true);
+    const handleSleepChange = (value) => {
+        setSortingSleep(value);
+    };
+
+    const runAlgorithm = (array, algorithm) => {
         clearSteps();
         const algorithmClass = algorithmsMapping[`${algorithm}`];
-        const algorithmObj = new algorithmClass();
+        const algorithmObj = new algorithmClass(copyArray(array));
         algorithmObj.sort();
-        resetPlayBar();
-        setIsSorting(true);
+        resetPlayBar(steps.length);
+        forceUpdate();
     };
 
-    const handleStop = () => {
-        setIsSorting(false);
-        setStartButtonEnabled(true);
-        setStopButtonEnabled(false);
-        resetArrayTypes();
+    const applyStep = (step) => {
+        setArray(getStep(step));
     };
+
 
     let canvasHeight = window.innerHeight - Constants.navBarHeight - Constants.configurationBarHeight - 20;
 
     return (
         <>
             <ConfigurationBar>
-                <BasicSelect title="Sorting algorithm" isDisabled={isSorting} onChange={handleAlgorithmChange} value={algorithm} values={algorithms}  />
-                <BasicSlider title="Array size" isDisabled={isSorting} min={SortingConstants.arraySizeMin} max={SortingConstants.arraySizeMax}
+                <BasicSelect title="Sorting algorithm" isDisabled={autoplayRunning} onChange={handleAlgorithmChange} value={algorithm} values={algorithms}  />
+                <BasicSlider title="Array size"  isDisabled={autoplayRunning} min={SortingConstants.arraySizeMin} max={SortingConstants.arraySizeMax}
                     default={SortingConstants.arraySizeDefault} step={SortingConstants.arraySizeStep} onChange={handleSizeChange} />
-                <BasicSlider title="Sleep time(ms)" isDisabled={!sleepEnabled} min={SortingConstants.sleepMin} max={SortingConstants.sleepMax} 
-                    default={SortingConstants.sleepDefault} step={SortingConstants.sleepStep} onChange={setSortingSleep} />
-                {isSorting 
-                    ? <PlayBar stepsLength={steps.length} setStep={applyStep} setSleepEnabled={setSleepEnabled} sleepTimeout={sortingSleep}/>
-                    : <BasicButton title="Start sorting" onClick={handleStart} isDisabled={!startButtonEnabled}/>
-                }
-                <BasicButton title="Stop sorting" onClick={handleStop} isDisabled={!stopButtonEnabled}/>
+                <BasicSlider title="Sleep time(ms)"  min={SortingConstants.sleepMin} max={SortingConstants.sleepMax} 
+                    default={SortingConstants.sleepDefault} step={SortingConstants.sleepStep} onChange={handleSleepChange} />
+                <PlayBar setStep={applyStep} setRunningAutoplay={setAutoplayRunning}/>
+                    
+                
             </ConfigurationBar>
             <canvas ref={canvasRef} height={canvasHeight} width={window.innerWidth}/>
         </>

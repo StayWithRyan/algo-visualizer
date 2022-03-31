@@ -1,7 +1,6 @@
 import ArrayElement from "./Elements/ArrayElement"
 import {RegularElementType} from "./Elements/ArrayElementTypes"
 
-let array = [];
 let steps = [];
 
 const clearSteps = () => {
@@ -12,20 +11,21 @@ const addStep = (arrayToStep) => {
     steps.push(copyArray(arrayToStep));
 }
 
-const applyStep = (index) => {
-    array = steps[index];
+const getStep = (index) => {
+    return steps[index];
 }
 
 const createArray = (size) => {
-    array.length = 0;
     let newArray = [];
     for(let i = 1; i <= size; ++i) {
         newArray.push(i);
     }
     newArray = newArray.sort((a, b) => 0.5 - Math.random());
     for(let i = 0; i < size; ++i) {
-        array.push(new ArrayElement(newArray[i]))
+        newArray[i] = new ArrayElement(newArray[i]);
     }
+
+    return newArray;
 }
 
 const copyArray = (arrayToCopy) => {
@@ -39,13 +39,7 @@ const copyArray = (arrayToCopy) => {
     return newArray;
 }
 
-const resetArrayTypes = () => {
-    for(let i = 0; i < array.length; ++i) {
-        array[i].setType(RegularElementType);
-    }
-}
-
-const draw = (canvas) => {
+const draw = (canvas, array) => {
     const context = canvas.getContext('2d');
 
     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -55,12 +49,18 @@ const draw = (canvas) => {
     let elementWidth = (canvas.width - canvasPadding * 2) / array.length;
 
     for(let i = 0; i < array.length; ++i) {
-        array[i].draw(canvas, canvasPadding + i * elementWidth, 0, elementWidth);
+        array[i].draw(canvas, canvasPadding + i * elementWidth, 0, elementWidth, array.length);
     }
 
 }
 
+const resetArrayTypes = (array) => {
+    for(let i = 0; i < array.length; ++i) {
+        array[i].setType(RegularElementType);
+    }
+}
+
+
 export {
-    array, steps, clearSteps, addStep, applyStep,
-    resetArrayTypes, createArray, copyArray, draw
+    steps, clearSteps, addStep, getStep, createArray, copyArray, draw, resetArrayTypes
 };

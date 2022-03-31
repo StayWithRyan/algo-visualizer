@@ -117,7 +117,6 @@ function TreeBasedPage() {
         const algorithmClass = algorithmsMapping[`${algorithm}`];
         const algorithmObj = new algorithmClass();
         algorithmObj.algorithm();
-        console.log(treeSteps.length)
         resetPlayBar();
         setIsDrawing(true);
     }

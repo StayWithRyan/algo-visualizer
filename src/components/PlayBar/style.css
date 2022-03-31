@@ -13,6 +13,13 @@
     cursor: pointer;
 }
 
+.activePlayBarIcon {
+    color: #9c27b0;
+}
 .activePlayBarIcon:hover {
-    color: yellow;
+    color: #d845f1;
+}
+
+.disabledPlayBarIcon {
+    color: #5c2c6c;
 }

@@ -1,10 +1,9 @@
-import Constants from '../../constants';
 import {CheckingElementType, RegularElementType, SwappingElementType} from "../../screens/SortingPage/Elements/ArrayElementTypes";
-import {addStep, array, copyArray} from "../../screens/SortingPage/sortingHelpers";
+import {addStep} from "../../screens/SortingPage/sortingHelpers";
 
 class BaseSort {
-    constructor() {
-        this.array = copyArray(array);
+    constructor(array) {
+        this.array = array;
     }
 
     sort() {

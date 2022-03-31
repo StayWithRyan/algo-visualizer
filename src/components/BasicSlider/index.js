@@ -18,7 +18,7 @@ export default function BasicSlider(props) {
             step={props.step}
             min={props.min}
             max={props.max}
-            style={{ color: Constants.mainColor}}
+            style={{ color: props.isDisabled ? Constants.disabledMainColor : Constants.mainColor}}
             valueLabelDisplay="auto"
         />
         </Box>

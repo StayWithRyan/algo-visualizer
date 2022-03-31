@@ -6,8 +6,8 @@ class ArrayElement {
         this.type = new typeClass();
     }
 
-    draw(canvas, x, y, width) {
-        this.type.draw(canvas, x, y, width, this.value);
+    draw(canvas, x, y, width, arrayLength) {
+        this.type.draw(canvas, x, y, width, arrayLength, this.value);
     }
 
     setType(typeClass) {

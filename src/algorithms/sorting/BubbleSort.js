@@ -1,6 +1,10 @@
 import BaseSort from './BaseSort';
 
 class BubbleSort extends BaseSort {
+    constructor(array) {
+        super(array);
+    }
+    
     innerSort() {
         let length = this.array.length;
         for (let i = 0; i < length - 1; i++) {

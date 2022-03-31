@@ -5,23 +5,43 @@ import { BsStopCircle, BsPlayCircle } from 'react-icons/bs';
 import Constants from '../../constants';
 import { useState, useEffect } from 'react';
 
-let currentStep = 0;
-let autoplayStopped = false;
+let timeout = 0;
 let autoplayId = 0;
 
-const resetPlayBar = () => {
-    currentStep = 0;
+let autoplayStopped = false;
+let stepsLength = 0;
+let currentStep = 0;
+
+const resetPlayBar = (stepsLengthPassed) => {
     autoplayStopped = false;
+    stepsLength = stepsLengthPassed;
+    currentStep = 0;
 }
 
-function PlayBar({stepsLength, setStep, setSleepEnabled, sleepTimeout}) {
+const setAutoplaySleep = (sleepTimeout) => {
+    timeout = sleepTimeout;
+}
 
+function PlayBar({setStep, setRunningAutoplay}) {
     let [running, setRunning] = useState(false);
-    useEffect(() => {
-        setSleepEnabled(!running);
-    }, [running])
-    const [nextStepEnabled, setNextStepEnabled] = useState(true);
     const [prevStepEnabled, setPrevStepEnabled] = useState(false);
+    const [nextStepEnabled, setNextStepEnabled] = useState(true);
+
+    useEffect(() => {
+        setRunningAutoplay(running);
+    }, [running])
+
+    if(currentStep === 0) {
+        if(running == true){
+            setRunning(false);
+        }
+        if(prevStepEnabled == true) {
+            setPrevStepEnabled(false);
+        }
+        if(nextStepEnabled == false) {
+            setNextStepEnabled(true);
+        }
+    }
 
     const updateButtonsEnables = (running) => {
         if(running) {
@@ -46,11 +66,11 @@ function PlayBar({stepsLength, setStep, setSleepEnabled, sleepTimeout}) {
         setStep(currentStep);
     }
 
-    const autoplay = async (id, timeout) => {
+    const autoplay = async (id) => {
         if(autoplayStopped || id !== autoplayId) {
             return;
         }
-        if(currentStep == stepsLength - 1) {
+        if(currentStep === stepsLength - 1) {
             setRunning(false)
             updateButtonsEnables(false);
             return;
@@ -58,14 +78,14 @@ function PlayBar({stepsLength, setStep, setSleepEnabled, sleepTimeout}) {
         currentStep++;
         setStep(currentStep);
         await Constants.delay(timeout);
-        await autoplay(id, timeout);
+        await autoplay(id);
     }
 
     const handleAutoplay = () => {
         setRunning(true); 
         autoplayStopped = false;
         autoplayId++;
-        autoplay(autoplayId, sleepTimeout);
+        autoplay(autoplayId);
         updateButtonsEnables(true);
     }
 
@@ -78,7 +98,7 @@ function PlayBar({stepsLength, setStep, setSleepEnabled, sleepTimeout}) {
 
     let mainButton;
     if(!running) {
-        mainButton = <BsPlayCircle className={nextStepEnabled ? 'activePlayBarIcon' : ''} style={{width: "66px"}} size={34} 
+        mainButton = <BsPlayCircle className={nextStepEnabled ? 'activePlayBarIcon' : 'disabledPlayBarIcon'} style={{width: "66px"}} size={34} 
             onClick={nextStepEnabled ? handleAutoplay : () => {}}
         />
     }
@@ -90,11 +110,11 @@ function PlayBar({stepsLength, setStep, setSleepEnabled, sleepTimeout}) {
     return (
         <div className = "PlayBar" style={{border: `3px solid ${Constants.mainColor}`}}>
             <div className = "PlayBarButtons">
-                <BiArrowToLeft className={prevStepEnabled ? 'activePlayBarIcon' : ''} style={{width: "66px"}} size={34} 
+                <BiArrowToLeft className={prevStepEnabled ? 'activePlayBarIcon' : 'disabledPlayBarIcon'} style={{width: "66px"}} size={34} 
                     onClick={prevStepEnabled ? handlePrevStep : () => {}}
                 />
                 {mainButton}
-                <BiArrowToRight className={nextStepEnabled ? 'activePlayBarIcon' : ''} style={{width: "66px"}} size={34} 
+                <BiArrowToRight className={nextStepEnabled ? 'activePlayBarIcon' : 'disabledPlayBarIcon'} style={{width: "66px"}} size={34} 
                     onClick={nextStepEnabled ? handleNextStep : () => {}}
                 />
             </div>
@@ -102,4 +122,4 @@ function PlayBar({stepsLength, setStep, setSleepEnabled, sleepTimeout}) {
     );
 }
 
-export{PlayBar, resetPlayBar};
+export{PlayBar, resetPlayBar, setAutoplaySleep};
