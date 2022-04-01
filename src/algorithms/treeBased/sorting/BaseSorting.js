@@ -35,7 +35,7 @@ class BaseSorting {
         this.array[node.id].setType(RegularElementType);
     }
 
-    setChecking = async (nodeI, nodeJ) => {
+    setChecking(nodeI, nodeJ) {
         nodeI.setType(CheckingNodeType);
         nodeJ.setType(CheckingNodeType);
         this.array[nodeI.id].setType(CheckingElementType);

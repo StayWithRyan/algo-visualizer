@@ -1,12 +1,11 @@
 import Constants from '../../../constants';
 import PathfindingConstants from '../../../screens/PathfindingPage/constants';
 import {EmptyElementType, BlockElementType} from '../../../screens/PathfindingPage/Elements/MazeElementTypes';
-import {maze, updateElement} from '../../../screens/PathfindingPage/mazeHelpers';
 import {createBorders} from './mazeGeneratorsHelpers';
 
 let delayTimeout = PathfindingConstants.generatingDelayTimeout;
 
-function createSetsArray() {
+function createSetsArray(maze) {
     let sets = [];
     for(let i = 0 ; i < maze.length; ++i) {
         let row = [];
@@ -18,10 +17,10 @@ function createSetsArray() {
     return sets;
 }
 
-async function EllersAlgorithm(handleFinishGenerating) {
-    await createBorders()
+async function EllersAlgorithm(maze, handleFinishGenerating) {
+    await createBorders(maze);
 
-    let sets = createSetsArray();
+    let sets = createSetsArray(maze);
     let setCounter = 0;
 
     let h = maze.length;
@@ -35,7 +34,7 @@ async function EllersAlgorithm(handleFinishGenerating) {
             let setSize = 0;
             for(let j = 1; j < w - 1; ++j) {
                 if(sets[i - 1][j] == 0) {
-                    updateElement(i, j, BlockElementType);
+                    maze[i][j].setType(BlockElementType);
                     sets[i][j] = 0;
                     await Constants.delay(delayTimeout);
                 }
@@ -74,7 +73,7 @@ async function EllersAlgorithm(handleFinishGenerating) {
                         sets[i][j] = sets[i - 1][j];
                     }
                     else{
-                        updateElement(i, j, BlockElementType);
+                        maze[i][j].setType(BlockElementType);
                         sets[i][j] = 0;
                         await Constants.delay(delayTimeout);
                     }
@@ -108,7 +107,7 @@ async function EllersAlgorithm(handleFinishGenerating) {
             // set blocks between sets
             for(let j = 2; j < w - 2; ++j) {
                 if(sets[i][j] != sets[i][j - 1] && !(maze[i][j - 1].type instanceof BlockElementType) && sets[i - 1][j] == 0 && maze[i][j].type instanceof EmptyElementType) {
-                    updateElement(i, j, BlockElementType);
+                    maze[i][j].setType(BlockElementType);
                     sets[i][j] = 0;
                     await Constants.delay(delayTimeout);
                 }

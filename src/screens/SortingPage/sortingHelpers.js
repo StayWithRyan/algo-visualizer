@@ -1,5 +1,30 @@
 import ArrayElement from "./Elements/ArrayElement"
 import {RegularElementType} from "./Elements/ArrayElementTypes"
+import BubbleSort from '../../algorithms/sorting/BubbleSort';
+import SelectionSort from '../../algorithms/sorting/SelectionSort';
+import InsertionSort from '../../algorithms/sorting/InsertionSort';
+import MergeSort from '../../algorithms/sorting/MergeSort';
+import QuickSort from '../../algorithms/sorting/QuickSort';
+import HeapSort from '../../algorithms/sorting/HeapSort';
+import ShellSort from '../../algorithms/sorting/ShellSort';
+import CocktailSort from '../../algorithms/sorting/CocktailSort';
+import GnomeSort from '../../algorithms/sorting/GnomeSort';
+
+const algorithmsMapping = {
+    "Bubble Sort": BubbleSort,
+    "Cocktail Sort": CocktailSort,
+    "Selection Sort": SelectionSort,
+    "Insertion Sort": InsertionSort,
+    "Gnome Sort": GnomeSort,
+    "Shell Sort": ShellSort,
+    "Merge Sort": MergeSort,
+    "Quick Sort": QuickSort,
+    "Heap Sort": HeapSort
+}    
+const algorithms = [];
+for (let property in algorithmsMapping) {
+    algorithms.push(property);
+}
 
 let steps = [];
 
@@ -62,5 +87,6 @@ const resetArrayTypes = (array) => {
 
 
 export {
-    steps, clearSteps, addStep, getStep, createArray, copyArray, draw, resetArrayTypes
+    steps, clearSteps, addStep, getStep, createArray, copyArray, draw, resetArrayTypes,
+    algorithmsMapping, algorithms
 };

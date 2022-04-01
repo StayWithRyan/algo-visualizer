@@ -1,7 +1,6 @@
 import Constants from '../../../constants';
 import PathfindingConstants from '../../../screens/PathfindingPage/constants';
 import {BlockElementType} from '../../../screens/PathfindingPage/Elements/MazeElementTypes';
-import {maze, updateElement} from '../../../screens/PathfindingPage/mazeHelpers';
 import {createBorders} from './mazeGeneratorsHelpers';
 
 let delayTimeout = PathfindingConstants.generatingDelayTimeout;
@@ -24,8 +23,8 @@ function getRandomGap(max) {
     return value;
 }
 
-async function RecursiveDivision (handleFinishGenerating) {
-    await createBorders();
+async function RecursiveDivision (maze, handleFinishGenerating) {
+    await createBorders(maze);
     await RecursiveDivisionInner(maze, 1, 1, maze.length - 2, maze[0].length - 2); 
 
     await Constants.delay(200);
@@ -55,7 +54,7 @@ async function RecursiveDivisionInner(maze, x, y, h, w) {
             if(i == gap) {
                 continue;
             }
-            updateElement(y + rowIndex, x + i, BlockElementType);
+            maze[y + rowIndex][x + i].setType(BlockElementType);
             await Constants.delay(delayTimeout);
         }
         await RecursiveDivisionInner(maze, x, y, rowIndex, w);
@@ -68,7 +67,7 @@ async function RecursiveDivisionInner(maze, x, y, h, w) {
             if(i == gap) {
                 continue;
             }
-            updateElement(y + i, columnIndex + x, BlockElementType);
+            maze[y + i][columnIndex + x].setType(BlockElementType);
             await Constants.delay(delayTimeout);
         }
         await RecursiveDivisionInner(maze, x, y, h, columnIndex);

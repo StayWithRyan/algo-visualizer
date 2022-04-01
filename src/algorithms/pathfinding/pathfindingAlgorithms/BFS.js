@@ -1,15 +1,14 @@
 import {getNodeLocation} from '../../../screens/PathfindingPage/mazeHelpers';
 import { 
-    StartElementType, TargetElementType, CheckingElementType, CheckingStartElementType, 
+    StartElementType, TargetElementType,
     CheckingTargetElementType, BlockElementType
 } from '../../../screens/PathfindingPage/Elements/MazeElementTypes';
-import {maze} from '../../../screens/PathfindingPage/mazeHelpers';
-import Constants from '../../../constants';
+import {addStep} from '../../../screens/PathfindingPage/mazeHelpers';
 import BasePathfinding from './BasePathfinding';
 
 class BFS extends BasePathfinding{
-    constructor(finishFinding, waitTimeout) {
-        super(finishFinding, waitTimeout);
+    constructor(maze) {
+        super(maze);
         this.queue = [];
         this.visitedArray = this.createArrayWithValue(false);
         this.pathArray = this.createArrayWithValue([]);
@@ -27,26 +26,22 @@ class BFS extends BasePathfinding{
 
     copyPathArray(array) {
         let newArray = [];
-        for(let i = 0 ; i <array.length; ++i) {
+        for(let i = 0 ; i < array.length; ++i) {
             newArray.push([array[i][0], array[i][1]]);
         }
         return newArray;
     }
 
-    async find() {
-        let [startI, startJ] = getNodeLocation(StartElementType);
+    find() {
+        let [startI, startJ] = getNodeLocation(this.maze, StartElementType);
         this.queue.push([startI, startJ]);
         this.pathArray[startI][startJ].push([startI, startJ]);
-
-        await Constants.delay(10);
-        let path = await this.BFS();
+        addStep(this.maze);
+        let path = this.BFS();
 
         if(path.length > 0) {
-            await this.showPath(path);
+            this.showPath(path);
         }
-        await Constants.delay(200);
-        
-        this.finishFinding();
     };
 
     inQueue(i, j) {
@@ -64,7 +59,7 @@ class BFS extends BasePathfinding{
     }
 
     isBlock(i, j) {
-       return maze[i][j].type instanceof BlockElementType;
+       return this.maze[i][j].type instanceof BlockElementType;
     }
 
     isNodeToVisit(i, j) {
@@ -83,7 +78,7 @@ class BFS extends BasePathfinding{
     }
 
     getLowestHeuristicNode(isAStart) {
-        let [targetI, targetJ] = getNodeLocation(TargetElementType);
+        let [targetI, targetJ] = getNodeLocation(this.maze, TargetElementType);
 
         let lowestIndex = 0;
         let lowestValue = Math.abs(this.queue[0][0] - targetI) + Math.abs(this.queue[0][1] - targetJ);
@@ -117,7 +112,7 @@ class BFS extends BasePathfinding{
     }
 
     // true if found
-    async visitNode() {
+    visitNode() {
         let i, j;
         if(this.greedy) {
             [i, j] = this.getLowestHeuristicNode(false);
@@ -131,9 +126,9 @@ class BFS extends BasePathfinding{
 
         this.visitedArray[i][j] = true;
 
-        await this.setChecking(i, j);
+        this.setChecking(i, j);
 
-        if(maze[i][j].type instanceof CheckingTargetElementType) {
+        if(this.maze[i][j].type instanceof CheckingTargetElementType) {
             // found path
             return this.pathArray[i][j];
         }
@@ -143,11 +138,11 @@ class BFS extends BasePathfinding{
             this.queueNode(i - 1, j, i, j);
         }
         // right
-        if(j + 1 < maze[0].length) {
+        if(j + 1 < this.maze[0].length) {
             this.queueNode(i, j + 1, i, j);
         }
         // down
-        if(i + 1 < maze.length) {
+        if(i + 1 < this.maze.length) {
             this.queueNode(i + 1, j, i, j);
         }
         // left
@@ -156,12 +151,12 @@ class BFS extends BasePathfinding{
         }
     }
 
-    async BFS() {
+    BFS() {
         while(this.queue.length > 0) {
             if(this.stop) {
                 return [];
             }
-            let pathToTarget = await this.visitNode();
+            let pathToTarget = this.visitNode();
             if(pathToTarget) {
                 return pathToTarget;
             }

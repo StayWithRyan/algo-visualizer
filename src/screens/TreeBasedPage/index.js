@@ -4,36 +4,17 @@ import BasicSelect from '../../components/BasicSelect'
 import BasicSlider from '../../components/BasicSlider';
 import BasicButton from '../../components/BasicButton';
 
-import { 
+import {
+    algorithmsMapping, algorithms, sameTreeAlgorithms,
     copyTree, copyArray, getStep, clearSteps,
     createTree, createHeapSortTree, createArray, createTournamentSortTree,
     createTreeSortArray, resetTreeTypes, resetArrayTypes, getTreeSizes, treeSteps
 } from './treeBasedHelpers'
 import {draw} from './drawingTree'
 import {PlayBar, resetPlayBar, setAutoplaySleep} from '../../components/PlayBar';
-
-import LNRTraversal from "../../algorithms/treeBased/traversal/LNRTraversal"
-import LRNTraversal from "../../algorithms/treeBased/traversal/LRNTraversal"
-import NLRTraversal from "../../algorithms/treeBased/traversal/NLRTraversal"
-import HeapSort from "../../algorithms/treeBased/sorting/HeapSort"
-import TreeSort from "../../algorithms/treeBased/sorting/TreeSort"
-import TournamentSort from "../../algorithms/treeBased/sorting/TournamentSort"
-
 import Constants from '../../constants';
 import TreeBasedConstants from './constants';
-const algorithmsMapping = {
-    "In-order tree traversal(LNR)": LNRTraversal,
-    "Pre-order tree traversal(NLR)": NLRTraversal,
-    "Post-order tree traversal(LRN)": LRNTraversal,
-    "HeapSort": HeapSort,
-    "TreeSort": TreeSort,
-    "TournamentSort": TournamentSort
-}
-const algorithms = [];
-for (let property in algorithmsMapping) {
-    algorithms.push(property);
-}
-let sameTreeAlgorithms = ["In-order tree traversal(LNR)", "Pre-order tree traversal(NLR)", "Post-order tree traversal(LRN)"];
+
 
 function TreeBasedPage() {
     const [algorithm, setAlgorithm] = useState(algorithms[0]);

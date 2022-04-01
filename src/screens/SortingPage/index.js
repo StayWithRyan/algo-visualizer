@@ -4,40 +4,14 @@ import ConfigurationBar from "../../components/ConfigurationBar";
 import {useState, useRef, useEffect, useCallback} from 'react';
 import BasicSelect from '../../components/BasicSelect'
 import BasicSlider from '../../components/BasicSlider';
-import BasicButton from '../../components/BasicButton';
 import {PlayBar, resetPlayBar, setAutoplaySleep} from '../../components/PlayBar';
-
-import BubbleSort from '../../algorithms/sorting/BubbleSort';
-import SelectionSort from '../../algorithms/sorting/SelectionSort';
-import InsertionSort from '../../algorithms/sorting/InsertionSort';
-import MergeSort from '../../algorithms/sorting/MergeSort';
-import QuickSort from '../../algorithms/sorting/QuickSort';
-import HeapSort from '../../algorithms/sorting/HeapSort';
-import ShellSort from '../../algorithms/sorting/ShellSort';
-import CocktailSort from '../../algorithms/sorting/CocktailSort';
-import GnomeSort from '../../algorithms/sorting/GnomeSort';
 
 import Constants from '../../constants';
 import SortingConstants from './constants';
 import {
+    algorithmsMapping, algorithms,
     steps, clearSteps, getStep, copyArray, createArray, draw, resetArrayTypes
 } from './sortingHelpers';
-
-const algorithmsMapping = {
-    "Bubble Sort": BubbleSort,
-    "Cocktail Sort": CocktailSort,
-    "Selection Sort": SelectionSort,
-    "Insertion Sort": InsertionSort,
-    "Gnome Sort": GnomeSort,
-    "Shell Sort": ShellSort,
-    "Merge Sort": MergeSort,
-    "Quick Sort": QuickSort,
-    "Heap Sort": HeapSort
-}    
-const algorithms = [];
-for (let property in algorithmsMapping) {
-    algorithms.push(property);
-}
 
 function SortingPage() {
     const [algorithm, setAlgorithm] = useState(algorithms[0]);

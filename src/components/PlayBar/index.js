@@ -22,7 +22,7 @@ const setAutoplaySleep = (sleepTimeout) => {
     timeout = sleepTimeout;
 }
 
-function PlayBar({setStep, setRunningAutoplay}) {
+function PlayBar({setStep, setRunningAutoplay, isDisabled = false}) {
     let [running, setRunning] = useState(false);
     const [prevStepEnabled, setPrevStepEnabled] = useState(false);
     const [nextStepEnabled, setNextStepEnabled] = useState(true);
@@ -57,13 +57,13 @@ function PlayBar({setStep, setRunningAutoplay}) {
     const handlePrevStep = () => {
         currentStep--;
         updateButtonsEnables(running);
-        setStep(currentStep);
+        setStep(currentStep, false);
     }
 
     const handleNextStep = () => {
         currentStep++;
         updateButtonsEnables(running);
-        setStep(currentStep);
+        setStep(currentStep, true);
     }
 
     const autoplay = async (id) => {
@@ -76,7 +76,7 @@ function PlayBar({setStep, setRunningAutoplay}) {
             return;
         }
         currentStep++;
-        setStep(currentStep);
+        setStep(currentStep, true);
         await Constants.delay(timeout);
         await autoplay(id);
     }
@@ -98,8 +98,8 @@ function PlayBar({setStep, setRunningAutoplay}) {
 
     let mainButton;
     if(!running) {
-        mainButton = <BsPlayCircle className={nextStepEnabled ? 'activePlayBarIcon' : 'disabledPlayBarIcon'} style={{width: "66px"}} size={34} 
-            onClick={nextStepEnabled ? handleAutoplay : () => {}}
+        mainButton = <BsPlayCircle className={(nextStepEnabled && !isDisabled) ? 'activePlayBarIcon' : 'disabledPlayBarIcon'} style={{width: "66px"}} size={34} 
+            onClick={(nextStepEnabled && !isDisabled) ? handleAutoplay : () => {}}
         />
     }
     else {
@@ -110,12 +110,12 @@ function PlayBar({setStep, setRunningAutoplay}) {
     return (
         <div className = "PlayBar" style={{border: `3px solid ${Constants.mainColor}`}}>
             <div className = "PlayBarButtons">
-                <BiArrowToLeft className={prevStepEnabled ? 'activePlayBarIcon' : 'disabledPlayBarIcon'} style={{width: "66px"}} size={34} 
-                    onClick={prevStepEnabled ? handlePrevStep : () => {}}
+                <BiArrowToLeft className={(prevStepEnabled && !isDisabled) ? 'activePlayBarIcon' : 'disabledPlayBarIcon'} style={{width: "66px"}} size={34} 
+                    onClick={(prevStepEnabled && !isDisabled)  ? handlePrevStep : () => {}}
                 />
                 {mainButton}
-                <BiArrowToRight className={nextStepEnabled ? 'activePlayBarIcon' : 'disabledPlayBarIcon'} style={{width: "66px"}} size={34} 
-                    onClick={nextStepEnabled ? handleNextStep : () => {}}
+                <BiArrowToRight className={(nextStepEnabled && !isDisabled)  ? 'activePlayBarIcon' : 'disabledPlayBarIcon'} style={{width: "66px"}} size={34} 
+                    onClick={(nextStepEnabled && !isDisabled) ? handleNextStep : () => {}}
                 />
             </div>
         </div>

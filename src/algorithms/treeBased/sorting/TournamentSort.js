@@ -1,11 +1,10 @@
 import BaseSorting from './BaseSorting';
 import {createTournamentSortTree, getNodesFromLevel, getTreeMaxLevel, addStep} from '../../../screens/TreeBasedPage/treeBasedHelpers';
-import Constants from '../../../constants';
 import {
     AddedNodeType, CheckingNodeType, 
-    InvisibleNodeType, RegularNodeType
+    RegularNodeType
 } from '../../../screens/TreeBasedPage/Elements/Tree/TreeNodeTypes';
-import {DoneElement, DoneElementType} from '../../../screens/TreeBasedPage/Elements/Array/ArrayElementTypes';
+import {DoneElementType} from '../../../screens/TreeBasedPage/Elements/Array/ArrayElementTypes';
 import ArrayElement from '../../../screens/TreeBasedPage/Elements/Array/ArrayElement';
 
 class TournamentSort extends BaseSorting {

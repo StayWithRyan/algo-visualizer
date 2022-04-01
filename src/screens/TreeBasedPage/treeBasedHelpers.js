@@ -1,10 +1,29 @@
 import Constants from '../../constants';
 import TreeBasedConstants from './constants';
-
 import {InvisibleNodeType, RegularNodeType} from './Elements/Tree/TreeNodeTypes';
 import TreeNode from './Elements/Tree/TreeNode';
 import ArrayElement from './Elements/Array/ArrayElement';
 import {RegularElementType} from './Elements/Array/ArrayElementTypes';
+import LNRTraversal from "../../algorithms/treeBased/traversal/LNRTraversal"
+import LRNTraversal from "../../algorithms/treeBased/traversal/LRNTraversal"
+import NLRTraversal from "../../algorithms/treeBased/traversal/NLRTraversal"
+import HeapSort from "../../algorithms/treeBased/sorting/HeapSort"
+import TreeSort from "../../algorithms/treeBased/sorting/TreeSort"
+import TournamentSort from "../../algorithms/treeBased/sorting/TournamentSort"
+
+const algorithmsMapping = {
+    "In-order tree traversal(LNR)": LNRTraversal,
+    "Pre-order tree traversal(NLR)": NLRTraversal,
+    "Post-order tree traversal(LRN)": LRNTraversal,
+    "HeapSort": HeapSort,
+    "TreeSort": TreeSort,
+    "TournamentSort": TournamentSort
+}
+const algorithms = [];
+for (let property in algorithmsMapping) {
+    algorithms.push(property);
+}
+let sameTreeAlgorithms = ["In-order tree traversal(LNR)", "Pre-order tree traversal(NLR)", "Post-order tree traversal(LRN)"];
 
 let treeSteps = [];
 let arraySteps = [];
@@ -349,5 +368,6 @@ const getNodeById = (tree, id) => {
 export {
     treeSteps, arraySteps, clearSteps, addStep, getStep, copyTree, copyArray,
     createTree, createHeapSortTree, createTournamentSortTree, getNodeById,
-    resetTreeTypes, resetArrayTypes, getTreeSizes, createArray, createTreeSortArray, getNodesFromLevel, getTreeMaxLevel
+    resetTreeTypes, resetArrayTypes, getTreeSizes, createArray, createTreeSortArray, getNodesFromLevel, getTreeMaxLevel,
+    algorithmsMapping, algorithms, sameTreeAlgorithms
 };

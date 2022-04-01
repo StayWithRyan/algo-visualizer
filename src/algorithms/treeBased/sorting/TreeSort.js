@@ -54,9 +54,6 @@ class TreeSort extends BaseSorting {
     }
 
     LNR(node) {
-        if(this.stopFlag) {
-            throw Constants.stopError;
-        }
         if(node.left) {
             this.LNR(node.left)
         }

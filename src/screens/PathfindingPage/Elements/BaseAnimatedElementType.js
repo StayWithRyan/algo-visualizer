@@ -35,6 +35,14 @@ class BaseAnimatedElementType extends BaseElementType{
             this.innerDraw(canvas, x, y);
         }
     }
+
+    setAnimating() {
+        this.currentStep = 0;
+    }
+
+    preventFromAnimating() {
+        this.currentStep = this.drawingSteps - 1;
+    }
 }
 
 

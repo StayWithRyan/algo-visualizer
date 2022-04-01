@@ -1,5 +1,4 @@
-import {getNodeById, addStep} from '../../../screens/TreeBasedPage/treeBasedHelpers';
-import Constants from '../../../constants';
+import {getNodeById} from '../../../screens/TreeBasedPage/treeBasedHelpers';
 import BaseSorting from './BaseSorting';
 
 class HeapSort extends BaseSorting {
