@@ -90,6 +90,7 @@ function PathfindingPage() {
 
     const handleReset = () => {
         resetMaze(maze, mazeSnapshot);
+        runAlgorithm(maze, algorithm);
     }
 
     const handleDown = (e) => {
@@ -155,7 +156,6 @@ function PathfindingPage() {
             return true;
         }
         if(isUserDrawing) {
-            console.log(isDrawingBlock)
             if(isDrawingBlock) {
                 if(maze[i][j].type instanceof BlockElementType === false) {
                     updateElement(maze, mazeSnapshot, i, j, BlockElementType);
@@ -174,10 +174,12 @@ function PathfindingPage() {
         if(autoplayRunning || isGenerating) {
             return;
         }
+        if(isUserDrawing) {
+            runAlgorithm(maze, algorithm);
+        }
         setIsUserDrawing(false); 
         setIsMovingStartNode(false);
         setIsMovingTargetNode(false);
-        runAlgorithm(maze, algorithm);
     }
 
     const canvasMarginHorizontal = `${ (window.innerWidth - maze[0].length * PathfindingConstants.elementSize - 1) / 2 }px`

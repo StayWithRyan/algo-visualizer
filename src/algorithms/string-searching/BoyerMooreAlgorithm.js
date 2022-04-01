@@ -1,10 +1,6 @@
 import BaseStringSearching from './BaseStringSearching';
 
 class BoyerMooreAlgorithm extends BaseStringSearching {
-    constructor(pattern, setPattern, text, setText, finishSearching, waitTimeout, copyArray) {
-        super(pattern, setPattern, text, setText, finishSearching, waitTimeout, copyArray);
-    }
-
     max(a,b) {
         return (a > b)? a: b;
     }
@@ -13,10 +9,10 @@ class BoyerMooreAlgorithm extends BaseStringSearching {
     badCharHeuristic() {
         this.badchar = {};
         for (let i = 0; i < this.pattern.length; i++) {
-            this.badchar[this.pattern[i].character] = -1;
+            this.badchar[this.pattern[i].char] = -1;
         }
         for (let i = 0; i < this.pattern.length; i++) {
-            this.badchar[this.pattern[i].character] = i;
+            this.badchar[this.pattern[i].char] = i;
         }
     }
      
@@ -30,26 +26,25 @@ class BoyerMooreAlgorithm extends BaseStringSearching {
         }
     }
      
-    async innerSearch() {
+    innerSearch() {
 
         let m = this.pattern.length;
         let n = this.text.length;
     
         this.badCharHeuristic();
-        await this.setPatternPreprocessing();
-        this.setDefaultColor();
+        this.setPatternLocation(0);
+        this.setPatternPreprocessing();
     
         let s = 0;
         
         while(s <= (n - m)) {
-            await this.setPatternLocation(s);
+            this.setPatternLocation(s);
             let j = m - 1;
     
 
             while(j >= 0) {
-                await this.setChecking(j + s, j);
-                this.setDefaultColor();
-                if(this.pattern[j].character == this.text[s + j].character) {
+                this.setChecking(j + s, j);
+                if(this.pattern[j].char == this.text[s + j].char) {
                     j--;
                 }
                 else {
@@ -59,10 +54,10 @@ class BoyerMooreAlgorithm extends BaseStringSearching {
 
             if (j < 0) {
                 this.found = true;
-                await this.setTextMatch(s, s + m);
+                this.setTextMatch(s, s + m);
                 break;
             }
-            s += this.max(1, j - this.getBadCharHeuristicValue(this.text[s + j].character));
+            s += this.max(1, j - this.getBadCharHeuristicValue(this.text[s + j].char));
         }
     }
 }

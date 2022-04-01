@@ -4,7 +4,7 @@ const SearchingConstants = {
     sleepDefault: 500,
     sleepStep: 50,
 
-    defaultColor: "white",
+    defaultColor: "black",
     checkingColor: "#fab366",
     checkingHashColor: "#6ea1ff",
     matchColor: "#07e35b",

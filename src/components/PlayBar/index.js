@@ -11,11 +11,13 @@ let autoplayId = 0;
 let autoplayStopped = false;
 let stepsLength = 0;
 let currentStep = 0;
+let firstStep = 0;
 
-const resetPlayBar = (stepsLengthPassed) => {
+const resetPlayBar = (stepsLengthPassed, firstStepPassed = 0) => {
     autoplayStopped = false;
     stepsLength = stepsLengthPassed;
-    currentStep = 0;
+    currentStep = firstStepPassed;
+    firstStep = firstStepPassed;
 }
 
 const setAutoplaySleep = (sleepTimeout) => {
@@ -31,7 +33,7 @@ function PlayBar({setStep, setRunningAutoplay, isDisabled = false}) {
         setRunningAutoplay(running);
     }, [running])
 
-    if(currentStep === 0) {
+    if(currentStep === firstStep) {
         if(running == true){
             setRunning(false);
         }

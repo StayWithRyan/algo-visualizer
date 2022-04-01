@@ -4,11 +4,7 @@ let d = 256;
 let q = 5;
 
 class RabinKarpAlgorithm extends BaseStringSearching {
-    constructor(pattern, setPattern, text, setText, finishSearching, waitTimeout, copyArray) {
-        super(pattern, setPattern, text, setText, finishSearching, waitTimeout, copyArray);
-    }
-
-    async innerSearch() {
+    innerSearch() {
         let M = this.pattern.length;
         let N = this.text.length;
         let i, j;
@@ -24,18 +20,20 @@ class RabinKarpAlgorithm extends BaseStringSearching {
         for(i = 0; i < M - 1; i++)
             h = (h * d) % q;
      
+            
+        this.setPatternLocation(0);
+        this.setPatternPreprocessing();
         // Calculate the hash value of pattern and
         // first window of text
         for(i = 0; i < M; i++) {
-            p = (d * p + this.pattern[i].character.charCodeAt()) % q;
-            t = (d * t + this.text[i].character.charCodeAt()) % q;
+            p = (d * p + this.pattern[i].char.charCodeAt()) % q;
+            t = (d * t + this.text[i].char.charCodeAt()) % q;
         }
      
         // Slide the pattern over text one by one
         for(i = 0; i <= N - M; i++) {
-            await this.setPatternLocation(i);
-            await this.setCheckingHash(i, i + M);
-            this.setDefaultColor();
+            this.setPatternLocation(i);
+            this.setCheckingHash(i, i + M);
             // Check the hash values of current
             // window of text and pattern. If the
             // hash values match then only
@@ -45,9 +43,8 @@ class RabinKarpAlgorithm extends BaseStringSearching {
                 /* Check for characters one by one */
                 for(j = 0; j < M; j++)
                 {
-                    await this.setChecking(i + j, j);
-                    this.setDefaultColor();
-                    if (this.text[i+j].character != this.pattern[j].character)
+                    this.setChecking(i + j, j);
+                    if (this.text[i+j].char != this.pattern[j].char)
                         break;
                 }
      
@@ -55,7 +52,7 @@ class RabinKarpAlgorithm extends BaseStringSearching {
                 // txt[i, i+1, ...i+M-1]
                 if (j == M) {
                     this.found = true;
-                    await this.setTextMatch(i, i + j);
+                    this.setTextMatch(i, i + j);
                     break;
                 }
             }
@@ -65,8 +62,8 @@ class RabinKarpAlgorithm extends BaseStringSearching {
             // trailing digit
             if (i < N - M)
             {
-                t = (d * (t - this.text[i].character.charCodeAt() * h) +
-                    this.text[i + M].character.charCodeAt()) % q;
+                t = (d * (t - this.text[i].char.charCodeAt() * h) +
+                    this.text[i + M].char.charCodeAt()) % q;
      
                 // We might get negative value of t,
                 // converting it to positive

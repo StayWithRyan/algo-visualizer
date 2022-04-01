@@ -1,18 +1,13 @@
 import BaseStringSearching from './BaseStringSearching';
 
 class KMPAlgorithm extends BaseStringSearching {
-    constructor(pattern, setPattern, text, setText, finishSearching, waitTimeout, copyArray) {
-        super(pattern, setPattern, text, setText, finishSearching, waitTimeout, copyArray);
-    }
-
- 
-    async innerSearch() {
+    innerSearch() {
         let M = this.pattern.length;
         let N = this.text.length;
 
         let lps = this.computeLPSArray();
-        await this.setPatternPreprocessing();
-        this.setDefaultColor();
+        this.setPatternLocation(0);
+        this.setPatternPreprocessing();
 
         let j = 0;
 
@@ -23,25 +18,23 @@ class KMPAlgorithm extends BaseStringSearching {
                 break;
             }
 
-            if (this.pattern[j].character === this.text[i].character) {
-                await this.setPatternLocation(i - j);
-                await this.setChecking(i, j);
-                this.setDefaultColor();
+            if (this.pattern[j].char === this.text[i].char) {
+                this.setPatternLocation(i - j);
+                this.setChecking(i, j);
                 j++;
                 i++;
 
                 if(j === M) {
                     this.found = true;
-                    await this.setTextMatch(i - M, i);
+                    this.setTextMatch(i - M, i);
                     break;
                 }
             }
             if(i < N) {
 
-                if(this.pattern[j].character !== this.text[i].character) {
-                    await this.setPatternLocation(i - j);
-                    await this.setChecking(i, j);
-                    this.setDefaultColor();
+                if(this.pattern[j].char !== this.text[i].char) {
+                    this.setPatternLocation(i - j);
+                    this.setChecking(i, j);
     
                     if (j != 0) {
                         j = lps[j - 1];
@@ -63,7 +56,7 @@ class KMPAlgorithm extends BaseStringSearching {
         
         
         while (i < M) {
-            if(this.pattern[i].character === this.pattern[len].character) {
+            if(this.pattern[i].char === this.pattern[len].char) {
                 len += 1;
                 lps[i] = len;
                 i += 1;

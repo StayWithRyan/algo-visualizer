@@ -6,68 +6,47 @@ import BasicSelect from '../../components/BasicSelect';
 import BasicSlider from '../../components/BasicSlider';
 import BasicButton from '../../components/BasicButton';
 
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useCallback} from 'react';
 
 import Constants from '../../constants';
 import SearchingConstants from './constants';
-
-
-import NaiveAlgorithm from '../../algorithms/string-searching/NaiveAlgorithm';
-import OptimizedNaiveAlgorithm from '../../algorithms/string-searching/OptimizedNaiveAlgorithm';
-import KMPAlgorithm from '../../algorithms/string-searching/KMPAlgorithm';
-import BoyerMooreAlgorithm from '../../algorithms/string-searching/BoyerMooreAlgorithm';
-import RabinKarpAlgorithm from '../../algorithms/string-searching/RabinKarpAlgorithm';
+import {
+    patternSteps, clearSteps, getStep, convertCharactersArrayToString, copyCharactersArray,
+    algorithmsMapping, algorithms, createCharactersArray, resetCharactersArray
+} from "./stringsearchingHelpers";
+import {PlayBar, resetPlayBar, setAutoplaySleep} from '../../components/PlayBar';
 
 function StringsearchingPage() {
 
-    const algorithmsMapping = {
-        "Naive Algorithm": NaiveAlgorithm,
-        "Optimized Naive Algorithm": OptimizedNaiveAlgorithm,
-        "KMP(Knuth Morris Pratt) Algorithm": KMPAlgorithm,
-        "Boyer Moore Algorithm": BoyerMooreAlgorithm,
-        "Rabin-Karp Algorithm": RabinKarpAlgorithm
-    }
-    const algorithms = [];
-    for (let property in algorithmsMapping) {
-        algorithms.push(property);
-    }
-    const [algorithm, setAlgorithm] = useState('');
-
+    const [algorithm, setAlgorithm] = useState(algorithms[0]);
     const [searchingSleep, setSearchingSleep] = useState(SearchingConstants.sleepDefault);
-    const [startButtonDisabled, setStartButtonDisabled] = useState(true);
-    const [stopButtonDisabled, setStopButtonDisabled] = useState(true);
-    const [clearButtonDisabled, setClearButtonDisabled] = useState(true);
+    const [isInputValid, setIsInputValid] = useState(false);
+    const [isSearching, setIsSearching] = useState(false);
+    const [autoplayRunning, setAutoplayRunning] = useState(false);
+
 
     const [pattern, setPattern] = useState([]);
+    const [patternLocation, setPatternLocation] = useState(null);
     const [text, setText] = useState([]);
 
-    const [searchingAlgorithmObj, setSearchingAlgorithmObj] = useState(null);
-    const [isSearching, setIsSearching] = useState(false);
+    const [, updateState] = useState();
+    const forceUpdate = useCallback(() => updateState({}), []);
 
     useEffect(() => {
-        if((pattern.length !== 0 || text.length !== 0) && isSearching === false) {
-            setClearButtonDisabled(false);
-        }
-        else{
-            setClearButtonDisabled(true);
-        }
-        if(pattern.length !== 0 && text.length !== 0 && algorithm !== "" && isSearching === false && pattern.length <= text.length) {
-            setStartButtonDisabled(false);
+        if(pattern.length !== 0 && text.length !== 0 && pattern.length <= text.length) {
+            if(!isSearching) {
+                runAlgorithm(pattern, text, algorithm);
+            }
+            setIsInputValid(true);
         }
         else {
-            setStartButtonDisabled(true);
+            setIsInputValid(false);
         }
-    }, [pattern, text, algorithm, isSearching]);
+    }, [pattern, text]);
 
-    const copyArray = (array) => {
-        let newArray = [];
-        array.forEach(element => {
-            newArray.push({character : element.character, color: element.color});
-
-        });
-
-        return newArray;
-    }
+    useEffect(() => {
+        setAutoplaySleep(searchingSleep);
+    }, [searchingSleep]);
 
     const inputValidation = (string) => {
         if(string.trim() != string) {
@@ -81,6 +60,12 @@ function StringsearchingPage() {
         return true;
     }
 
+    const handleAlgorithmChange = (value) => {
+        setAlgorithm(value);
+        runAlgorithm(pattern, text, value);
+    };
+
+
     const handlePatternChange = (value) => {
         if(inputValidation(value)) {
             setPattern(createCharactersArray(value));
@@ -92,118 +77,65 @@ function StringsearchingPage() {
             setText(createCharactersArray(value));
         }
     };
-    const createCharactersArray = (string) => {
-        let charactersArray = [];
-        for(let i = 0; i < string.length; ++i) {
-            charactersArray.push({character: string[i], color: SearchingConstants.defaultColor})
-        }
 
-        return charactersArray;
-    }
-
-    const convertCharactersArrayToString = (charactersArray) => {
-        let string = "";
-        for(let i = 0; i < charactersArray.length; ++i) {
-            string = string + charactersArray[i].character;
-        }
-
-        return string;
-    }
-    
-    const updatePatternWhileSearching = (value, index) => {
-        if (index != null) {
-            let newPattern = [];
-            for(let i = 0; i < index; i++) {
-                newPattern.push({character : "a", color: "invisible"});
-            }
-            
-            value.forEach(element => {
-                newPattern.push({character : element.character, color: element.color});
-    
-            });
-            let charactersLeft = text.length - newPattern.length;
-            for(let i = 0; i < charactersLeft; i++) {
-                newPattern.push({character : "a", color: "invisible"});
-    
-            }
-            setPattern(newPattern);
-        }
-        else {
-            let newPattern = [];    
-            value.forEach(element => {
-                newPattern.push({character : element.character, color: element.color});
-    
-            });
-            setPattern(newPattern);
-        }
-    }
-
-    const handleStart = () => {
-        setIsSearching(true);
-        
-        setStartButtonDisabled(true);
-        setStopButtonDisabled(false);
-
+    const runAlgorithm = (pattern, text, algorithm) => {
+        clearSteps();
         const algorithmClass = algorithmsMapping[`${algorithm}`];
-        const algorithmObj = new algorithmClass(pattern, updatePatternWhileSearching, text, setText, handleStop, searchingSleep, copyArray);
-        setSearchingAlgorithmObj(algorithmObj);
-        algorithmObj.search()
-    };
-
-    const handleStop = (patternValue) => {
-        if(searchingAlgorithmObj) {
-            searchingAlgorithmObj.stopSearching();
-        }
-        setIsSearching(false);
-        // reset color
-        let newArray = copyArray(text);
-        for(let i = 0; i < newArray.length; i++) {
-            newArray[i].color = SearchingConstants.defaultColor;
-        }
-
-        setText(newArray);
-
-        if (patternValue) {
-            newArray = copyArray(patternValue);
-        }
-        else if(searchingAlgorithmObj) {
-            newArray = copyArray(searchingAlgorithmObj.pattern);
-        }
-        for(let i = 0; i < newArray.length; i++) {
-            newArray[i].color = SearchingConstants.defaultColor;
-        }
-        setPattern(newArray);
-
-        setStartButtonDisabled(false);
-        setStopButtonDisabled(true);
+        const algorithmObj = new algorithmClass(copyCharactersArray(pattern), copyCharactersArray(text));
+        algorithmObj.search();
+        resetPlayBar(patternSteps.length, -1);
+        // to update PlayBar
+        forceUpdate();
     };
 
     const handleClear = () => {
-        setPattern("");
-        setText("");
+        setPatternLocation(null);
+        let newPattern = copyCharactersArray(pattern);
+        let newText = copyCharactersArray(text);
+        resetCharactersArray(newPattern);
+        resetCharactersArray(newText);
+        setPattern(newPattern);
+        setText(newText);
+        setIsSearching(false);
+        runAlgorithm(newPattern, newText, algorithm);
     };
 
+    const applyStep = (step) => {
+        setIsSearching(true);
+        let [newPattern, newPatternLocation, newText] = getStep(step);
+        setPattern(newPattern);
+        setPatternLocation(newPatternLocation);
+        setText(newText);
+    };
+
+
+    let prePattern = [];
+    let postPattern = [];
+    if(patternLocation !== null) {
+        let chars = text.length - pattern.length;
+        for(let i = 0; i < patternLocation; ++i) {
+            prePattern.push({char: "-", color: "white"});
+        }
+        for(let i = 0; i < chars - prePattern.length; ++i) {
+            postPattern.push({char: "-", color: "white"});
+        }
+    }
+    
     return (
         <>
             <ConfigurationBar>
-                <BasicSelect title ="Searching algorithm" isDisabled={isSearching} onChange = {setAlgorithm} value = {algorithm} values = {algorithms}  />
-                <BasicSlider title="Sleep time(ms)" isDisabled={isSearching} min={SearchingConstants.sleepMin} max={SearchingConstants.sleepMax} 
+                <BasicSelect title ="Searching algorithm" isDisabled={isSearching} onChange = {handleAlgorithmChange} value = {algorithm} values = {algorithms}  />
+                <BasicSlider title="Sleep time(ms)" min={SearchingConstants.sleepMin} max={SearchingConstants.sleepMax} 
                     default={SearchingConstants.sleepDefault} step={SearchingConstants.sleepStep} onChange={setSearchingSleep} />
-                <BasicButton title="Start searching" onClick={handleStart} isDisabled={startButtonDisabled}/>
-                <BasicButton title="Stop searching" onClick={() => handleStop()} isDisabled={stopButtonDisabled}/>
-                <BasicButton title="Clear" onClick={handleClear} isDisabled={clearButtonDisabled}/>
+                <PlayBar setStep={applyStep} setRunningAutoplay={setAutoplayRunning} isDisabled={!isInputValid}/>
+                <BasicButton title="Clear" onClick={handleClear} isDisabled={autoplayRunning || !isSearching}/>
             </ConfigurationBar>
             {isSearching // pattern
                 ? <div className="textCard">
                     <div className="textBox" style ={{marginTop: "200px"}}>
-                        {pattern.map(
+                        {[...prePattern, ...pattern, ...postPattern].map(
                             elem => {
-                                if (elem.color === "invisible") {
-                                    return <span style={{backgroundColor: "white", color: "white"}}>{elem.character}</span>;
-                                }
-                                else {
-                                    return <span style={{backgroundColor: elem.color}}>{elem.character}</span>;
-                                }
+                                return <span style={{color: elem.color}}>{elem.char}</span>;
                             }
                         )}
                     </div>
@@ -217,7 +149,7 @@ function StringsearchingPage() {
             {isSearching // text
                 ? <div className="textCard">
                     <div className="textBox" style ={{marginTop: "0px"}}>
-                        {text.map(elem => <span style={{backgroundColor: elem.color}}>{elem.character}</span>)}
+                        {text.map(elem => <span style={{color: elem.color}}>{elem.char}</span>)}
                     </div>
                 </div>     
                 : <div className="textCard">

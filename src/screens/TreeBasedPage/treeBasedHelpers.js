@@ -366,7 +366,7 @@ const getNodeById = (tree, id) => {
 }
 
 export {
-    treeSteps, arraySteps, clearSteps, addStep, getStep, copyTree, copyArray,
+    treeSteps, clearSteps, addStep, getStep, copyTree, copyArray,
     createTree, createHeapSortTree, createTournamentSortTree, getNodeById,
     resetTreeTypes, resetArrayTypes, getTreeSizes, createArray, createTreeSortArray, getNodesFromLevel, getTreeMaxLevel,
     algorithmsMapping, algorithms, sameTreeAlgorithms
