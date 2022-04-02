@@ -12,10 +12,11 @@ import {draw, createMaze, copyMaze, steps, clearSteps, getStep, fillSnapshot, cr
 import {StartElementType, TargetElementType, BlockElementType, EmptyElementType} from './Elements/MazeElementTypes';
 import {PlayBar, resetPlayBar, setAutoplaySleep} from '../../components/PlayBar';
 
+let maze = createMaze();
+
 function PathfindingPage() {
 
     const [algorithm, setAlgorithm] = useState(algorithms[0]);
-    const [maze, setMaze] = useState(createMaze());
     //SnapShot of blocks. Need to remember blocks positions when moving start and target nodes.
     const [mazeSnapshot, setMazeSnapshot] = useState(createSnapshot(maze));
     const [pathfindingSleep, setPathfindingSleep] = useState(PathfindingConstants.sleepDefault);
@@ -36,12 +37,9 @@ function PathfindingPage() {
     useEffect(() => {
         draw(maze, canvasRef.current, true);
         runAlgorithm(maze, algorithm);
-    }, []);
-
-    useEffect(() => {
         let intervalId = setInterval(() =>  draw(maze, canvasRef.current), Constants.drawInterval);
-        return () => clearInterval(intervalId);
-    }, [maze]);
+        return () => {clearInterval(intervalId); maze = createMaze();};
+    }, []);
 
     useEffect(() => {
         setAutoplaySleep(pathfindingSleep);
@@ -85,7 +83,8 @@ function PathfindingPage() {
     };
 
     const applyStep = (step, isNext) => {
-        setMaze(getStep(step, isNext));
+        let [elem, i, j] = getStep(step, isNext);
+        maze[i][j] = elem;
     };
 
     const handleReset = () => {

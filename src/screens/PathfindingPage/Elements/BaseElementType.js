@@ -1,6 +1,10 @@
 import PathfindingConstants from '../constants';
 
 class BaseElementType {
+    constructor() {
+        this.currentStep = 0;
+    }
+    
     drawStartLabel(canvas, x, y) {
         let context = canvas.getContext('2d');
         context.strokeStyle = PathfindingConstants.startColor;

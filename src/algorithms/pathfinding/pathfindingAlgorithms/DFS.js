@@ -22,7 +22,7 @@ class DFS extends BasePathfinding{
 
         let startLocation = getNodeLocation(this.maze, StartElementType);
         let path = [];
-        addStep(this.maze);
+        addStep();
         if(this.DFSInner(startLocation[0], startLocation[1], path)) {
             this.showPath(path);
         }

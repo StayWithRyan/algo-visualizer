@@ -1,5 +1,5 @@
 const SortingConstants = {
-    sleepMin: 20,
+    sleepMin: 25,
     sleepMax: 2000,
     sleepDefault: 500,
     sleepStep: 20,

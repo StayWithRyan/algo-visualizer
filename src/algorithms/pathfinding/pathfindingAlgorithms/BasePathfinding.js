@@ -36,7 +36,7 @@ class BasePathfinding {
                 classType = PathTargetElementType;
             }
             this.maze[path[i][0]][path[i][1]].setType(classType);
-            addStep(this.maze);
+            addStep(this.maze[path[i][0]][path[i][1]], path[i][0], path[i][1]);
         }
     }
 
@@ -49,7 +49,7 @@ class BasePathfinding {
             classType = CheckingTargetElementType;
         }
         this.maze[i][j].setType(classType);
-        addStep(this.maze);
+        addStep(this.maze[i][j], i, j);
     }
 }
 

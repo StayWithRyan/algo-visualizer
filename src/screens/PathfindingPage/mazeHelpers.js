@@ -38,39 +38,32 @@ const clearSteps = () => {
     steps.length = 0;
 }
 
-const addStep = (maze) => {
-    steps.push(copyMaze(maze));
+const addStep = async (elem, i, j) => {
+    steps.push([
+        elem ? copyElem(elem) : null,
+        i,
+        j,
+    ]);
 }
 
 const getStep = (index, isNext) => {
-    let maze = steps[index];
-    let prevMaze = steps[isNext ? index - 1 : index + 1];
-    let differentNodes = [];
-    for(let i = 0; i < maze.length; ++i) {
-        for(let j = 0; j < maze[0].length; ++j) {
-            if(maze[i][j].type.constructor !== prevMaze[i][j].type.constructor) {
-                differentNodes.push(maze[i][j])
-            }
+    let [elem, i, j] = steps[isNext ? index : index + 1];
+
+    if(isNext) {
+        if(elem.type.setAnimating) {
+            elem.type.setAnimating()
         }
+        return [elem, i, j];
     }
-    if(differentNodes.length != 1) {
-        console.log(differentNodes.length)
-        throw "??????";
+    else {
+        let newElem = copyElem(elem);
+        newElem.type = newElem.prevType;
+        if(newElem.type.preventFromAnimating) {
+            newElem.type.preventFromAnimating()
+        }
+        return [newElem, i, j];
     }
-    differentNodes.forEach(element => {
-        if(isNext) {
-            if(element.type.setAnimating) {
-                element.type.setAnimating()
-            }
-        }
-        else {
-            if(element.type.preventFromAnimating) {
-                element.type.preventFromAnimating()
-            }
-        }
-    });
     
-    return maze;
 }
 
 const copyMaze = (maze) => {
@@ -78,14 +71,19 @@ const copyMaze = (maze) => {
     for(let i = 0; i < maze.length; ++i) {
         let row = [];
         for(let j = 0; j < maze[0].length; ++j) {
-            let elem = new MazeElement();
-            elem.type = maze[i][j].type;
-            row.push(elem);
+            row.push(copyElem(maze[i][j]));
         }
         newMaze.push(row)
     }
 
     return newMaze;
+}
+
+const copyElem = (elem) => {
+    let mewElem = new MazeElement();
+    mewElem.type = elem.type;
+    mewElem.prevType = elem.prevType;
+    return mewElem;
 }
 
 const createMaze = () => {
@@ -150,16 +148,31 @@ const createSnapshot = (maze) => {
 
 const draw = (maze, canvas, fillBackground) => {
     if(fillBackground) {
-        const context = canvas.getContext('2d');
-        context.fillStyle = PathfindingConstants.gridColor;
-        context.fillRect(0, 0, canvas.width, canvas.height);
-
+        drawGrid(maze, canvas);
     }
 
     for(let i = 0 ; i < maze.length; ++i) {
         for(let j = 0 ; j < maze[0].length; ++j) {
             maze[i][j].draw(canvas, j * elemSize, i * elemSize);
         }
+    }
+}
+
+const drawGrid = (maze, canvas) => {
+    const context = canvas.getContext('2d');
+    context.lineWidth = 1;
+    context.strokeStyle = PathfindingConstants.gridColor;
+    for(let i = 0; i <= maze.length; ++i) {
+        context.beginPath();
+        context.moveTo(0, i * elemSize + 0.5);
+        context.lineTo(canvas.width, i * elemSize + 0.5);
+        context.stroke();
+    }
+    for(let i = 0; i <= maze[0].length; ++i) {
+        context.beginPath();
+        context.moveTo(i * elemSize + 0.5, 0);
+        context.lineTo(i * elemSize + 0.5, canvas.height);
+        context.stroke();
     }
 }
 
@@ -239,7 +252,7 @@ const getNodeLocation = (maze, classToFind) => {
 }
 
 export {
-    steps, clearSteps, addStep, getStep, createMaze, copyMaze, fillSnapshot, createSnapshot,
+    steps, clearSteps, addStep, getStep, createMaze, copyMaze, copyElem, fillSnapshot, createSnapshot,
     getMousePosition, isOnBoarder, updateElement, resetMaze, getNodeLocation, cleanMazeAfterSearching, draw,
     algorithmsMapping, generatingAlgorithmsMapping, algorithms, generatingAlgorithms
 };

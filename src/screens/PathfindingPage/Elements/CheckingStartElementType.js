@@ -4,7 +4,6 @@ import PathfindingConstants from '../constants';
 class CheckingStartElementType extends BaseAnimatedElementType {
     constructor() {
         super()
-        this.backgroundColor = PathfindingConstants.emptyColor;
         this.rainbow.setSpectrum(PathfindingConstants.checkingColor[0], PathfindingConstants.checkingColor[1]);
     }
 

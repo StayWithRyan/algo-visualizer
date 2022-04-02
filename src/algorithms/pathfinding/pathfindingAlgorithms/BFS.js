@@ -36,7 +36,7 @@ class BFS extends BasePathfinding{
         let [startI, startJ] = getNodeLocation(this.maze, StartElementType);
         this.queue.push([startI, startJ]);
         this.pathArray[startI][startJ].push([startI, startJ]);
-        addStep(this.maze);
+        addStep();
         let path = this.BFS();
 
         if(path.length > 0) {

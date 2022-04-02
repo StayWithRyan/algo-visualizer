@@ -80,7 +80,7 @@ function PlayBar({setStep, setRunningAutoplay, isDisabled = false}) {
         currentStep++;
         setStep(currentStep, true);
         await Constants.delay(timeout);
-        await autoplay(id);
+        autoplay(id);
     }
 
     const handleAutoplay = () => {

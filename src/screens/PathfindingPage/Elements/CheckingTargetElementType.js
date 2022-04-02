@@ -3,8 +3,7 @@ import PathfindingConstants from '../constants';
 
 class CheckingTargetElementType extends BaseAnimatedElementType {
     constructor() {
-        super()
-        this.backgroundColor = PathfindingConstants.emptyColor;
+        super();
         this.rainbow.setSpectrum(PathfindingConstants.checkingColor[0], PathfindingConstants.checkingColor[1]);
     }
 

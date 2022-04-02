@@ -1,5 +1,5 @@
 const PathfindingConstants = {
-    sleepMin: 20,
+    sleepMin: 25,
     sleepMax: 300,
     sleepDefault: 50,
     sleepStep: 15,

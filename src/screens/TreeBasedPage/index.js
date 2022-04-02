@@ -53,7 +53,7 @@ function TreeBasedPage() {
         }
         else if(algorithm == "TreeSort") {
             newTree = null;
-            newArray = isReset? resetArrayTypes(array) : createTreeSortArray(Math.min(treeSizeMax, size), treeMaxLevel);
+            newArray = isReset? resetArrayTypes(array) : createTreeSortArray(size, treeMaxLevel);
         }
         else if(sameTreeAlgorithms.includes(algorithm)) {
             newTree = isReset? resetTreeTypes(tree) : createTree(size, treeMaxLevel);
@@ -61,7 +61,7 @@ function TreeBasedPage() {
         }
         else if(algorithm == "TournamentSort") {
             if(!isReset) {
-                newTree = createTournamentSortTree({lastLevelSize: Math.min(treeSizeMax, size)});
+                newTree = createTournamentSortTree({lastLevelSize: size});
                 newArray = [];
             }
         }
@@ -70,7 +70,14 @@ function TreeBasedPage() {
     }
 
     const handleAlgorithmChange = (value) => {
-        let [newTree, newArray] = updateTreeAndArray(treeSize, value, sameTreeAlgorithms.includes(value) && sameTreeAlgorithms.includes(algorithm));
+        [treeSizeMax, treeMaxLevel] = getTreeSizes(value);
+        if(treeSize > treeSizeMax) {
+            setTreeSize(treeSizeMax);
+        }
+        let [newTree, newArray] = updateTreeAndArray(
+            Math.min(treeSize, treeSizeMax),
+            value, sameTreeAlgorithms.includes(value) && sameTreeAlgorithms.includes(algorithm)
+        );
         setAlgorithm(value);
         setTree(newTree);
         setArray(newArray);
