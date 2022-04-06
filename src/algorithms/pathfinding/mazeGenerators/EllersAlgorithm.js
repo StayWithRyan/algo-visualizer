@@ -1,4 +1,4 @@
-import Constants from '../../../constants';
+import Helpers from '../../../helpers';
 import PathfindingConstants from '../../../screens/PathfindingPage/constants';
 import {EmptyElementType, BlockElementType} from '../../../screens/PathfindingPage/Elements/MazeElementTypes';
 import {createBorders} from './mazeGeneratorsHelpers';
@@ -36,7 +36,7 @@ async function EllersAlgorithm(maze, handleFinishGenerating) {
                 if(sets[i - 1][j] == 0) {
                     maze[i][j].setType(BlockElementType);
                     sets[i][j] = 0;
-                    await Constants.delay(delayTimeout);
+                    await Helpers.delay(delayTimeout);
                 }
                 else{
                     if(prevSet != sets[i - 1][j]) {
@@ -53,9 +53,9 @@ async function EllersAlgorithm(maze, handleFinishGenerating) {
                             k++;
                         }
 
-                        gapIndexes.push(Constants.getRandomInt(setSize));
+                        gapIndexes.push(Helpers.getRandomInt(setSize));
                         for(let k = 0; k < 5; k ++) {
-                            let newGap = Constants.getRandomInt(setSize);
+                            let newGap = Helpers.getRandomInt(setSize);
                             let gapAvailable = true;
                             for(let l = 0; l < gapIndexes.length; ++l) {
                                 if(Math.abs(newGap - gapIndexes[l]) <= 1) {
@@ -75,7 +75,7 @@ async function EllersAlgorithm(maze, handleFinishGenerating) {
                     else{
                         maze[i][j].setType(BlockElementType);
                         sets[i][j] = 0;
-                        await Constants.delay(delayTimeout);
+                        await Helpers.delay(delayTimeout);
                     }
                     setIndex++;
                 }
@@ -99,7 +99,7 @@ async function EllersAlgorithm(maze, handleFinishGenerating) {
             }
             // randomly join adjacent cells
             for(let j = 2; j < w - 1; ++j) {
-                if(Constants.getRandomInt(10) < 6) {
+                if(Helpers.getRandomInt(10) < 6) {
                     sets[i][j] = sets[i][j - 1];
                 }
             }
@@ -109,7 +109,7 @@ async function EllersAlgorithm(maze, handleFinishGenerating) {
                 if(sets[i][j] != sets[i][j - 1] && !(maze[i][j - 1].type instanceof BlockElementType) && sets[i - 1][j] == 0 && maze[i][j].type instanceof EmptyElementType) {
                     maze[i][j].setType(BlockElementType);
                     sets[i][j] = 0;
-                    await Constants.delay(delayTimeout);
+                    await Helpers.delay(delayTimeout);
                 }
             }
 
@@ -122,7 +122,7 @@ async function EllersAlgorithm(maze, handleFinishGenerating) {
         }
     }
 
-    await Constants.delay(200);
+    await Helpers.delay(200);
     handleFinishGenerating();
 
 };

@@ -1,4 +1,4 @@
-import Constants from '../../constants';
+import Helpers from '../../helpers';
 import TreeBasedConstants from './constants';
 import {InvisibleNodeType, RegularNodeType} from './Elements/Tree/TreeNodeTypes';
 import TreeNode from './Elements/Tree/TreeNode';
@@ -213,7 +213,7 @@ const createTree = (size, treeMaxLevel) => {
     }
 
     const getRandomValue = () => {
-        let nodeValueIndex = Constants.getRandomInt(nodeValues.length);
+        let nodeValueIndex = Helpers.getRandomInt(nodeValues.length);
         let value = nodeValues[nodeValueIndex];
         // remove selected value from array
         nodeValues.splice(nodeValueIndex, 1);
@@ -226,7 +226,7 @@ const createTree = (size, treeMaxLevel) => {
 
     while(queue.length > 0 && currentTreeSize < size) {
         let nodeIndexToPopulate;
-        nodeIndexToPopulate = Constants.getRandomInt(queue.length);
+        nodeIndexToPopulate = Helpers.getRandomInt(queue.length);
         let nodeToPopulate = queue[nodeIndexToPopulate];
         if(nodeToPopulate.left == null && nodeToPopulate.level < treeMaxLevel) {
             nodeToPopulate.setLeftChild(getRandomValue(), RegularNodeType);

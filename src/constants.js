@@ -9,11 +9,7 @@ const Constants = {
     drawInterval: 20,
     
     navBarHeight: 45,
-    configurationBarHeight: 60,
-
-    delay : ms => new Promise(res => setTimeout(res, ms)),
-    getRandomInt : max => Math.floor(Math.random() * max),
-    stopError: "Preventing from executing"
+    configurationBarHeight: 60
 }
 
 export default Constants;

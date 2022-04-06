@@ -13,12 +13,15 @@ import {StartElementType, TargetElementType, BlockElementType, EmptyElementType}
 import {PlayBar, resetPlayBar, setAutoplaySleep} from '../../components/PlayBar';
 
 let maze = createMaze();
+//Snapshot of blocks. Need to remember blocks positions when moving start and target nodes.
+let mazeSnapshot = createSnapshot(maze);
 
 function PathfindingPage() {
-
+    if(maze === null) {
+        maze = createMaze();
+        mazeSnapshot = createSnapshot(maze);
+    }
     const [algorithm, setAlgorithm] = useState(algorithms[0]);
-    //SnapShot of blocks. Need to remember blocks positions when moving start and target nodes.
-    const [mazeSnapshot, setMazeSnapshot] = useState(createSnapshot(maze));
     const [pathfindingSleep, setPathfindingSleep] = useState(PathfindingConstants.sleepDefault);
     const [generatingAlgorithm, setGeneratingAlgorithm] = useState(generatingAlgorithms[0]);
     const [autoplayRunning, setAutoplayRunning] = useState(false);
@@ -36,9 +39,9 @@ function PathfindingPage() {
 
     useEffect(() => {
         draw(maze, canvasRef.current, true);
-        runAlgorithm(maze, algorithm);
+        runAlgorithm(algorithm);
         let intervalId = setInterval(() =>  draw(maze, canvasRef.current), Constants.drawInterval);
-        return () => {clearInterval(intervalId); maze = createMaze();};
+        return () => {clearInterval(intervalId); maze = null;};
     }, []);
 
     useEffect(() => {
@@ -48,10 +51,10 @@ function PathfindingPage() {
     const handleAlgorithmChange = (value) => {
         setAlgorithm(value);
         cleanMazeAfterSearching(maze);
-        runAlgorithm(maze, value);
+        runAlgorithm(value);
     };
 
-    const runAlgorithm = (maze, algorithm) => {
+    const runAlgorithm = (algorithm) => {
         clearSteps();
         const algorithmClass = algorithmsMapping[`${algorithm}`];
         const algorithmObj = new algorithmClass(copyMaze(maze));
@@ -73,13 +76,18 @@ function PathfindingPage() {
 
     const handleGenerating = () => {
         setIsGenerating(true);
-        const handleFinishGenerating = () => {
-            fillSnapshot(maze, mazeSnapshot);
-            runAlgorithm(maze, algorithm);
-            setIsGenerating(false);
-        }
         resetMaze(maze, mazeSnapshot);
-        generatingAlgorithmsMapping[`${generatingAlgorithm}`](maze, handleFinishGenerating);
+        try{
+            const handleFinishGenerating = () => {
+                fillSnapshot(maze, mazeSnapshot);
+                runAlgorithm(algorithm);
+                setIsGenerating(false);
+            }
+            generatingAlgorithmsMapping[`${generatingAlgorithm}`](maze, handleFinishGenerating);
+        }
+        catch(e) {
+            // to handle situation when user leaving pathfinding page before generating is completed
+        }
     };
 
     const applyStep = (step, isNext) => {
@@ -89,7 +97,7 @@ function PathfindingPage() {
 
     const handleReset = () => {
         resetMaze(maze, mazeSnapshot);
-        runAlgorithm(maze, algorithm);
+        runAlgorithm(algorithm);
     }
 
     const handleDown = (e) => {
@@ -140,7 +148,7 @@ function PathfindingPage() {
         setIsMovingStartNode(false);
         setIsMovingTargetNode(false);
         handleDrawing(e);
-        runAlgorithm(maze, algorithm);
+        runAlgorithm(algorithm);
     }
 
     const handleDrawing = (e) => {
@@ -174,7 +182,7 @@ function PathfindingPage() {
             return;
         }
         if(isUserDrawing) {
-            runAlgorithm(maze, algorithm);
+            runAlgorithm(algorithm);
         }
         setIsUserDrawing(false); 
         setIsMovingStartNode(false);

@@ -1,4 +1,4 @@
-import Constants from '../../../constants';
+import Helpers from '../../../helpers';
 import PathfindingConstants from '../../../screens/PathfindingPage/constants';
 import {BlockElementType} from '../../../screens/PathfindingPage/Elements/MazeElementTypes';
 import {createBorders} from './mazeGeneratorsHelpers';
@@ -8,7 +8,7 @@ let delayTimeout = PathfindingConstants.generatingDelayTimeout;
 function getRandomLine(max) {
     let value;
     do {
-        value = Constants.getRandomInt(max);
+        value = Helpers.getRandomInt(max);
     } while(value % 2 == 0);
 
     return value;
@@ -17,7 +17,7 @@ function getRandomLine(max) {
 function getRandomGap(max) {
     let value;
     do {
-        value = Constants.getRandomInt(max);
+        value = Helpers.getRandomInt(max);
     } while(value % 2 == 1);
 
     return value;
@@ -27,7 +27,7 @@ async function RecursiveDivision (maze, handleFinishGenerating) {
     await createBorders(maze);
     await RecursiveDivisionInner(maze, 1, 1, maze.length - 2, maze[0].length - 2); 
 
-    await Constants.delay(200);
+    await Helpers.delay(200);
     handleFinishGenerating();
 
 };
@@ -45,7 +45,7 @@ async function RecursiveDivisionInner(maze, x, y, h, w) {
         horizontalChance = 20;
     }
     
-    let isHorizontal = (Constants.getRandomInt(100) < horizontalChance);
+    let isHorizontal = (Helpers.getRandomInt(100) < horizontalChance);
 
     if(isHorizontal) {
         let rowIndex = getRandomLine(h - 1);
@@ -55,7 +55,7 @@ async function RecursiveDivisionInner(maze, x, y, h, w) {
                 continue;
             }
             maze[y + rowIndex][x + i].setType(BlockElementType);
-            await Constants.delay(delayTimeout);
+            await Helpers.delay(delayTimeout);
         }
         await RecursiveDivisionInner(maze, x, y, rowIndex, w);
         await RecursiveDivisionInner(maze, x, y + rowIndex + 1, h - rowIndex - 1, w);
@@ -68,7 +68,7 @@ async function RecursiveDivisionInner(maze, x, y, h, w) {
                 continue;
             }
             maze[y + i][columnIndex + x].setType(BlockElementType);
-            await Constants.delay(delayTimeout);
+            await Helpers.delay(delayTimeout);
         }
         await RecursiveDivisionInner(maze, x, y, h, columnIndex);
         await RecursiveDivisionInner(maze, x + columnIndex + 1, y, h, w - columnIndex - 1);

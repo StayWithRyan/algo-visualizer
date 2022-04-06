@@ -45,6 +45,11 @@ function StringsearchingPage() {
     }, [pattern, text]);
 
     useEffect(() => {
+        resetPlayBar();
+    }, []);
+
+
+    useEffect(() => {
         setAutoplaySleep(searchingSleep);
     }, [searchingSleep]);
 

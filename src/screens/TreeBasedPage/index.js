@@ -15,13 +15,13 @@ import {PlayBar, resetPlayBar, setAutoplaySleep} from '../../components/PlayBar'
 import Constants from '../../constants';
 import TreeBasedConstants from './constants';
 
+let tree = createTree(TreeBasedConstants.treeSizeDefault, getTreeSizes(algorithms[0])[1]);
+let array = createTree(TreeBasedConstants.treeSizeDefault, getTreeSizes(algorithms[0])[1]);
 
 function TreeBasedPage() {
     const [algorithm, setAlgorithm] = useState(algorithms[0]);
     let [treeSizeMax, treeMaxLevel] = getTreeSizes(algorithm);
     const [treeSize, setTreeSize] = useState(TreeBasedConstants.treeSizeDefault);
-    const [tree, setTree] = useState(createTree(TreeBasedConstants.treeSizeDefault, treeMaxLevel));
-    const [array, setArray] = useState([]);
     const [treeBasedSleep, setTreeBasedSleep] = useState(TreeBasedConstants.sleepDefault);
     const [autoplayRunning, setAutoplayRunning] = useState(false);
 
@@ -31,7 +31,7 @@ function TreeBasedPage() {
     const canvasRef = useRef(null);
 
     useEffect(() => {
-        runAlgorithm(tree, array, algorithm);
+        runAlgorithm(algorithm);
     }, []);
 
     useEffect(() => {
@@ -79,20 +79,20 @@ function TreeBasedPage() {
             value, sameTreeAlgorithms.includes(value) && sameTreeAlgorithms.includes(algorithm)
         );
         setAlgorithm(value);
-        setTree(newTree);
-        setArray(newArray);
-        runAlgorithm(newTree, newArray, value);
+        tree = newTree;
+        array = newArray;
+        runAlgorithm(value);
     }
 
     const handleSizeChange = (value) => {
         let [newTree, newArray] = updateTreeAndArray(value, algorithm);
         setTreeSize(value);
-        setTree(newTree);
-        setArray(newArray);
-        runAlgorithm(newTree, newArray, algorithm);
+        tree = newTree;
+        array = newArray;
+        runAlgorithm(algorithm);
     }
     
-    const runAlgorithm = (tree, array, algorithm) => {
+    const runAlgorithm = (algorithm) => {
         clearSteps();
         const algorithmClass = algorithmsMapping[`${algorithm}`];
         const algorithmObj = new algorithmClass(copyTree(tree), copyArray(array));
@@ -105,8 +105,8 @@ function TreeBasedPage() {
 
     const applyStep = (step) => {
         let [newTree, newArray] = getStep(step);
-        setTree(newTree);
-        setArray(newArray);
+        tree = newTree;
+        array = newArray;
     };
 
     let canvasHeight = window.innerHeight - Constants.navBarHeight - Constants.configurationBarHeight - 20;

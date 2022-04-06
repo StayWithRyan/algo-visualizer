@@ -13,9 +13,11 @@ import {
     steps, clearSteps, getStep, copyArray, createArray, draw, resetArrayTypes
 } from './sortingHelpers';
 
+
+let array = createArray(SortingConstants.arraySizeDefault);
+
 function SortingPage() {
     const [algorithm, setAlgorithm] = useState(algorithms[0]);
-    const [array, setArray] = useState(createArray(SortingConstants.arraySizeDefault));
     const [sortingSleep, setSortingSleep] = useState(SortingConstants.sleepDefault);
     const [autoplayRunning, setAutoplayRunning] = useState(false);
 
@@ -25,7 +27,7 @@ function SortingPage() {
     const canvasRef = useRef(null);
 
     useEffect(() => {
-        runAlgorithm(array, algorithm);
+        runAlgorithm(algorithm);
     }, []);
 
     useEffect(() => {
@@ -40,16 +42,15 @@ function SortingPage() {
     const handleAlgorithmChange = (value) => {
         setAlgorithm(value);
         resetArrayTypes(array);
-        runAlgorithm(array, value);
+        runAlgorithm(value);
     };
 
     const handleSizeChange = (value) => {
-        let newArray = createArray(value);
-        setArray(newArray);
-        runAlgorithm(newArray, algorithm);
+        array = createArray(value);
+        runAlgorithm(algorithm);
     };
 
-    const runAlgorithm = (array, algorithm) => {
+    const runAlgorithm = (algorithm) => {
         clearSteps();
         const algorithmClass = algorithmsMapping[`${algorithm}`];
         const algorithmObj = new algorithmClass(copyArray(array));
@@ -60,7 +61,7 @@ function SortingPage() {
     };
 
     const applyStep = (step) => {
-        setArray(getStep(step));
+        array = getStep(step);
     };
 
 

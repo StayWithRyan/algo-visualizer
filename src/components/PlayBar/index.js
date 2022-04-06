@@ -3,6 +3,7 @@ import './style.css';
 import { BiArrowToRight, BiArrowToLeft } from 'react-icons/bi';
 import { BsStopCircle, BsPlayCircle } from 'react-icons/bs';
 import Constants from '../../constants';
+import Helpers from '../../helpers';
 import { useState, useEffect } from 'react';
 
 let timeout = 0;
@@ -13,11 +14,12 @@ let stepsLength = 0;
 let currentStep = 0;
 let firstStep = 0;
 
-const resetPlayBar = (stepsLengthPassed, firstStepPassed = 0) => {
+const resetPlayBar = (stepsLengthPassed = 0, firstStepPassed = 0) => {
     autoplayStopped = false;
     stepsLength = stepsLengthPassed;
     currentStep = firstStepPassed;
     firstStep = firstStepPassed;
+    autoplayId++;
 }
 
 const setAutoplaySleep = (sleepTimeout) => {
@@ -79,7 +81,8 @@ function PlayBar({setStep, setRunningAutoplay, isDisabled = false}) {
         }
         currentStep++;
         setStep(currentStep, true);
-        await Constants.delay(timeout);
+        await Helpers.delay(timeout);
+        console.log("autoplay")
         autoplay(id);
     }
 
