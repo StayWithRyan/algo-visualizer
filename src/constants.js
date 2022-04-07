@@ -9,7 +9,8 @@ const Constants = {
     drawInterval: 20,
     
     navBarHeight: 45,
-    configurationBarHeight: 60
+    configurationBarHeight: 60,
+    minAppWidth: 1300
 }
 
 export default Constants;

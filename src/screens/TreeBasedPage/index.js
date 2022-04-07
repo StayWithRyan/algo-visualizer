@@ -122,7 +122,7 @@ function TreeBasedPage() {
                 <PlayBar setStep={applyStep} setRunningAutoplay={setAutoplayRunning}/>
 
             </ConfigurationBar>
-            <canvas ref={canvasRef} height={canvasHeight} width={window.innerWidth}/>
+            <canvas ref={canvasRef} height={canvasHeight} width={window.innerWidth} style={{minWidth: `${Constants.minAppWidth}px`}}/>
         </>
     );
 }

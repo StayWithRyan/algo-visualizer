@@ -32,6 +32,11 @@ class BFS extends BasePathfinding{
         return newArray;
     }
 
+    addPath(i, j, iFrom, jFrom) {
+        this.pathArray[i][j] = this.copyPathArray(this.pathArray[iFrom][jFrom]);
+        this.pathArray[i][j].push([i, j]);
+    }
+
     find() {
         let [startI, startJ] = getNodeLocation(this.maze, StartElementType);
         this.queue.push([startI, startJ]);
@@ -63,7 +68,7 @@ class BFS extends BasePathfinding{
     }
 
     isNodeToVisit(i, j) {
-        if(!this.inVisitedArray(i, j) && !this.inQueue(i, j) && !this.isBlock(i, j)) {
+        if(!this.inVisitedArray(i, j) && !this.isBlock(i, j)) {
             return true;
         }
         return false;
@@ -71,9 +76,16 @@ class BFS extends BasePathfinding{
 
     queueNode(i, j, iFrom, jFrom) {
         if(this.isNodeToVisit(i, j)) {
-            this.queue.push([i, j]);
-            this.pathArray[i][j] = this.copyPathArray(this.pathArray[iFrom][jFrom]);
-            this.pathArray[i][j].push([i, j]);
+            if(!this.inQueue(i, j) ) {
+                this.queue.push([i, j]);
+                this.addPath(i, j, iFrom, jFrom);
+            }
+            else {
+                if(this.pathArray[i][j].length > this.pathArray[iFrom][jFrom].length + 1) {
+                    this.addPath(i, j, iFrom, jFrom);
+                }
+            }
+
         }
     }
 
@@ -153,9 +165,6 @@ class BFS extends BasePathfinding{
 
     BFS() {
         while(this.queue.length > 0) {
-            if(this.stop) {
-                return [];
-            }
             let pathToTarget = this.visitNode();
             if(pathToTarget) {
                 return pathToTarget;

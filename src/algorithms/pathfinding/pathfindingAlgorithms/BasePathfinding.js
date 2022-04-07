@@ -25,9 +25,6 @@ class BasePathfinding {
     showPath(path) {
         let len = path.length;
         for(let i = 0; i < len; ++i) {
-            if(this.stop) {
-                return false;
-            }
             let classType = PathElementType;
             if(this.maze[path[i][0]][path[i][1]].type instanceof CheckingStartElementType) {
                 classType = PathStartElementType;

@@ -29,9 +29,6 @@ class DFS extends BasePathfinding{
     };
 
     DFSInner(currentI, currentJ, path) {
-        if(this.stop) {
-            return false;
-        }
         if(this.visitedArray[currentI][currentJ]) {
             return false;
         }

@@ -81,8 +81,20 @@ function PlayBar({setStep, setRunningAutoplay, isDisabled = false}) {
         }
         currentStep++;
         setStep(currentStep, true);
-        await Helpers.delay(timeout);
-        console.log("autoplay")
+
+        if(timeout > 300) {
+            let currentTimeout = timeout;
+            while(currentTimeout > 0) {
+                if(timeout < currentTimeout) {
+                    currentTimeout = timeout;
+                }
+                await Helpers.delay(100);
+                currentTimeout -= 100;
+            }
+        }
+        else {
+            await Helpers.delay(timeout);
+        }
         autoplay(id);
     }
 

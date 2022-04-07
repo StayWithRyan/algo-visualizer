@@ -217,7 +217,10 @@ function PathfindingPage() {
                 onMouseMove={(e) => {handleMove(e)}}
                 height={maze.length * PathfindingConstants.elementSize + 1}
                 width={maze[0].length * PathfindingConstants.elementSize + 1}
-                style={{marginLeft: canvasMarginHorizontal, marginRight: canvasMarginHorizontal, marginTop: canvasMarginVertical}}
+                style={{
+                    marginLeft: canvasMarginHorizontal, marginRight: canvasMarginHorizontal, 
+                    marginTop: canvasMarginVertical, minWidth: `${Constants.minAppWidth - 2 * canvasMarginHorizontal}px`
+                }}
             />
         </>
     );
