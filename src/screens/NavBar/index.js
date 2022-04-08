@@ -10,17 +10,25 @@ import {useState} from 'react';
 import Constants from '../../constants';
 
 function NavBar() {
-    const pagesMapping = {
-        "Pathfinding": <PathfindingPage/>,
-        "Sorting": <SortingPage/>,
-        "String-searching": <StringsearchingPage/>,
-        "Tree Based": <TreeBasedPage/>
-    }
-    
-    const pages = [];
-    for (let property in pagesMapping) {
-        pages.push(property);
-    }
+
+    const pages = [
+        {
+            page: <PathfindingPage/>,
+            name: Constants.pathfindingPageTitle
+        },
+        {
+            page: <SortingPage/>,
+            name: Constants.sortingPageTitle
+        },
+        {
+            page: <StringsearchingPage/>,
+            name: Constants.stringsearchingPageTitle
+        },
+        {
+            page: <TreeBasedPage/>,
+            name: Constants.treeBasedPageTitle
+        }
+    ];
 
     const [selectedPage, setSelectedPage] = useState(pages[0]);
     
@@ -32,10 +40,10 @@ function NavBar() {
         <>
             <div className="NavBar" style = {{height: Constants.navBarHeight, backgroundColor: Constants.navBarColor}} >
                 {pages.map(
-                    page => <NavLink key = {page} text = {page} onSelect = {() => onSelectPage(page)} isSelected = {selectedPage === page}/>
+                    page => <NavLink key = {page.name} text = {page.name} onSelect = {() => onSelectPage(page)} isSelected = {selectedPage.name === page.name}/>
                 )}
             </div>
-            {pagesMapping[selectedPage]}
+            {selectedPage.page}
         </>
     );
 }

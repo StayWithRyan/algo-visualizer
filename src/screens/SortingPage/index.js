@@ -69,7 +69,7 @@ function SortingPage() {
 
     return (
         <>
-            <ConfigurationBar>
+            <ConfigurationBar pageName={Constants.sortingPageTitle} >
                 <BasicSelect title="Sorting algorithm" isDisabled={autoplayRunning} onChange={handleAlgorithmChange} value={algorithm} values={algorithms}  />
                 <BasicSlider title="Array size"  isDisabled={autoplayRunning} min={SortingConstants.arraySizeMin} max={SortingConstants.arraySizeMax}
                     default={SortingConstants.arraySizeDefault} step={SortingConstants.arraySizeStep} onChange={handleSizeChange} />

@@ -128,7 +128,7 @@ function StringsearchingPage() {
     
     return (
         <>
-            <ConfigurationBar>
+            <ConfigurationBar pageName={Constants.stringsearchingPageTitle}>
                 <BasicSelect title ="Searching algorithm" isDisabled={isSearching} onChange = {handleAlgorithmChange} value = {algorithm} values = {algorithms}  />
                 <BasicButton title="Clear" onClick={handleClear} isDisabled={autoplayRunning || !isSearching}/>
                 <BasicSlider title="Sleep time(ms)" min={SearchingConstants.sleepMin} max={SearchingConstants.sleepMax} 

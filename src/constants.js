@@ -10,7 +10,12 @@ const Constants = {
     
     navBarHeight: 45,
     configurationBarHeight: 60,
-    minAppWidth: 1300
+    minAppWidth: 1300,
+
+    pathfindingPageTitle: "pathfinding",
+    sortingPageTitle: "sorting",
+    stringsearchingPageTitle: "stringsearching",
+    treeBasedPageTitle: "treeBased"
 }
 
 export default Constants;

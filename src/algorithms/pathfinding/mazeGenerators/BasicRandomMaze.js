@@ -19,7 +19,6 @@ async function BasicRandomMaze (maze, handleFinishGenerating) {
         }
     }
 
-    await Helpers.delay(200);
     handleFinishGenerating();
 };
   

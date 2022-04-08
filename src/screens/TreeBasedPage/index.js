@@ -2,7 +2,6 @@ import ConfigurationBar from "../../components/ConfigurationBar";
 import {useState, useEffect, useRef, useCallback} from 'react';
 import BasicSelect from '../../components/BasicSelect'
 import BasicSlider from '../../components/BasicSlider';
-import BasicButton from '../../components/BasicButton';
 
 import {
     algorithmsMapping, algorithms, sameTreeAlgorithms,
@@ -113,7 +112,7 @@ function TreeBasedPage() {
 
     return (
         <>
-            <ConfigurationBar>
+            <ConfigurationBar pageName={Constants.treeBasedPageTitle}>
                 <BasicSelect title ="Algorithm" isDisabled={autoplayRunning} onChange = {handleAlgorithmChange} value = {algorithm} values = {algorithms}  />
                 <BasicSlider title="Tree size" isDisabled={autoplayRunning} min={TreeBasedConstants.treeSizeMin} max={treeSizeMax}
                     default={TreeBasedConstants.treeSizeDefault} step={TreeBasedConstants.treeSizeStep} onChange={handleSizeChange} />

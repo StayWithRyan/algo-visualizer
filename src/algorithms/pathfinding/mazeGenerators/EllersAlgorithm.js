@@ -124,7 +124,6 @@ async function EllersAlgorithm(maze, handleFinishGenerating) {
         }
     }
 
-    await Helpers.delay(200);
     handleFinishGenerating();
 };
   

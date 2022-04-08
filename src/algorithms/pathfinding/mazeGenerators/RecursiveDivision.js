@@ -29,7 +29,6 @@ async function RecursiveDivision (maze, handleFinishGenerating) {
     await createBorders(maze);
     await RecursiveDivisionInner(maze, 1, 1, maze.length - 2, maze[0].length - 2); 
 
-    await Helpers.delay(200);
     handleFinishGenerating();
 };
 

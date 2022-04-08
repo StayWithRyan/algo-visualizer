@@ -1,8 +1,8 @@
-import NaiveAlgorithm from '../../algorithms/string-searching/NaiveAlgorithm';
-import OptimizedNaiveAlgorithm from '../../algorithms/string-searching/OptimizedNaiveAlgorithm';
-import KMPAlgorithm from '../../algorithms/string-searching/KMPAlgorithm';
-import BoyerMooreAlgorithm from '../../algorithms/string-searching/BoyerMooreAlgorithm';
-import RabinKarpAlgorithm from '../../algorithms/string-searching/RabinKarpAlgorithm';
+import NaiveAlgorithm from '../../algorithms/string-searching/Naive';
+import OptimizedNaiveAlgorithm from '../../algorithms/string-searching/OptimizedNaive';
+import KMPAlgorithm from '../../algorithms/string-searching/KMP';
+import BoyerMooreAlgorithm from '../../algorithms/string-searching/BoyerMoore';
+import RabinKarpAlgorithm from '../../algorithms/string-searching/RabinKarp';
 import SearchingConstants from './constants';
 
 const algorithmsMapping = {

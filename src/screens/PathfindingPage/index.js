@@ -200,7 +200,7 @@ function PathfindingPage() {
 
     return (
         <>
-            <ConfigurationBar>
+            <ConfigurationBar pageName={Constants.pathfindingPageTitle}>
                 <BasicSelect isDisabled={autoplayRunning || isGenerating} title ="Pathfinding algorithm" onChange = {handleAlgorithmChange} 
                     value={algorithm} values={algorithms}  />
                 <BasicSlider isDisabled={isGenerating} title="Sleep time" min={PathfindingConstants.sleepMin} max={PathfindingConstants.sleepMax} 
