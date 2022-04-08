@@ -22,7 +22,7 @@ function NavBar() {
         pages.push(property);
     }
 
-    const [selectedPage, setSelectedPage] = useState(pages[2]);
+    const [selectedPage, setSelectedPage] = useState(pages[0]);
     
     const onSelectPage = (page) => {
         setSelectedPage(page);

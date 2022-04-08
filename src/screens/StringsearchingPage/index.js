@@ -130,10 +130,10 @@ function StringsearchingPage() {
         <>
             <ConfigurationBar>
                 <BasicSelect title ="Searching algorithm" isDisabled={isSearching} onChange = {handleAlgorithmChange} value = {algorithm} values = {algorithms}  />
+                <BasicButton title="Clear" onClick={handleClear} isDisabled={autoplayRunning || !isSearching}/>
                 <BasicSlider title="Sleep time(ms)" min={SearchingConstants.sleepMin} max={SearchingConstants.sleepMax} 
                     default={SearchingConstants.sleepDefault} step={SearchingConstants.sleepStep} onChange={setSearchingSleep} />
                 <PlayBar setStep={applyStep} setRunningAutoplay={setAutoplayRunning} isDisabled={!isInputValid}/>
-                <BasicButton title="Clear" onClick={handleClear} isDisabled={autoplayRunning || !isSearching}/>
             </ConfigurationBar>
             {isSearching // pattern
                 ? <div className="textCard">

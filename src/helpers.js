@@ -1,5 +1,5 @@
 const Helpers = {
-    delay : ms => new Promise(res => setTimeout(res, ms)),
+    delay : async (ms) => { if(ms) await new Promise(res => setTimeout(res, ms))},
     getRandomInt : max => Math.floor(Math.random() * max)
 }
 

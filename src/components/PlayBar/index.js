@@ -1,7 +1,8 @@
 import './style.css';
 
 import { BiArrowToRight, BiArrowToLeft } from 'react-icons/bi';
-import { BsStopCircle, BsPlayCircle } from 'react-icons/bs';
+import { BsStopCircle } from 'react-icons/bs';
+import { AiOutlineDoubleRight, AiOutlineDoubleLeft} from "react-icons/ai";
 import Constants from '../../constants';
 import Helpers from '../../helpers';
 import { useState, useEffect } from 'react';
@@ -70,17 +71,17 @@ function PlayBar({setStep, setRunningAutoplay, isDisabled = false}) {
         setStep(currentStep, true);
     }
 
-    const autoplay = async (id) => {
+    const autoplay = async (id, forward) => {
         if(autoplayStopped || id !== autoplayId) {
             return;
         }
-        if(currentStep === stepsLength - 1) {
+        if((currentStep === stepsLength - 1 && forward === true) || (currentStep === 0 && forward === false)) {
             setRunning(false)
             updateButtonsEnables(false);
             return;
         }
-        currentStep++;
-        setStep(currentStep, true);
+        currentStep += forward ? 1 : -1;
+        setStep(currentStep, forward);
 
         if(timeout > 300) {
             let currentTimeout = timeout;
@@ -95,14 +96,14 @@ function PlayBar({setStep, setRunningAutoplay, isDisabled = false}) {
         else {
             await Helpers.delay(timeout);
         }
-        autoplay(id);
+        autoplay(id, forward);
     }
 
-    const handleAutoplay = () => {
+    const handleAutoplay = (forward) => {
         setRunning(true); 
         autoplayStopped = false;
         autoplayId++;
-        autoplay(autoplayId);
+        autoplay(autoplayId, forward);
         updateButtonsEnables(true);
     }
 
@@ -115,12 +116,18 @@ function PlayBar({setStep, setRunningAutoplay, isDisabled = false}) {
 
     let mainButton;
     if(!running) {
-        mainButton = <BsPlayCircle className={(nextStepEnabled && !isDisabled) ? 'activePlayBarIcon' : 'disabledPlayBarIcon'} style={{width: "66px"}} size={34} 
-            onClick={(nextStepEnabled && !isDisabled) ? handleAutoplay : () => {}}
-        />
+        mainButton = 
+        <>
+            <AiOutlineDoubleLeft className={(prevStepEnabled && !isDisabled) ? 'activePlayBarIcon' : 'disabledPlayBarIcon'} style={{width: "66px"}} size={34} 
+                onClick={(prevStepEnabled && !isDisabled) ? () => {handleAutoplay(false)} : () => {}}
+            />
+            <AiOutlineDoubleRight className={(nextStepEnabled && !isDisabled) ? 'activePlayBarIcon' : 'disabledPlayBarIcon'} style={{width: "66px"}} size={34} 
+                onClick={(nextStepEnabled && !isDisabled) ? () => {handleAutoplay(true)} : () => {}}
+            />
+        </>
     }
     else {
-        mainButton = <BsStopCircle className='activePlayBarIcon' style={{width: "66px"}} size={34} 
+        mainButton = <BsStopCircle className='activePlayBarIcon' style={{width: "132px"}} size={34} 
             onClick={handleStop}
         /> 
     }

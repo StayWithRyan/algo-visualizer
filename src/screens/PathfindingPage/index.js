@@ -11,6 +11,7 @@ import {draw, createMaze, copyMaze, steps, clearSteps, getStep, fillSnapshot, cr
 } from './mazeHelpers';
 import {StartElementType, TargetElementType, BlockElementType, EmptyElementType} from './Elements/MazeElementTypes';
 import {PlayBar, resetPlayBar, setAutoplaySleep} from '../../components/PlayBar';
+import {setDelayTimeout} from '../../algorithms/pathfinding/mazeGenerators/mazeGeneratorsHelpers';
 
 let maze = createMaze();
 //Snapshot of blocks. Need to remember blocks positions when moving start and target nodes.
@@ -181,7 +182,7 @@ function PathfindingPage() {
         if(autoplayRunning || isGenerating) {
             return;
         }
-        if(isUserDrawing) {
+        if(isUserDrawing || isMovingStartNode || isMovingTargetNode) {
             runAlgorithm(algorithm);
         }
         setIsUserDrawing(false); 
@@ -200,14 +201,21 @@ function PathfindingPage() {
     return (
         <>
             <ConfigurationBar>
-                <BasicSelect isDisabled={autoplayRunning || isGenerating} title ="Pathfinding algorithm" onChange = {handleAlgorithmChange} value={algorithm} values={algorithms}  />
+                <BasicSelect isDisabled={autoplayRunning || isGenerating} title ="Pathfinding algorithm" onChange = {handleAlgorithmChange} 
+                    value={algorithm} values={algorithms}  />
                 <BasicSlider isDisabled={isGenerating} title="Sleep time" min={PathfindingConstants.sleepMin} max={PathfindingConstants.sleepMax} 
                     default={PathfindingConstants.sleepDefault} step={PathfindingConstants.sleepStep} onChange={setPathfindingSleep} 
                 />
                 <PlayBar isDisabled={isGenerating} setStep={applyStep} setRunningAutoplay={setAutoplayRunning}/>
                 <div style={{width: 3, backgroundColor: Constants.mainColor, marginBottom: "10px"}}></div>
-                <BasicSelect isDisabled={isGenerating ||autoplayRunning} title ="Maze generating algorithm" onChange = {handleGeneratingAlgorithmChange} value={generatingAlgorithm} values={generatingAlgorithms}  />
-                <BasicButton title="Generate maze" onClick={handleGenerating} isDisabled={isGenerating ||autoplayRunning}/>
+                <BasicSelect isDisabled={isGenerating ||autoplayRunning} title ="Maze generating algorithm" onChange = {handleGeneratingAlgorithmChange} 
+                    value={generatingAlgorithm} values={generatingAlgorithms}  />
+                {
+                    !isGenerating && <BasicButton title="Generate maze" onClick={handleGenerating} isDisabled={isGenerating ||autoplayRunning}/>
+                }
+                {
+                    isGenerating && <BasicButton title="Skip animation" onClick={()=>{setDelayTimeout(0)}}/>
+                }
                 <BasicButton isDisabled={isGenerating || autoplayRunning} title="Reset maze" onClick={handleReset} />
             </ConfigurationBar>
             <canvas ref={canvasRef} 

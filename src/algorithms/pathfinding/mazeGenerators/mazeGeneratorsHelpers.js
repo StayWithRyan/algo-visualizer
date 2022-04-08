@@ -1,7 +1,11 @@
 import Helpers from '../../../helpers';
 import PathfindingConstants from '../../../screens/PathfindingPage/constants';
 import BlockElementType from '../../../screens/PathfindingPage/Elements/BlockElementType';
+
 let delayTimeout = PathfindingConstants.generatingDelayTimeout;
+const setDelayTimeout = (delay) => {
+    delayTimeout = delay;
+}
 
 const createBorders = async (maze) => {
     for(let i = 0; i < maze[0].length; ++i) {
@@ -25,4 +29,4 @@ const createBorders = async (maze) => {
     }
 }
 
-export {createBorders};
+export {createBorders, delayTimeout, setDelayTimeout};

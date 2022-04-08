@@ -1,9 +1,7 @@
 import Helpers from '../../../helpers';
 import PathfindingConstants from '../../../screens/PathfindingPage/constants';
 import {EmptyElementType, BlockElementType} from '../../../screens/PathfindingPage/Elements/MazeElementTypes';
-import {createBorders} from './mazeGeneratorsHelpers';
-
-let delayTimeout = PathfindingConstants.generatingDelayTimeout;
+import {delayTimeout, createBorders, setDelayTimeout} from './mazeGeneratorsHelpers';
 
 function createSetsArray(maze) {
     let sets = [];
@@ -18,6 +16,10 @@ function createSetsArray(maze) {
 }
 
 async function EllersAlgorithm(maze, handleFinishGenerating) {
+    // wait need to trigger draw function to draw empty nodes
+    await Helpers.delay(1);
+    setDelayTimeout(PathfindingConstants.generatingDelayTimeout);
+
     await createBorders(maze);
 
     let sets = createSetsArray(maze);
@@ -124,7 +126,6 @@ async function EllersAlgorithm(maze, handleFinishGenerating) {
 
     await Helpers.delay(200);
     handleFinishGenerating();
-
 };
   
 export default EllersAlgorithm;
