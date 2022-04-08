@@ -22,8 +22,6 @@ function getRandomGap(max) {
 }
 
 async function RecursiveDivision (maze, handleFinishGenerating) {
-    // wait need to trigger draw function to draw empty nodes
-    await Helpers.delay(1);
     setDelayTimeout(PathfindingConstants.generatingDelayTimeout);
     
     await createBorders(maze);

@@ -16,8 +16,6 @@ function createSetsArray(maze) {
 }
 
 async function EllersAlgorithm(maze, handleFinishGenerating) {
-    // wait need to trigger draw function to draw empty nodes
-    await Helpers.delay(1);
     setDelayTimeout(PathfindingConstants.generatingDelayTimeout);
 
     await createBorders(maze);

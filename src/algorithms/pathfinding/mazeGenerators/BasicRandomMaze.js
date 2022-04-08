@@ -4,8 +4,6 @@ import Helpers from '../../../helpers';
 import {delayTimeout, setDelayTimeout} from './mazeGeneratorsHelpers';
 
 async function BasicRandomMaze (maze, handleFinishGenerating) {
-    // wait need to trigger draw function to draw empty nodes
-    await Helpers.delay(1);
     setDelayTimeout(PathfindingConstants.generatingDelayTimeout);
     
     for(let i = 0; i < maze.length; ++i) {

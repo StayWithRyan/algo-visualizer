@@ -11,15 +11,15 @@ import CocktailSort from '../../algorithms/sorting/CocktailSort';
 import GnomeSort from '../../algorithms/sorting/GnomeSort';
 
 const algorithmsMapping = {
-    "Bubble Sort": BubbleSort,
-    "Cocktail Sort": CocktailSort,
-    "Selection Sort": SelectionSort,
-    "Insertion Sort": InsertionSort,
-    "Gnome Sort": GnomeSort,
-    "Shell Sort": ShellSort,
-    "Merge Sort": MergeSort,
-    "Quick Sort": QuickSort,
-    "Heap Sort": HeapSort
+    "Сортування бульбашкою": BubbleSort,
+    "Сортування змішуванням": CocktailSort,
+    "Сортування вибором": SelectionSort,
+    "Сортування включенням": InsertionSort,
+    "Сортування гнома": GnomeSort,
+    "Сортування Шелла": ShellSort,
+    "Сортування злиттям": MergeSort,
+    "Швидке сортування": QuickSort,
+    "Пірамідальне сортування": HeapSort
 }    
 const algorithms = [];
 for (let property in algorithmsMapping) {

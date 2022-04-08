@@ -11,15 +11,15 @@ import DFS from '../../algorithms/pathfinding/pathfindingAlgorithms/DFS';
 import BFS from '../../algorithms/pathfinding/pathfindingAlgorithms/BFS';
 
 const algorithmsMapping = {
-    "Depth First Search": DFS,
-    "Breadth First Search (Dijkstra)": BFS,
-    "Best First Search": BFS,
-    "AStar(A*)": BFS
+    "Пошук у глибину": DFS,
+    "Пошук у ширину (Алгоритм Дейкстри)": BFS,
+    "Пошук 'Найкращий - перший'": BFS,
+    "Алгоритм пошуку A*": BFS
 }
 const generatingAlgorithmsMapping = {
-    "Recursive Division": RecursiveDivision,
-    "Basic Random Maze": BasicRandomMaze,
-    "Eller's Algorithm": EllersAlgorithm
+    "Рекурсивний поділ": RecursiveDivision,
+    "Алгоритм Ейлера": EllersAlgorithm,
+    "Випадкові блоки": BasicRandomMaze,
 }
 const algorithms = [];
 for (let property in algorithmsMapping) {

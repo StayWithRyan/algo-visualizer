@@ -113,10 +113,10 @@ function TreeBasedPage() {
     return (
         <>
             <ConfigurationBar pageName={Constants.treeBasedPageTitle}>
-                <BasicSelect title ="Algorithm" isDisabled={autoplayRunning} onChange = {handleAlgorithmChange} value = {algorithm} values = {algorithms}  />
-                <BasicSlider title="Tree size" isDisabled={autoplayRunning} min={TreeBasedConstants.treeSizeMin} max={treeSizeMax}
+                <BasicSelect title ="Алгоритм" isDisabled={autoplayRunning} onChange = {handleAlgorithmChange} value = {algorithm} values = {algorithms}  />
+                <BasicSlider title="Розмір дерева(масиву)" isDisabled={autoplayRunning} min={TreeBasedConstants.treeSizeMin} max={treeSizeMax}
                     default={TreeBasedConstants.treeSizeDefault} step={TreeBasedConstants.treeSizeStep} onChange={handleSizeChange} />
-                <BasicSlider title="Sleep time(ms)" min={TreeBasedConstants.sleepMin} max={TreeBasedConstants.sleepMax} 
+                <BasicSlider title="Тривалість кроку(мс)" min={TreeBasedConstants.sleepMin} max={TreeBasedConstants.sleepMax} 
                     default={TreeBasedConstants.sleepDefault} step={TreeBasedConstants.sleepStep} onChange={setTreeBasedSleep} />
                 <PlayBar setStep={applyStep} setRunningAutoplay={setAutoplayRunning}/>
 

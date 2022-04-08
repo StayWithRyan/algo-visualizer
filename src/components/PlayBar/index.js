@@ -75,14 +75,16 @@ function PlayBar({setStep, setRunningAutoplay, isDisabled = false}) {
         if(autoplayStopped || id !== autoplayId) {
             return;
         }
+        currentStep += forward ? 1 : -1;
+        setStep(currentStep, forward);
+
+        
         if((currentStep === stepsLength - 1 && forward === true) || (currentStep === 0 && forward === false)) {
             setRunning(false)
             updateButtonsEnables(false);
             return;
         }
-        currentStep += forward ? 1 : -1;
-        setStep(currentStep, forward);
-
+        
         if(timeout > 300) {
             let currentTimeout = timeout;
             while(currentTimeout > 0) {

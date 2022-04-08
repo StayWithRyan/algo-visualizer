@@ -12,43 +12,43 @@ import HeapSortInfo from './HeapSortInfo';
 let SortingPagesMapping = [
     {
         page : <GeneralInfo/>,
-        name: "General Info"
+        name: "Загальна інформація"
     },
     {
         page : <BubbleSortInfo/>,
-        name: "BubbleSortInfo"
+        name: "Сортування бульбашкою"
     },
     {
         page : <CocktailSortInfo/>,
-        name: "CocktailSortInfo"
+        name: "Сортування змішуванням"
     },
     {
         page : <SelectionSortInfo/>,
-        name: "SelectionSortInfo"
+        name: "Сортування вибором"
     },
     {
         page : <InsertionSortInfo/>,
-        name: "InsertionSortInfo"
+        name: "Сортування включенням"
     },
     {
         page : <GnomeSortInfo/>,
-        name: "GnomeSortInfo"
+        name: "Сортування гнома"
     },
     {
         page : <ShellSortInfo/>,
-        name: "ShellSortInfo"
+        name: "Сортування Шелла"
     },
     {
         page : <MergeSortInfo/>,
-        name: "MergeSortInfo"
+        name: "Сортування злиттям"
     },
     {
         page : <QuickSortInfo/>,
-        name: "QuickSortInfo"
+        name: "Швидке сортування"
     },
     {
         page : <HeapSortInfo/>,
-        name: "HeapSortInfo"
+        name: "Пірамідальне сортування"
     }
 ];
 

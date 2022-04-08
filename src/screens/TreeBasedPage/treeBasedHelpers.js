@@ -12,18 +12,18 @@ import TreeSort from "../../algorithms/treeBased/sorting/TreeSort"
 import TournamentSort from "../../algorithms/treeBased/sorting/TournamentSort"
 
 const algorithmsMapping = {
-    "In-order tree traversal(LNR)": LNRTraversal,
-    "Pre-order tree traversal(NLR)": NLRTraversal,
-    "Post-order tree traversal(LRN)": LRNTraversal,
-    "HeapSort": HeapSort,
-    "TreeSort": TreeSort,
-    "TournamentSort": TournamentSort
+    "Обхід: серединний порядок (LNR)": LNRTraversal,
+    "Обхід: прямий порядок (NLR)": NLRTraversal,
+    "Обхід: зворотній порядок (LRN)": LRNTraversal,
+    "Пірамідальне сортування": HeapSort,
+    "Сортування бінарним деревом": TreeSort,
+    "Метод вибірки з дерева": TournamentSort
 }
 const algorithms = [];
 for (let property in algorithmsMapping) {
     algorithms.push(property);
 }
-let sameTreeAlgorithms = ["In-order tree traversal(LNR)", "Pre-order tree traversal(NLR)", "Post-order tree traversal(LRN)"];
+let sameTreeAlgorithms = ["Обхід: серединний порядок (LNR)", "Обхід: прямий порядок (NLR)", "Обхід: зворотній порядок (LRN)"];
 
 let treeSteps = [];
 let arraySteps = [];

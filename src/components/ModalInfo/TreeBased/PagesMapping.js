@@ -9,31 +9,31 @@ import TournamentSortInfo from './TournamentSortInfo';
 let TreeBasedPagesMapping = [
     {
         page : <GeneralInfo/>,
-        name: "General Info"
+        name: "Загальна інформація"
     },
     {
         page : <LNRTraversalInfo/>,
-        name: "LNRTraversalInfo"
+        name: "Обхід: серединний порядок (LNR)"
     },
     {
         page : <NLRTraversalInfo/>,
-        name: "NLRTraversalInfo"
+        name: "Обхід: прямий порядок (NLR)"
     },
     {
         page : <LRNTraversalInfo/>,
-        name: "LRNTraversalInfo"
+        name: "Обхід: зворотній порядок (LRN)"
     },
     {
         page : <HeapSortInfo/>,
-        name: "HeapSortInfo"
+        name: "Пірамідальне сортування"
     },
     {
         page : <TreeSortInfo/>,
-        name: "TreeSortInfo"
+        name: "Сортування бінарним деревом"
     },
     {
         page : <TournamentSortInfo/>,
-        name: "TournamentSortInfo"
+        name: "Метод вибірки з дерева"
     }
 ];
 

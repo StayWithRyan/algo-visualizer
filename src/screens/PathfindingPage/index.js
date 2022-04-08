@@ -35,6 +35,7 @@ function PathfindingPage() {
     const [isMovingStartNode, setIsMovingStartNode] = useState(false);
     const [isMovingTargetNode, setIsMovingTargetNode] = useState(false);
     const [isDrawingBlock, setIsDrawingBlock] = useState(false);
+    const [isClear, setIsClear] = useState(true);
 
     const canvasRef = useRef(null);
 
@@ -83,6 +84,7 @@ function PathfindingPage() {
                 fillSnapshot(maze, mazeSnapshot);
                 runAlgorithm(algorithm);
                 setIsGenerating(false);
+                setIsClear(false);
             }
             generatingAlgorithmsMapping[`${generatingAlgorithm}`](maze, handleFinishGenerating);
         }
@@ -92,11 +94,13 @@ function PathfindingPage() {
     };
 
     const applyStep = (step, isNext) => {
+        setIsClear(false);
         let [elem, i, j] = getStep(step, isNext);
         maze[i][j] = elem;
     };
 
     const handleReset = () => {
+        setIsClear(true);
         resetMaze(maze, mazeSnapshot);
         runAlgorithm(algorithm);
     }
@@ -134,9 +138,11 @@ function PathfindingPage() {
             let [i, j] = getMousePosition(canvasRef.current, e);
             if(isMovingStartNode) {
                 updateElement(maze, mazeSnapshot, i, j, StartElementType);
+                setIsClear(false);
             }
             else if(isMovingTargetNode) {
                 updateElement(maze, mazeSnapshot, i, j, TargetElementType);
+                setIsClear(false);
             }
         }
     }
@@ -167,11 +173,13 @@ function PathfindingPage() {
             if(isDrawingBlock) {
                 if(maze[i][j].type instanceof BlockElementType === false) {
                     updateElement(maze, mazeSnapshot, i, j, BlockElementType);
+                    setIsClear(false);
                 }
             }
             else {
                 if(maze[i][j].type instanceof EmptyElementType === false) {
                     updateElement(maze, mazeSnapshot, i, j, EmptyElementType);
+                    setIsClear(false);
                 }
             }
         }
@@ -201,22 +209,22 @@ function PathfindingPage() {
     return (
         <>
             <ConfigurationBar pageName={Constants.pathfindingPageTitle}>
-                <BasicSelect isDisabled={autoplayRunning || isGenerating} title ="Pathfinding algorithm" onChange = {handleAlgorithmChange} 
+                <BasicSelect isDisabled={autoplayRunning || isGenerating} title ="Алгоритм" onChange = {handleAlgorithmChange} 
                     value={algorithm} values={algorithms}  />
-                <BasicSlider isDisabled={isGenerating} title="Sleep time" min={PathfindingConstants.sleepMin} max={PathfindingConstants.sleepMax} 
+                <BasicSlider isDisabled={isGenerating} title="Тривалість кроку(мс)" min={PathfindingConstants.sleepMin} max={PathfindingConstants.sleepMax} 
                     default={PathfindingConstants.sleepDefault} step={PathfindingConstants.sleepStep} onChange={setPathfindingSleep} 
                 />
                 <PlayBar isDisabled={isGenerating} setStep={applyStep} setRunningAutoplay={setAutoplayRunning}/>
                 <div style={{width: 3, backgroundColor: Constants.mainColor, marginBottom: "10px"}}></div>
-                <BasicSelect isDisabled={isGenerating ||autoplayRunning} title ="Maze generating algorithm" onChange = {handleGeneratingAlgorithmChange} 
+                <BasicSelect isDisabled={isGenerating ||autoplayRunning} title ="Алгоритм генерації лабіринту" onChange = {handleGeneratingAlgorithmChange} 
                     value={generatingAlgorithm} values={generatingAlgorithms}  />
                 {
-                    !isGenerating && <BasicButton title="Generate maze" onClick={handleGenerating} isDisabled={isGenerating ||autoplayRunning}/>
+                    !isGenerating && <BasicButton title="Згенерувати лабіринт" onClick={handleGenerating} isDisabled={isGenerating ||autoplayRunning}/>
                 }
                 {
-                    isGenerating && <BasicButton title="Skip animation" onClick={()=>{setDelayTimeout(0)}}/>
+                    isGenerating && <BasicButton title="Зупинити анімацію" onClick={()=>{setDelayTimeout(0)}}/>
                 }
-                <BasicButton isDisabled={isGenerating || autoplayRunning} title="Reset maze" onClick={handleReset} />
+                <BasicButton isDisabled={isGenerating || autoplayRunning || isClear} title="Очистити" onClick={handleReset} />
             </ConfigurationBar>
             <canvas ref={canvasRef} 
                 onMouseDown={(e) => {handleDown(e)}}

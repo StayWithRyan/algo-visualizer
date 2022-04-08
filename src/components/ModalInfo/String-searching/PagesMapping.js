@@ -8,27 +8,27 @@ import RabinKarpInfo from './RabinKarpInfo';
 let StringSearchingPagesMapping = [
     {
         page : <GeneralInfo/>,
-        name: "General Info"
+        name: "Загальна інформація"
     },
     {
         page : <NaiveInfo/>,
-        name: "NaiveInfo"
+        name: "Прямий пошук"
     },
     {
         page : <OptimizedNaiveInfo/>,
-        name: "OptimizedNaiveInfo"
+        name: "Оптимізований прямий пошук"
     },
     {
         page : <KMPInfo/>,
-        name: "KMPInfo"
+        name: "Алгоритм Кнута - Морріса - Пратта"
     },
     {
         page : <BoyerMooreInfo/>,
-        name: "BoyerMooreInfo"
+        name: "Алгоритм Боєра - Мура"
     },
     {
         page : <RabinKarpInfo/>,
-        name: "RabinKarpInfo"
+        name: "Алгоритм Рабіна - Карпа"
     }
 ];
 

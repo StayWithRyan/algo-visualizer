@@ -6,11 +6,11 @@ import RabinKarpAlgorithm from '../../algorithms/string-searching/RabinKarp';
 import SearchingConstants from './constants';
 
 const algorithmsMapping = {
-    "Naive Algorithm": NaiveAlgorithm,
-    "Optimized Naive Algorithm": OptimizedNaiveAlgorithm,
-    "KMP(Knuth Morris Pratt) Algorithm": KMPAlgorithm,
-    "Boyer Moore Algorithm": BoyerMooreAlgorithm,
-    "Rabin-Karp Algorithm": RabinKarpAlgorithm
+    "Прямий пошук": NaiveAlgorithm,
+    "Оптимізований прямий пошук": OptimizedNaiveAlgorithm,
+    "Алгоритм Кнута - Морріса - Пратта": KMPAlgorithm,
+    "Алгоритм Боєра - Мура": BoyerMooreAlgorithm,
+    "Алгоритм Рабіна - Карпа": RabinKarpAlgorithm
 }
 const algorithms = [];
 for (let property in algorithmsMapping) {

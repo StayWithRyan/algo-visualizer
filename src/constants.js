@@ -12,10 +12,10 @@ const Constants = {
     configurationBarHeight: 60,
     minAppWidth: 1300,
 
-    pathfindingPageTitle: "pathfinding",
-    sortingPageTitle: "sorting",
-    stringsearchingPageTitle: "stringsearching",
-    treeBasedPageTitle: "treeBased"
+    pathfindingPageTitle: "Пошук шляху",
+    sortingPageTitle: "Сортування",
+    stringsearchingPageTitle: "Пошук стрічки",
+    treeBasedPageTitle: "Дерева"
 }
 
 export default Constants;

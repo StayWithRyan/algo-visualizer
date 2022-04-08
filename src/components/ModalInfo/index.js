@@ -45,7 +45,7 @@ function ModalInfo(props) {
         <div className="modalContent" onClick = {(e) => {e.stopPropagation();}}>
 
             <div className='ModelSelector'>
-                <BasicSelect title ="Title" onChange = {setSelectedInfoPage} 
+                <BasicSelect title ="" onChange = {setSelectedInfoPage} 
                         value={selectedInfoPage} values={pages}
                 />
             </div>

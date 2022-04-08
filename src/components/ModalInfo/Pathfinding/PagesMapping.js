@@ -7,23 +7,23 @@ import AStarInfo from './AStarInfo';
 let PathfindingPagesMapping = [
     {
         page : <GeneralInfo/>,
-        name: "General Info"
+        name: "Загальна інформація"
     },
     {
         page : <DFSInfo/>,
-        name: "DFSInfo"
+        name: "Пошук у глибину"
     },
     {
         page : <BFSInfo/>,
-        name: "BFSInfo"
+        name: "Пошук у ширину (Алгоритм Дейкстри)"
     },
     {
         page : <BestFirstSearchInfo/>,
-        name: "BestFirstSearchInfo"
+        name: "Пошук 'Найкращий - перший'"
     },
     {
         page : <AStarInfo/>,
-        name: "AStarInfo"
+        name: "Алгоритм пошуку A*"
     }
 ];
 
