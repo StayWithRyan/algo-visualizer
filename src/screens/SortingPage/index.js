@@ -73,7 +73,7 @@ function SortingPage() {
                 <BasicSelect title="Алгоритм" isDisabled={autoplayRunning} onChange={handleAlgorithmChange} value={algorithm} values={algorithms}  />
                 <BasicSlider title="Розмір масиву"  isDisabled={autoplayRunning} min={SortingConstants.arraySizeMin} max={SortingConstants.arraySizeMax}
                     default={SortingConstants.arraySizeDefault} step={SortingConstants.arraySizeStep} onChange={handleSizeChange} />
-                <BasicSlider title="Тривалість кроку(мс)"  min={SortingConstants.sleepMin} max={SortingConstants.sleepMax} 
+                <BasicSlider title="Тривалість кроку (мс)"  min={SortingConstants.sleepMin} max={SortingConstants.sleepMax} 
                     default={SortingConstants.sleepDefault} step={SortingConstants.sleepStep} onChange={setSortingSleep} />
                 <PlayBar setStep={applyStep} setRunningAutoplay={setAutoplayRunning}/>
                     

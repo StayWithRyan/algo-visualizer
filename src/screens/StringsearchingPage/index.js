@@ -131,7 +131,7 @@ function StringsearchingPage() {
             <ConfigurationBar pageName={Constants.stringsearchingPageTitle}>
                 <BasicSelect title ="Алгоритм" isDisabled={isSearching} onChange = {handleAlgorithmChange} value = {algorithm} values = {algorithms}  />
                 <BasicButton title="Завершити пошук" onClick={handleClear} isDisabled={autoplayRunning || !isSearching}/>
-                <BasicSlider title="Тривалість кроку(мс)" min={SearchingConstants.sleepMin} max={SearchingConstants.sleepMax} 
+                <BasicSlider title="Тривалість кроку (мс)" min={SearchingConstants.sleepMin} max={SearchingConstants.sleepMax} 
                     default={SearchingConstants.sleepDefault} step={SearchingConstants.sleepStep} onChange={setSearchingSleep} />
                 <PlayBar setStep={applyStep} setRunningAutoplay={setAutoplayRunning} isDisabled={!isInputValid}/>
             </ConfigurationBar>
@@ -146,7 +146,7 @@ function StringsearchingPage() {
                     </div>
                 </div>     
                 : <div className="textCard">
-                    <input type="text" className="textBox" placeholder="String to search" style={{borderBottom: `5px solid ${Constants.mainColor}`}}
+                    <input type="text" className="textBox" placeholder="Зразок для пошуку" style={{borderBottom: `5px solid ${Constants.mainColor}`}}
                         value={convertCharactersArrayToString(pattern)} onChange={(event) => handlePatternChange(event.target.value)}
                     />
                 </div>
@@ -158,7 +158,7 @@ function StringsearchingPage() {
                     </div>
                 </div>     
                 : <div className="textCard">
-                    <input type="text" className="textBox" placeholder="Text"  style={{borderBottom: `5px solid ${Constants.mainColor}`}}
+                    <input type="text" className="textBox" placeholder="Текст"  style={{borderBottom: `5px solid ${Constants.mainColor}`}}
                         value={convertCharactersArrayToString(text)} onChange={(event) => handleTextChange(event.target.value)}
                     />
                 </div>

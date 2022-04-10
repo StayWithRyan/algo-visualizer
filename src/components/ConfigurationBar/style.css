@@ -3,5 +3,5 @@
     flex: 1;
     flex-direction: row;
     justify-content: space-around;
-    padding-top: 10px;
+    align-items: center;
 }

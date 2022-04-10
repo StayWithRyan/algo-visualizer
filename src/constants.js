@@ -1,15 +1,22 @@
 const Constants = {
-    mainColor: "#9c27b0",
-    disabledMainColor: "#5c2c6c",
-    textColor: "#dbd8e3",
-    disabledTextColor : "#878282",
-    navBarColor: "#2a2438",
-    configurationBarColor: "#352f44",
-    
+    mainColor: "#ea4334",
+    disabledMainColor: "#723331",
+    textColor: "#eeeeee",
+    disabledTextColor : "#ffffff",
+    navBarColor: "#222225",
+    configurationBarColor: "#29292e",
+
+    blueColor: "#4285f4",
+    redColor: "#ea4334",
+    yellowColor: "#fbbc05",
+    greenColor: "#fbbc05",
+
+
+    fontFamily: "Ubuntu",
     drawInterval: 20,
     
-    navBarHeight: 45,
-    configurationBarHeight: 60,
+    navBarHeight: 50,
+    configurationBarHeight: 80,
     minAppWidth: 1300,
 
     pathfindingPageTitle: "Пошук шляху",

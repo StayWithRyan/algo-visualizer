@@ -14,12 +14,12 @@
 }
 
 .activePlayBarIcon {
-    color: #9c27b0;
+    color: #ea4334;
 }
 .activePlayBarIcon:hover {
-    color: #d845f1;
+    color: #e96a5e;
 }
 
 .disabledPlayBarIcon {
-    color: #5c2c6c;
+    color: #723331;
 }

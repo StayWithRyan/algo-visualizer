@@ -10,7 +10,7 @@ function NavLink(props) {
                 ? {borderBottom: `5px solid ${Constants.mainColor}`} 
                 : {borderBottom: `5px solid ${Constants.navBarColor}`}} 
         >
-            <h1 className = "NavLinkText" style = {isSelected ?{color: Constants.mainColor} :{color: Constants.textColor}}>{props.text}</h1>
+            <div className = "NavLinkText" style = {isSelected ?{color: Constants.mainColor} :{color: Constants.textColor}}>{props.text}</div>
         </div>
     );
 }
