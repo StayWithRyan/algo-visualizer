@@ -22,3 +22,7 @@
     overflow: hidden;
     user-select: none;
 }
+
+.textBox::selection {
+    background: #e7cac9;
+}

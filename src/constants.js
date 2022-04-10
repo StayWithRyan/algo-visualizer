@@ -2,14 +2,14 @@ const Constants = {
     mainColor: "#ea4334",
     disabledMainColor: "#723331",
     textColor: "#eeeeee",
-    disabledTextColor : "#ffffff",
+    disabledTextColor : "#646467",
     navBarColor: "#222225",
     configurationBarColor: "#29292e",
 
     blueColor: "#4285f4",
     redColor: "#ea4334",
     yellowColor: "#fbbc05",
-    greenColor: "#fbbc05",
+    greenColor: "#34a953",
 
 
     fontFamily: "Ubuntu",

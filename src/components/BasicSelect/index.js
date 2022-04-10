@@ -21,11 +21,12 @@ const theme = createTheme({
 export default function BasicSelect(props) {
     return (
         <div>
-            <InputLabel style={{ color: Constants.textColor, height: "20px", fontFamily: Constants.fontFamily }}>{props.title}</InputLabel>
+            <InputLabel style={{ color: props.isDisabled ? Constants.disabledTextColor : Constants.textColor, height: "20px", fontFamily: Constants.fontFamily, userSelect: "none" }}>{props.title}</InputLabel>
             <ThemeProvider theme={theme}>
                 <FormControl focused color={props.isDisabled ? "disabled": "enabled"} variant="standard" sx={{b:0, width: props.width || 200 }}>
                     <Select
-                        style={{ color: props.isDisabled ? Constants.disabledTextColor : Constants.textColor, 
+                        style={{
+                            color: props.isDisabled ? Constants.disabledTextColor : Constants.textColor, 
                             fontFamily: Constants.fontFamily, textAlign: props.centered ? "center" : ""}}
                         value={props.value}
                         onChange={(event) => {props.onChange(event.target.value)}}

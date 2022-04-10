@@ -49,7 +49,7 @@ function ModalInfo(props) {
                         value={selectedInfoPage} values={pages} width = {320}
                 />
             </div>
-            <div style = {{color: "#eeeeee", fontFamily: Constants.fontFamily }}>
+            <div className="modalInfo" style = {{color: "#eeeeee", fontFamily: Constants.fontFamily }}>
                 {getPageWithName(selectedInfoPage)}
             </div>
         </div>

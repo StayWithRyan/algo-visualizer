@@ -1,6 +1,11 @@
+import TextItem from "../TextItem"
+
 function GeneralInfo() {
     return (
-        <h1>General info about pathfinfing</h1>
+        <>
+            <TextItem >General info about pathfinfing</TextItem>
+            <TextItem>General info about pathfinfing</TextItem>
+        </>
     );
 }
 

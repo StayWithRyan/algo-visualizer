@@ -134,7 +134,7 @@ function PlayBar({setStep, setRunningAutoplay, isDisabled = false}) {
         /> 
     }
     return (
-        <div className = "PlayBar" style={{border: `3px solid ${Constants.mainColor}`}}>
+        <div className = "PlayBar" style={{border: isDisabled ? `3px solid ${Constants.disabledMainColor}` : `3px solid ${Constants.mainColor}`}}>
             <div className = "PlayBarButtons">
                 <BiArrowToLeft className={(prevStepEnabled && !isDisabled) ? 'activePlayBarIcon' : 'disabledPlayBarIcon'} style={{width: "66px"}} size={34} 
                     onClick={(prevStepEnabled && !isDisabled)  ? handlePrevStep : () => {}}

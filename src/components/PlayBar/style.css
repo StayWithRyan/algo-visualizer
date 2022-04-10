@@ -10,11 +10,11 @@
     flex: 1;
     flex-direction: row;
     align-items: center;
-    cursor: pointer;
 }
 
 .activePlayBarIcon {
     color: #ea4334;
+    cursor: pointer;
 }
 .activePlayBarIcon:hover {
     color: #e96a5e;

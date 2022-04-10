@@ -13,7 +13,10 @@ export default function BasicSlider(props) {
 
     return (
         <div>
-            <InputLabel style={{ color: Constants.textColor, height: "20px", fontFamily: Constants.fontFamily }} id="demo-simple-select-standard-label">{props.title}</InputLabel>
+            <InputLabel 
+                style={{ color: props.isDisabled ? Constants.disabledTextColor : Constants.textColor, height: "20px", fontFamily: Constants.fontFamily, userSelect: "none"}} 
+                id="demo-simple-select-standard-label">{props.title}
+            </InputLabel>
             <Box sx={{ width: 200, p: 0 }}>
             <Slider
                 value = {value}
