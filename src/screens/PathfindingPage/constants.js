@@ -6,13 +6,13 @@ const PathfindingConstants = {
 
     generatingDelayTimeout: 10,
 
-    gridColor: "black",
-    emptyColor: "white",
-    blockColor: ["#14856b", "#352f44"],
-    checkingColor: ["#d8e7c6", "#dfa47f"],
-    pathColor: ["#e29b41", "#eb6b0a"],
-    startColor: "purple",
-    targetColor: "purple",
+    gridColor: "#252527",
+    emptyColor: "black",
+    blockColor: ["#16b8f3", "#331219"],
+    checkingColor: ["black", "#deb1c4"],
+    pathColor: ["#bac1cc", "#be004f"],
+    startColor: "#34a953",
+    targetColor: "#34a953",
 
     elementSize: 30,
 }

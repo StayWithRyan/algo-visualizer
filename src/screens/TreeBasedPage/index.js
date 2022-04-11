@@ -14,10 +14,14 @@ import {PlayBar, resetPlayBar, setAutoplaySleep} from '../../components/PlayBar'
 import Constants from '../../constants';
 import TreeBasedConstants from './constants';
 
-let tree = createTree(TreeBasedConstants.treeSizeDefault, getTreeSizes(algorithms[0])[1]);
-let array = createTree(TreeBasedConstants.treeSizeDefault, getTreeSizes(algorithms[0])[1]);
+let tree = null;
+let array = null;
 
 function TreeBasedPage() {
+    if(tree == null && array == null) {
+        tree = createTree(TreeBasedConstants.treeSizeDefault, getTreeSizes(algorithms[0])[1]);
+        array = [];
+    }
     const [algorithm, setAlgorithm] = useState(algorithms[0]);
     let [treeSizeMax, treeMaxLevel] = getTreeSizes(algorithm);
     const [treeSize, setTreeSize] = useState(TreeBasedConstants.treeSizeDefault);
@@ -39,18 +43,18 @@ function TreeBasedPage() {
 
     useEffect(() => {
         let intervalId = setInterval(() =>  draw(canvasRef.current, tree, array), Constants.drawInterval);
-        return () => clearInterval(intervalId);
-    }, [tree, array]);
+        return () => {clearInterval(intervalId); tree = null; array = null;};
+    }, []);
 
     const updateTreeAndArray = (size, algorithm, isReset = false) => {
         let newTree = tree;
         let newArray = array;
 
-        if(algorithm == "HeapSort") {
+        if(algorithm == "Пірамідальне сортування") {
             newTree = createHeapSortTree(size);
             newArray = isReset? resetArrayTypes(array) : createArray(size);
         }
-        else if(algorithm == "TreeSort") {
+        else if(algorithm == "Сортування бінарним деревом") {
             newTree = null;
             newArray = isReset? resetArrayTypes(array) : createTreeSortArray(size, treeMaxLevel);
         }
@@ -58,7 +62,7 @@ function TreeBasedPage() {
             newTree = isReset? resetTreeTypes(tree) : createTree(size, treeMaxLevel);
             newArray = [];
         }
-        else if(algorithm == "TournamentSort") {
+        else if(algorithm == "Метод вибірки з дерева") {
             if(!isReset) {
                 newTree = createTournamentSortTree({lastLevelSize: size});
                 newArray = [];

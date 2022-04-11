@@ -40,6 +40,18 @@ class BaseElementType {
         context.arc(x + shift, y + shift, radius, 0, Math.PI * 2, false);
         context.fill();
     }
+
+    // fixes grid when your system scale != 100%
+    redrawGrid(canvas, x, y) {
+        let context = canvas.getContext('2d');
+        context.lineWidth = 1;
+        context.strokeStyle = PathfindingConstants.gridColor;
+        context.beginPath();
+        context.moveTo(x + PathfindingConstants.elementSize + 0.5, y);
+        context.lineTo(x + PathfindingConstants.elementSize + 0.5, y + PathfindingConstants.elementSize + 0.5);
+        context.lineTo(x, y + PathfindingConstants.elementSize + 0.5);
+        context.stroke();
+    }
 }
 
 export default BaseElementType;

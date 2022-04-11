@@ -11,6 +11,7 @@ class TargetElementType extends BaseElementType {
         context.fillStyle = PathfindingConstants.emptyColor;
         context.fillRect(x + 1, y + 1, PathfindingConstants.elementSize - 1, PathfindingConstants.elementSize - 1);
         this.drawTargetLabel(canvas, x, y, PathfindingConstants.emptyColor);
+        this.redrawGrid(canvas, x, y);
         
         this.currentStep++;
     }

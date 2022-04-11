@@ -1,4 +1,5 @@
 import TreeBasedConstants from '../../constants';
+import Constants from '../../../../constants';
 
 class BaseNodeType {
     draw(canvas, x, y, value) {
@@ -8,18 +9,13 @@ class BaseNodeType {
         context.arc(x, y, TreeBasedConstants.elementSize / 2, 0, Math.PI * 2, false);
         context.fill();
     
-        context.lineWidth = 2;
-        context.strokeStyle = "white";
+        context.lineWidth = 1;
+        context.strokeStyle = "#b31739";
         context.beginPath();
         context.arc(x, y, TreeBasedConstants.elementSize / 2 + 1, 0, Math.PI * 2, false);
         context.stroke();
     
-        context.lineWidth = 1;
-        context.strokeStyle = "black";
-        context.beginPath();
-        context.arc(x, y, TreeBasedConstants.elementSize / 2, 0, Math.PI * 2, false);
-        context.stroke();
-    
+
         context.font = TreeBasedConstants.font;
         context.fillStyle = TreeBasedConstants.textColor;
 

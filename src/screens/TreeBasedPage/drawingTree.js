@@ -1,4 +1,5 @@
 import TreeBasedConstants from './constants';
+import Constants from '../../constants';
 
 const draw = (canvas, tree, array) => {
     clearCanvas(canvas);
@@ -10,7 +11,7 @@ const draw = (canvas, tree, array) => {
 
 const clearCanvas = (canvas) => {
     const context = canvas.getContext('2d');
-    context.fillStyle = "white";
+    context.fillStyle = Constants.mainBackground;
     context.fillRect(0, 0, canvas.width, canvas.height);
 }
 
@@ -87,7 +88,7 @@ const drawEdge = (canvas, fromX, fromY, toX, toY) => {
     const context = canvas.getContext('2d');
     context.beginPath();
     context.lineWidth = 1;
-    context.strokeStyle = "black";
+    context.strokeStyle = "white";
     context.moveTo(x, y);
     context.lineTo(x2, y2);
     context.stroke();

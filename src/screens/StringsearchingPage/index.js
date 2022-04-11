@@ -119,10 +119,10 @@ function StringsearchingPage() {
     if(patternLocation !== null) {
         let chars = text.length - pattern.length;
         for(let i = 0; i < patternLocation; ++i) {
-            prePattern.push({char: "-", color: "white"});
+            prePattern.push({char: "-", color: Constants.mainBackground});
         }
         for(let i = 0; i < chars - prePattern.length; ++i) {
-            postPattern.push({char: "-", color: "white"});
+            postPattern.push({char: "-", color: Constants.mainBackground});
         }
     }
     
@@ -146,7 +146,9 @@ function StringsearchingPage() {
                     </div>
                 </div>     
                 : <div className="textCard">
-                    <input type="text" className="textBox" placeholder="Зразок для пошуку" style={{borderBottom: `5px solid ${Constants.mainColor}`}}
+                    <input type="text" className="textBox" placeholder="Зразок для пошуку" style={{borderBottom: `5px solid ${Constants.mainColor}`,
+                        backgroundColor: Constants.mainBackground, color: Constants.textColor
+                    }}
                         value={convertCharactersArrayToString(pattern)} onChange={(event) => handlePatternChange(event.target.value)}
                     />
                 </div>
@@ -158,7 +160,9 @@ function StringsearchingPage() {
                     </div>
                 </div>     
                 : <div className="textCard">
-                    <input type="text" className="textBox" placeholder="Текст"  style={{borderBottom: `5px solid ${Constants.mainColor}`}}
+                    <input type="text" className="textBox" placeholder="Текст"  style={{borderBottom: `5px solid ${Constants.mainColor}`,
+                        backgroundColor: Constants.mainBackground, color: Constants.textColor
+                    }}
                         value={convertCharactersArrayToString(text)} onChange={(event) => handleTextChange(event.target.value)}
                     />
                 </div>

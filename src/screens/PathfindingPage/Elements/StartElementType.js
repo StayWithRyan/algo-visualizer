@@ -11,6 +11,7 @@ class StartElementType extends BaseElementType {
         context.fillStyle = PathfindingConstants.emptyColor;
         context.fillRect(x + 1, y + 1, PathfindingConstants.elementSize - 1, PathfindingConstants.elementSize - 1);
         this.drawStartLabel(canvas, x, y);
+        this.redrawGrid(canvas, x, y);
 
         this.currentStep++;
     }

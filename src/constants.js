@@ -1,10 +1,11 @@
 const Constants = {
-    mainColor: "#ea4334",
-    disabledMainColor: "#723331",
+    mainColor: "#b31739",
+    disabledMainColor: "#4d131f",
     textColor: "#eeeeee",
     disabledTextColor : "#646467",
-    navBarColor: "#222225",
-    configurationBarColor: "#29292e",
+    navBarColor: "black",
+    configurationBarColor: "#101010",
+    mainBackground: "black",
 
     blueColor: "#4285f4",
     redColor: "#ea4334",
@@ -15,7 +16,7 @@ const Constants = {
     fontFamily: "Ubuntu",
     drawInterval: 20,
     
-    navBarHeight: 50,
+    navBarHeight: 60,
     configurationBarHeight: 80,
     minAppWidth: 1300,
 

@@ -88,7 +88,7 @@ const getTreeSizes = (algorithm) => {
     while(treeSizeMax < lastLevelMaxElements);
     treeSizeMax--;
 
-    if(algorithm == "TreeSort" || algorithm == "TournamentSort"){
+    if(algorithm == "Сортування бінарним деревом" || algorithm == "Метод вибірки з дерева"){
         treeSizeMax = (treeSizeMax + 1) / 2;
     }
     return [treeSizeMax, treeMaxLevel];

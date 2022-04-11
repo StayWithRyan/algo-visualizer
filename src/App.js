@@ -5,7 +5,7 @@ import './App.css';
 
 function App() {
   return (
-    <div style = {{minWidth: `${Constants.minAppWidth}px`}}>
+    <div style = {{minWidth: `${Constants.minAppWidth}px`, backgroundColor: Constants.mainBackground, height: "100vh"}}>
       <NavBar/>
     </div>
   );

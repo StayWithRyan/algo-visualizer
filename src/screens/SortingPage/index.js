@@ -14,9 +14,12 @@ import {
 } from './sortingHelpers';
 
 
-let array = createArray(SortingConstants.arraySizeDefault);
+let array = null;
 
 function SortingPage() {
+    if(array === null) {
+        array = createArray(SortingConstants.arraySizeDefault);
+    }
     const [algorithm, setAlgorithm] = useState(algorithms[0]);
     const [sortingSleep, setSortingSleep] = useState(SortingConstants.sleepDefault);
     const [autoplayRunning, setAutoplayRunning] = useState(false);
@@ -36,8 +39,8 @@ function SortingPage() {
 
     useEffect(() => {
         let intervalId = setInterval(() =>  {draw(canvasRef.current, array)}, Constants.drawInterval);
-        return () => clearInterval(intervalId);
-    }, [array]);
+        return () => {clearInterval(intervalId); array = null;}
+    }, []);
 
     const handleAlgorithmChange = (value) => {
         setAlgorithm(value);

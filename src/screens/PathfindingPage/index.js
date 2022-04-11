@@ -13,9 +13,9 @@ import {StartElementType, TargetElementType, BlockElementType, EmptyElementType}
 import {PlayBar, resetPlayBar, setAutoplaySleep} from '../../components/PlayBar';
 import {setDelayTimeout} from '../../algorithms/pathfinding/mazeGenerators/mazeGeneratorsHelpers';
 
-let maze = createMaze();
+let maze = null;
 //Snapshot of blocks. Need to remember blocks positions when moving start and target nodes.
-let mazeSnapshot = createSnapshot(maze);
+let mazeSnapshot = null;
 
 function PathfindingPage() {
     if(maze === null) {
@@ -60,10 +60,10 @@ function PathfindingPage() {
         clearSteps();
         const algorithmClass = algorithmsMapping[`${algorithm}`];
         const algorithmObj = new algorithmClass(copyMaze(maze));
-        if(algorithm == "Best First Search") {
+        if(algorithm == "Пошук 'Найкращий - перший'") {
             algorithmObj.setGreedy();
         }
-        if(algorithm == "AStar(A*)") {
+        if(algorithm == "Алгоритм пошуку A*") {
             algorithmObj.setAStar();
         }
         algorithmObj.find();
@@ -199,12 +199,12 @@ function PathfindingPage() {
     }
 
     const canvasMarginHorizontal = `${ (window.innerWidth - maze[0].length * PathfindingConstants.elementSize - 1) / 2 }px`
-    const canvasMarginVertical = `${ 
+    const canvasMarginVertical = 
         (
             window.innerHeight - maze.length * PathfindingConstants.elementSize -
             Constants.navBarHeight -  Constants.configurationBarHeight
         ) / 2 
-    }px`
+    
 
     return (
         <>
@@ -235,7 +235,7 @@ function PathfindingPage() {
                 width={maze[0].length * PathfindingConstants.elementSize + 1}
                 style={{
                     marginLeft: canvasMarginHorizontal, marginRight: canvasMarginHorizontal, 
-                    marginTop: canvasMarginVertical, minWidth: `${Constants.minAppWidth - 2 * canvasMarginHorizontal}px`
+                    marginTop: `${canvasMarginVertical}px`, minWidth: `${Constants.minAppWidth - 2 * canvasMarginHorizontal}px`
                 }}
             />
         </>

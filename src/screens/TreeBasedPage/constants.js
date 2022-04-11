@@ -18,7 +18,7 @@ const TreeBasedConstants = {
     checkingColor: "yellow",
     swappingColor: "red",
     doneColor: "green",
-    invisibleColor: "white",
+    invisibleColor: "black",
 
     font: "36px serif"
 }

@@ -148,6 +148,9 @@ const createSnapshot = (maze) => {
 
 const draw = (maze, canvas, fillBackground) => {
     if(fillBackground) {
+        let context = canvas.getContext("2d")
+        context.fillStyle = "black"
+        context.fillRect(0, 0, canvas.width, canvas.height);
         drawGrid(maze, canvas);
     }
 
