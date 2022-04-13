@@ -23,7 +23,7 @@ function PathfindingPage(props) {
         maze = createMaze();
         mazeSnapshot = createSnapshot(maze);
     }
-    const [algorithm, setAlgorithm] = useState(algorithms[0]);
+    const [algorithm, setAlgorithm] = useState(algorithms[3]);
     const [pathfindingSleep, setPathfindingSleep] = useState(PathfindingConstants.sleepDefault);
     const [generatingAlgorithm, setGeneratingAlgorithm] = useState(generatingAlgorithms[0]);
     const [autoplayRunning, setAutoplayRunning] = useState(false);
@@ -217,7 +217,7 @@ function PathfindingPage(props) {
                     default={PathfindingConstants.sleepDefault} step={PathfindingConstants.sleepStep} onChange={setPathfindingSleep} 
                 />
                 <PlayBar isDisabled={isGenerating} setStep={applyStep} setRunningAutoplay={setAutoplayRunning}/>
-                <div style={{width: 3, backgroundColor: Constants.mainColor, marginBottom: "10px"}}></div>
+                <div style={{width: 3, height: Constants.configurationBarHeight - 20, backgroundColor: Constants.mainColor}}></div>
                 <BasicSelect isDisabled={isGenerating ||autoplayRunning} title ="Алгоритм генерації лабіринту" onChange = {handleGeneratingAlgorithmChange} 
                     value={generatingAlgorithm} values={generatingAlgorithms}  />
                 {

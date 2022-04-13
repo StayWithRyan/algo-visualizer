@@ -1,7 +1,7 @@
 import Helpers from '../../../helpers';
 import PathfindingConstants from '../../../screens/PathfindingPage/constants';
 import {EmptyElementType, BlockElementType} from '../../../screens/PathfindingPage/Elements/MazeElementTypes';
-import {delayTimeout, createBorders, setDelayTimeout} from './mazeGeneratorsHelpers';
+import {delayTimeout, createBorders, setDelayTimeout, getBlocks, isSameBlockExists} from './mazeGeneratorsHelpers';
 
 function createSetsArray(maze) {
     let sets = [];
@@ -118,6 +118,43 @@ async function EllersAlgorithm(maze, handleFinishGenerating) {
                 if(sets[i][j] != 0 && sets[i][j - 1] != 0 ) {
                     sets[i][j] = sets[i][j - 1];
                 }
+            }
+        }
+    }
+    //last row
+    let lastRow = maze.length - 2;
+    let settedBlock = [];
+    for(let i = 2; i < maze[0].length - 2; ++i) {
+        let blocksAbove = getBlocks(maze, lastRow - 1, i);
+        let isTouchingTop = false;
+        let isTouchingLeft = false;
+        let isTouchingRight = false;
+        let countPrev = 0;
+
+        for(let j = 0; j < blocksAbove.length; ++j) {
+            if(blocksAbove[j][0] == 1) {
+                isTouchingTop = true;
+            }
+            if(blocksAbove[j][1] == 1) {
+                isTouchingLeft = true;
+            }
+            if(blocksAbove[j][1] == maze[0].length - 2) {
+                isTouchingRight = true;
+            }
+            if(blocksAbove[j][0] == maze.length - 3) {
+                countPrev++;
+            }
+        }
+        if(isTouchingTop || isTouchingLeft || isTouchingRight) {
+            continue;
+        }
+        if(countPrev == 1) {
+            maze[lastRow][i].setType(BlockElementType);
+        }
+        if(countPrev > 1) {
+            if(isSameBlockExists(blocksAbove, settedBlock) === false){
+                maze[lastRow][i].setType(BlockElementType);
+                settedBlock.push(blocksAbove);
             }
         }
     }

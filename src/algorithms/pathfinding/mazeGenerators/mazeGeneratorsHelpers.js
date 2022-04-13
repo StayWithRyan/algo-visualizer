@@ -29,4 +29,68 @@ const createBorders = async (maze) => {
     }
 }
 
-export {createBorders, delayTimeout, setDelayTimeout};
+const getBlocks = (maze, i, j) => {
+    let blocks = [];
+    let queued = [];
+    let queue = [[i, j]];
+
+    const isInQueued = (i, j) => {
+        for(let k = 0; k < queued.length; ++k) {
+            if(queued[k][0] == i && queued[k][1] == j) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    while(queue.length > 0) {
+        let [i, j] = queue.shift();
+        queued.push([i, j]);
+        if(maze[i][j].type instanceof BlockElementType) {
+            blocks.push([i, j]);
+            if(i + 1 < (maze.length - 2) && maze[i + 1][j].type instanceof BlockElementType && (isInQueued(i + 1, j) === false)) {
+                queue.push([i + 1, j]);
+            }
+            if(j + 1 < (maze[0].length - 1) && maze[i][j + 1].type instanceof BlockElementType && (isInQueued(i, j + 1) === false)) {
+                queue.push([i, j + 1]);
+            }
+            if(i - 1 > 0 && maze[i - 1][j].type instanceof BlockElementType && (isInQueued(i - 1, j) === false)) {
+                queue.push([i - 1, j]);
+            }
+            if(j - 1 > 0 && maze[i][j - 1].type instanceof BlockElementType && (isInQueued(i, j - 1) === false)) {
+                queue.push([i, j - 1]);
+            }
+        }
+    }
+
+    return blocks;
+}
+
+
+
+const isSameBlockExists = (block, blocks) => {
+    for(let i = 0; i < blocks.length; ++i) {
+        if(isSameBlocks(block, blocks[i])) {
+            return true;
+        }
+    }
+    return false;
+}
+const isSameBlocks = (blocksI, blocksJ) => {
+    const isInBlocksJ = (block) => {
+        for(let i = 0; i < blocksJ.length; ++i) {
+            if(blocksJ[i][0] == block[0] && blocksJ[i][1] == block[1]) {
+                return true;
+            }
+        }
+        return false;
+    }
+    for(let i = 0; i < blocksI.length; ++i) {
+        if(isInBlocksJ(blocksI[i]) === false) {
+            return false;
+        }
+    }
+    return true;
+}
+
+export {createBorders, delayTimeout, setDelayTimeout, getBlocks, isSameBlockExists};
