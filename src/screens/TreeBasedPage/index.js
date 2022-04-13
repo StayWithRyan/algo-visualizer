@@ -2,6 +2,7 @@ import ConfigurationBar from "../../components/ConfigurationBar";
 import {useState, useEffect, useRef, useCallback} from 'react';
 import BasicSelect from '../../components/BasicSelect'
 import BasicSlider from '../../components/BasicSlider';
+import PageBar from '../../components/PageBar';
 
 import {
     algorithmsMapping, algorithms, sameTreeAlgorithms,
@@ -17,7 +18,7 @@ import TreeBasedConstants from './constants';
 let tree = null;
 let array = null;
 
-function TreeBasedPage() {
+function TreeBasedPage(props) {
     if(tree == null && array == null) {
         tree = createTree(TreeBasedConstants.treeSizeDefault, getTreeSizes(algorithms[0])[1]);
         array = [];
@@ -112,10 +113,11 @@ function TreeBasedPage() {
         array = newArray;
     };
 
-    let canvasHeight = window.innerHeight - Constants.navBarHeight - Constants.configurationBarHeight - 20;
+    let canvasHeight = window.innerHeight - Constants.pageBarHeight - Constants.configurationBarHeight - 20;
 
     return (
         <>
+            <PageBar name={Constants.treeBasedPageTitle} clickBack={props.goBack}/>
             <ConfigurationBar pageName={Constants.treeBasedPageTitle}>
                 <BasicSelect title ="Алгоритм" isDisabled={autoplayRunning} onChange = {handleAlgorithmChange} value = {algorithm} values = {algorithms}  />
                 <BasicSlider title="Розмір дерева(масиву)" isDisabled={autoplayRunning} min={TreeBasedConstants.treeSizeMin} max={treeSizeMax}

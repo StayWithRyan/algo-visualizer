@@ -3,7 +3,7 @@ const Constants = {
     disabledMainColor: "#4d131f",
     textColor: "#eeeeee",
     disabledTextColor : "#646467",
-    navBarColor: "black",
+    pageBarColor: "black",
     configurationBarColor: "#101010",
     mainBackground: "black",
 
@@ -16,14 +16,15 @@ const Constants = {
     fontFamily: "Ubuntu",
     drawInterval: 20,
     
-    navBarHeight: 60,
+    pageBarHeight: 60,
     configurationBarHeight: 80,
     minAppWidth: 1300,
 
+    homePageTitle: "Дім",
     pathfindingPageTitle: "Пошук шляху",
     sortingPageTitle: "Сортування",
     stringsearchingPageTitle: "Пошук стрічки",
-    treeBasedPageTitle: "Дерева"
+    treeBasedPageTitle: "Алгоритми на деревах"
 }
 
 export default Constants;

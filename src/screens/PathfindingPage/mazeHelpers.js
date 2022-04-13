@@ -87,7 +87,7 @@ const copyElem = (elem) => {
 }
 
 const createMaze = () => {
-    let rows = getEven((window.innerHeight - Constants.navBarHeight - Constants.configurationBarHeight - 40 - elemSize) / elemSize);
+    let rows = getEven((window.innerHeight - Constants.pageBarHeight - Constants.configurationBarHeight - 40 - elemSize) / elemSize);
     let columns = getEven((window.innerWidth - 20 - elemSize) / elemSize);
 
     let maze = [];

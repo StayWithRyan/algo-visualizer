@@ -5,6 +5,7 @@ import ConfigurationBar from "../../components/ConfigurationBar";
 import BasicSelect from '../../components/BasicSelect';
 import BasicSlider from '../../components/BasicSlider';
 import BasicButton from '../../components/BasicButton';
+import PageBar from '../../components/PageBar';
 
 import {useState, useEffect, useCallback} from 'react';
 
@@ -16,7 +17,7 @@ import {
 } from "./stringsearchingHelpers";
 import {PlayBar, resetPlayBar, setAutoplaySleep} from '../../components/PlayBar';
 
-function StringsearchingPage() {
+function StringsearchingPage(props) {
 
     const [algorithm, setAlgorithm] = useState(algorithms[0]);
     const [searchingSleep, setSearchingSleep] = useState(SearchingConstants.sleepDefault);
@@ -57,7 +58,8 @@ function StringsearchingPage() {
         if(string.trim() != string) {
             return false;
         }
-        let maxLength = (window.innerWidth / 100 * 80) / 30; // 80 is textBox width
+        console.log(window.innerWidth / 100 * 80)
+        let maxLength = (window.innerWidth / 100 * 80) / 45; // 80 is textBox width
         if(string.length > maxLength) {
             return false;
         }
@@ -128,6 +130,7 @@ function StringsearchingPage() {
     
     return (
         <>
+            <PageBar name={Constants.stringsearchingPageTitle} clickBack={props.goBack}/>
             <ConfigurationBar pageName={Constants.stringsearchingPageTitle}>
                 <BasicSelect title ="Алгоритм" isDisabled={isSearching} onChange = {handleAlgorithmChange} value = {algorithm} values = {algorithms}  />
                 <BasicButton title="Завершити пошук" onClick={handleClear} isDisabled={autoplayRunning || !isSearching}/>

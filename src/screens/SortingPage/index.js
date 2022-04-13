@@ -5,6 +5,7 @@ import {useState, useRef, useEffect, useCallback} from 'react';
 import BasicSelect from '../../components/BasicSelect'
 import BasicSlider from '../../components/BasicSlider';
 import {PlayBar, resetPlayBar, setAutoplaySleep} from '../../components/PlayBar';
+import PageBar from '../../components/PageBar';
 
 import Constants from '../../constants';
 import SortingConstants from './constants';
@@ -16,7 +17,7 @@ import {
 
 let array = null;
 
-function SortingPage() {
+function SortingPage(props) {
     if(array === null) {
         array = createArray(SortingConstants.arraySizeDefault);
     }
@@ -68,10 +69,11 @@ function SortingPage() {
     };
 
 
-    let canvasHeight = window.innerHeight - Constants.navBarHeight - Constants.configurationBarHeight - 20;
+    let canvasHeight = window.innerHeight - Constants.pageBarHeight - Constants.configurationBarHeight - 20;
 
     return (
         <>
+            <PageBar name={Constants.sortingPageTitle} clickBack={props.goBack}/>
             <ConfigurationBar pageName={Constants.sortingPageTitle} >
                 <BasicSelect title="Алгоритм" isDisabled={autoplayRunning} onChange={handleAlgorithmChange} value={algorithm} values={algorithms}  />
                 <BasicSlider title="Розмір масиву"  isDisabled={autoplayRunning} min={SortingConstants.arraySizeMin} max={SortingConstants.arraySizeMax}

@@ -1,0 +1,23 @@
+.PageBar{
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    font-weight: 800;
+    font-size: 2.5em;
+    font-family: "Ubuntu";
+    user-select: none;
+}
+
+.homeButton {
+    color: #b31739;
+    position: absolute;
+    left: 10px;
+    top: 0px;
+    cursor: pointer;
+}
+
+.homeButton:hover {
+    color: #ea4334;
+}

@@ -1,0 +1,11 @@
+.homePage {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-evenly;
+}
+
+.NavBar {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-evenly;
+}

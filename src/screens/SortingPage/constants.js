@@ -4,9 +4,9 @@ const SortingConstants = {
     sleepDefault: 500,
     sleepStep: 20,
 
-    defaultColor: "#6ea1ff",
-    checkingColor: "#dfa47f",
-    swappingColor: "#eb6b64",
+    defaultColor: "#16b8f3",
+    checkingColor: "#FFD046",
+    swappingColor: "#be004f",
 
     arraySizeMin: 10,
     arraySizeMax: 50,

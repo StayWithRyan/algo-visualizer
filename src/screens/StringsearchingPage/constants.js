@@ -7,10 +7,10 @@ const SearchingConstants = {
     sleepStep: 50,
 
     defaultColor: Constants.textColor,
-    checkingColor: "#fab366",
-    checkingHashColor: "#6ea1ff",
+    checkingColor: "#fbbc05",
+    checkingHashColor: "#16b8f3",
     matchColor: "#07e35b",
-    noMatchColor: "#ff6d59"
+    noMatchColor: "#ea4334"
 }
 
 export default SearchingConstants;

@@ -1,16 +1,57 @@
-.NavLinkContainer{
-    width: 100%;
-    height: 100%;
+
+.NavPage {
+    cursor: pointer;
     display: flex;
+    flex-flow: column;
+    justify-content: space-evenly;
     align-items: center;
-    justify-content: center;
+    user-select: none;
+    width: 49.85vw;
+    height: 49.7vh;
 }
 
-.NavLinkText{
+.PageText {
+    text-align: center;
+    color: #eeeeee;
     font-family: "Ubuntu";
+    line-height: 1.4375em;
     font-weight: 500;
-    font-size: 1.7em;
-    margin: 0px;
-    user-select: none;
-    cursor: pointer;
+    font-size: 3.5em;
+}
+
+
+.NavPage1 {
+    border-bottom: 0.3vh solid #660d20;
+    border-right: 0.15vw solid #660d20;
+}
+
+.NavPage2 {
+    border-bottom: 0.3vh solid #660d20;
+    border-left: 0.15vw solid #660d20;
+}
+
+.NavPage3 {
+    border-top: 0.3vh solid #660d20;
+    border-right: 0.15vw solid #660d20;
+}
+
+.NavPage4 {
+    border-top: 0.3vh solid #660d20;
+    border-left: 0.15vw solid #660d20;
+}
+
+.NavPage1:hover {
+    background-image: linear-gradient(135deg, #b31739 0%, #660d20 50%, #3d080d 100%);
+}
+
+.NavPage2:hover {
+    background-image: linear-gradient(225deg, #b31739 0%, #660d20 50%, #3d080d 100%);
+}
+
+.NavPage3:hover {
+    background-image: linear-gradient(45deg, #b31739 0%, #660d20 50%, #3d080d 100%);
+}
+
+.NavPage4:hover {
+    background-image: linear-gradient(315deg, #b31739 0%, #660d20 50%, #3d080d 100%);
 }

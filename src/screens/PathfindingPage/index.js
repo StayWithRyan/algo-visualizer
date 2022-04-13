@@ -2,6 +2,7 @@ import ConfigurationBar from "../../components/ConfigurationBar";
 import BasicSelect from '../../components/BasicSelect'
 import BasicSlider from '../../components/BasicSlider';
 import BasicButton from '../../components/BasicButton';
+import PageBar from '../../components/PageBar';
 import {useState, useEffect, useRef, useCallback} from 'react';
 import PathfindingConstants from './constants';
 import Constants from '../../constants';
@@ -17,7 +18,7 @@ let maze = null;
 //Snapshot of blocks. Need to remember blocks positions when moving start and target nodes.
 let mazeSnapshot = null;
 
-function PathfindingPage() {
+function PathfindingPage(props) {
     if(maze === null) {
         maze = createMaze();
         mazeSnapshot = createSnapshot(maze);
@@ -202,12 +203,13 @@ function PathfindingPage() {
     const canvasMarginVertical = 
         (
             window.innerHeight - maze.length * PathfindingConstants.elementSize -
-            Constants.navBarHeight -  Constants.configurationBarHeight
+            Constants.pageBarHeight -  Constants.configurationBarHeight
         ) / 2 
     
 
     return (
         <>
+            <PageBar name={Constants.pathfindingPageTitle} clickBack={props.goBack}/>
             <ConfigurationBar pageName={Constants.pathfindingPageTitle}>
                 <BasicSelect isDisabled={autoplayRunning || isGenerating} title ="Алгоритм" onChange = {handleAlgorithmChange} 
                     value={algorithm} values={algorithms}  />
