@@ -1,7 +1,7 @@
 import Helpers from '../../../helpers';
 import PathfindingConstants from '../../../screens/PathfindingPage/constants';
 import {EmptyElementType, BlockElementType} from '../../../screens/PathfindingPage/Elements/MazeElementTypes';
-import {delayTimeout, createBorders, setDelayTimeout, getBlocks, isSameBlockExists} from './mazeGeneratorsHelpers';
+import {delayTimeout, createBorders, setDelayTimeout, getBlocks, isSameBlockExists, isLastBlock} from './mazeGeneratorsHelpers';
 
 function createSetsArray(maze) {
     let sets = [];
@@ -153,10 +153,13 @@ async function EllersAlgorithm(maze, handleFinishGenerating) {
         }
         if(countPrev > 1) {
             if(isSameBlockExists(blocksAbove, settedBlock) === false){
-                maze[lastRow][i].setType(BlockElementType);
-                settedBlock.push(blocksAbove);
+                if(Helpers.getRandomInt(countPrev) == 0 || isLastBlock(blocksAbove, lastRow - 1, i)) {
+                    maze[lastRow][i].setType(BlockElementType);
+                    settedBlock.push(blocksAbove);
+                }
             }
         }
+        await Helpers.delay(delayTimeout);
     }
 
     handleFinishGenerating();

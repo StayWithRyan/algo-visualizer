@@ -58,7 +58,6 @@ function StringsearchingPage(props) {
         if(string.trim() != string) {
             return false;
         }
-        console.log(window.innerWidth / 100 * 80)
         let maxLength = (window.innerWidth / 100 * 80) / 45; // 80 is textBox width
         if(string.length > maxLength) {
             return false;

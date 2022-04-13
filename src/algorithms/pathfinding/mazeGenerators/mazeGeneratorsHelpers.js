@@ -66,7 +66,17 @@ const getBlocks = (maze, i, j) => {
     return blocks;
 }
 
+const isLastBlock = (blocks, i, j) => {
+    let lastBlock = [i, j];
 
+    for(let k = 0; k < blocks.length; ++k) {
+        if(blocks[k][0] == i && lastBlock[1] <= blocks[k][1]) {
+            lastBlock[1] = blocks[k][1];
+        }
+    }
+
+    return i === lastBlock[0] && j === lastBlock[1];
+}
 
 const isSameBlockExists = (block, blocks) => {
     for(let i = 0; i < blocks.length; ++i) {
@@ -76,6 +86,7 @@ const isSameBlockExists = (block, blocks) => {
     }
     return false;
 }
+
 const isSameBlocks = (blocksI, blocksJ) => {
     const isInBlocksJ = (block) => {
         for(let i = 0; i < blocksJ.length; ++i) {
@@ -93,4 +104,4 @@ const isSameBlocks = (blocksI, blocksJ) => {
     return true;
 }
 
-export {createBorders, delayTimeout, setDelayTimeout, getBlocks, isSameBlockExists};
+export {createBorders, delayTimeout, setDelayTimeout, getBlocks, isLastBlock, isSameBlockExists};

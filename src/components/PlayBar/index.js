@@ -14,6 +14,7 @@ let autoplayStopped = false;
 let stepsLength = 0;
 let currentStep = 0;
 let firstStep = 0;
+let keyboardLocked = false;
 
 const resetPlayBar = (stepsLengthPassed = 0, firstStepPassed = 0) => {
     autoplayStopped = false;
@@ -34,12 +35,62 @@ function PlayBar({setStep, setRunningAutoplay, isDisabled = false}) {
 
     useEffect(() => {
         setRunningAutoplay(running);
-    }, [running])
+    }, [running]);
+
+    const handleKeyDown = (event) => {
+
+        if(event.key == 'ArrowRight') {
+            if(nextStepEnabled && !isDisabled) {
+                handleNextStep();
+            }
+        }
+
+        if(event.key == 'ArrowLeft') {
+            if(prevStepEnabled && !isDisabled) {
+                handlePrevStep();
+            }
+        }
+
+        if(event.key == 'Enter') {
+            if(!keyboardLocked) {
+                if(nextStepEnabled && !running && !isDisabled) {
+                    handleAutoplay(true);
+                }
+                if(running) {
+                    handleStop();
+                }
+                keyboardLocked = true;
+            }
+        }
+
+        if(event.key == 'Backspace') {
+            if(!keyboardLocked) {
+                if(prevStepEnabled && !running && !isDisabled) {
+                    handleAutoplay(false);
+                }
+                if(running) {
+                    handleStop();
+                }
+                keyboardLocked = true;
+            }
+        }
+    }
+
+    const handleKeyUp = (event) => {
+        keyboardLocked = false;
+    }
+
+
+    useEffect(() => {
+        document.addEventListener('keydown', handleKeyDown)
+        document.addEventListener('keyup', handleKeyUp)
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+            document.removeEventListener('keyup', handleKeyUp)
+        };
+    }, [nextStepEnabled, prevStepEnabled, running, isDisabled]);
 
     if(currentStep === firstStep) {
-        if(running == true){
-            setRunning(false);
-        }
         if(prevStepEnabled == true) {
             setPrevStepEnabled(false);
         }
