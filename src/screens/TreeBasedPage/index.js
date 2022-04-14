@@ -107,8 +107,8 @@ function TreeBasedPage(props) {
     }
     
 
-    const applyStep = (step) => {
-        let [newTree, newArray] = getStep(step);
+    const applyStep = (step, isNext) => {
+        let [newTree, newArray] = getStep(step, isNext);
         tree = newTree;
         array = newArray;
     };

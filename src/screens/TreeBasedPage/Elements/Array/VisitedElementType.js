@@ -1,10 +1,10 @@
-import BaseElementType from './BaseElementType';
+import BaseAnimatedElementType from './BaseAnimatedElementType';
 import TreeBasedConstants from '../../constants';
 
-class VisitedElementType extends BaseElementType {
+class VisitedElementType extends BaseAnimatedElementType {
     constructor() {
         super();
-        this.elementColor = TreeBasedConstants.visitedColor;
+        this.rainbow.setSpectrum(TreeBasedConstants.visitedColor[0], TreeBasedConstants.visitedColor[1]);
     }
 }
 

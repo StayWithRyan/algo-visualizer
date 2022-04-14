@@ -1,10 +1,11 @@
-import BaseNode from './BaseNodeType';
+import BaseAnimatedNodeType from './BaseAnimatedNodeType';
 import TreeBasedConstants from '../../constants';
 
-class VisitedNodeType extends BaseNode {
+class VisitedNodeType extends BaseAnimatedNodeType {
     constructor() {
         super();
-        this.nodeColor = TreeBasedConstants.visitedColor;
+        this.rainbow.setSpectrum(TreeBasedConstants.visitedColor[0], TreeBasedConstants.visitedColor[1]);
+        this.backgroundColor = TreeBasedConstants.regularColor;
     }
 }
 

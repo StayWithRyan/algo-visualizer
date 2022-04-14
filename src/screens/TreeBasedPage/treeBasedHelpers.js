@@ -38,8 +38,44 @@ const addStep = (treeToStep, arrayToStep) => {
     arraySteps.push(copyArray(arrayToStep));
 }
 
-const getStep = (index) => {
-    return [treeSteps[index], arraySteps[index]];
+const getStep = (index, isNext) => {
+    let treeStep = treeSteps[index];
+    let arrayStep = arraySteps[index];
+
+    if(isNext) {
+        //tree
+        let prevTreeStep = treeSteps[index - 1];
+        let queue = [];
+        if(treeStep != null) {
+            queue.push(treeStep);
+        }
+        while(queue.length > 0) {
+            let node = queue.shift();
+            let prevNode = getNodeById(prevTreeStep, node.id);
+            if(prevNode == null || prevNode.type.constructor.name !== node.type.constructor.name) {
+                if(node.type.setAnimating) {
+                    node.type.setAnimating();
+                }
+            }
+            if(node.left) {
+                queue.push(node.left);
+            }
+            if(node.right) {
+                queue.push(node.right);
+            }
+        }
+        //array
+        let prevArrayStep = arraySteps[index - 1];
+        for(let i = 0; i < arrayStep.length; ++i) {
+            if(i + 1 > prevArrayStep.length || prevArrayStep[i].type.constructor.name !== arrayStep[i].type.constructor.name) {
+                if(arrayStep[i].type.setAnimating) {
+                    arrayStep[i].type.setAnimating();
+                }
+            }
+        }
+    }
+
+    return [treeStep, arrayStep];
 }
 
 const copyTree = (tree) => {
@@ -349,6 +385,10 @@ const resetArrayTypes = (array) => {
 }
 
 const getNodeById = (tree, id) => {
+    if(tree == null) {
+        return null;
+    }
+
     let queue = [];
     queue.push(tree);
     while(queue.length > 0) {
@@ -363,6 +403,7 @@ const getNodeById = (tree, id) => {
             queue.push(node.right);
         }
     }
+    return null;
 }
 
 export {
