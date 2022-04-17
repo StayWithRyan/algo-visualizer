@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import InputLabel from '@mui/material/InputLabel';
@@ -9,6 +9,37 @@ export default function BasicSlider(props) {
     const [value, setValue] = useState(props.default);
     if(value > props.max) {
         setValue(props.max);
+    }
+
+    const handleKeyDown = (event) => {
+        if(props.isActive) {
+            if (event.key === 'ArrowUp') {
+                if(value < props.max) {
+                    let valueToSet = value + props.step <= props.max ? value + props.step : props.max;
+                    props.onChange(valueToSet);
+                    setValue(valueToSet);
+                }
+            }
+            if (event.key === 'ArrowDown') {
+                if(value > 0) {
+                    let valueToSet = value - props.step >= props.min ? value - props.step : props.min;
+                    props.onChange(valueToSet);
+                    setValue(valueToSet);
+                }
+            }
+        }
+    }
+
+    useEffect(() => {
+        document.addEventListener('keydown', handleKeyDown);
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [value, setValue, props.max, props.step, props.isActive]);
+    
+
+    function preventKeyboardNavigation(event) {
+        event.preventDefault();
     }
 
     return (
@@ -30,6 +61,7 @@ export default function BasicSlider(props) {
                 max={props.max}
                 style={{ color: props.isDisabled ? Constants.disabledMainColor : Constants.mainColor}}
                 valueLabelDisplay="auto"
+                onKeyDown={preventKeyboardNavigation}
             />
             </Box>
         </div>

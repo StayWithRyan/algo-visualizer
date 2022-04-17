@@ -1,8 +1,9 @@
 const TreeBasedConstants = {
     sleepMin: 25,
     sleepMax: 1000,
-    sleepDefault: 1000,
-    sleepStep: 15,
+    sleepDefault: 550,
+    sleepStep: 75,
+
 
     treeSizeMin: 5,
     treeSizeDefault: 15,

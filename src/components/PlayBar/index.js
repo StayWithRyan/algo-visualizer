@@ -28,7 +28,7 @@ const setAutoplaySleep = (sleepTimeout) => {
     timeout = sleepTimeout;
 }
 
-function PlayBar({setStep, setRunningAutoplay, isDisabled = false}) {
+function PlayBar({setStep, setRunningAutoplay, isDisabled = false, keyboardDisabled = false}) {
     let [running, setRunning] = useState(false);
     const [prevStepEnabled, setPrevStepEnabled] = useState(false);
     const [nextStepEnabled, setNextStepEnabled] = useState(true);
@@ -82,13 +82,15 @@ function PlayBar({setStep, setRunningAutoplay, isDisabled = false}) {
 
 
     useEffect(() => {
-        document.addEventListener('keydown', handleKeyDown)
-        document.addEventListener('keyup', handleKeyUp)
-        return () => {
-            document.removeEventListener('keydown', handleKeyDown);
-            document.removeEventListener('keyup', handleKeyUp)
-        };
-    }, [nextStepEnabled, prevStepEnabled, running, isDisabled]);
+        if(keyboardDisabled === false) {
+            document.addEventListener('keydown', handleKeyDown)
+            document.addEventListener('keyup', handleKeyUp)
+            return () => {
+                document.removeEventListener('keydown', handleKeyDown);
+                document.removeEventListener('keyup', handleKeyUp)
+            };
+        }
+    }, [nextStepEnabled, prevStepEnabled, running, isDisabled, keyboardDisabled]);
 
     if(currentStep === firstStep) {
         if(prevStepEnabled == true) {

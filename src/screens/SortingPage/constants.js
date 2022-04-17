@@ -1,8 +1,8 @@
 const SortingConstants = {
     sleepMin: 25,
-    sleepMax: 2000,
-    sleepDefault: 500,
-    sleepStep: 20,
+    sleepMax: 1000,
+    sleepDefault: 550,
+    sleepStep: 75,
 
     defaultColor: "#16b8f3",
     checkingColor: "#FFD046",

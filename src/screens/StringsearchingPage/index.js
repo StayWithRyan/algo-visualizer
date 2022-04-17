@@ -133,9 +133,9 @@ function StringsearchingPage(props) {
             <ConfigurationBar pageName={Constants.stringsearchingPageTitle}>
                 <BasicSelect title ="Алгоритм" isDisabled={isSearching} onChange = {handleAlgorithmChange} value = {algorithm} values = {algorithms}  />
                 <BasicButton title="Завершити пошук" onClick={handleClear} isDisabled={autoplayRunning || !isSearching}/>
-                <BasicSlider title="Тривалість кроку (мс)" min={SearchingConstants.sleepMin} max={SearchingConstants.sleepMax} 
+                <BasicSlider isActive={true} title="Тривалість кроку (мс)" min={SearchingConstants.sleepMin} max={SearchingConstants.sleepMax} 
                     default={SearchingConstants.sleepDefault} step={SearchingConstants.sleepStep} onChange={setSearchingSleep} />
-                <PlayBar setStep={applyStep} setRunningAutoplay={setAutoplayRunning} isDisabled={!isInputValid}/>
+                <PlayBar keyboardDisabled={!isSearching} setStep={applyStep} setRunningAutoplay={setAutoplayRunning} isDisabled={!isInputValid}/>
             </ConfigurationBar>
             {isSearching // pattern
                 ? <div className="textCard">

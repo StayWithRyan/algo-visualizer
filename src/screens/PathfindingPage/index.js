@@ -213,7 +213,7 @@ function PathfindingPage(props) {
             <ConfigurationBar pageName={Constants.pathfindingPageTitle}>
                 <BasicSelect isDisabled={autoplayRunning || isGenerating} title ="Алгоритм" onChange = {handleAlgorithmChange} 
                     value={algorithm} values={algorithms}  />
-                <BasicSlider isDisabled={isGenerating} title="Тривалість кроку (мс)" min={PathfindingConstants.sleepMin} max={PathfindingConstants.sleepMax} 
+                <BasicSlider isActive={true} isDisabled={isGenerating} title="Тривалість кроку (мс)" min={PathfindingConstants.sleepMin} max={PathfindingConstants.sleepMax} 
                     default={PathfindingConstants.sleepDefault} step={PathfindingConstants.sleepStep} onChange={setPathfindingSleep} 
                 />
                 <PlayBar isDisabled={isGenerating} setStep={applyStep} setRunningAutoplay={setAutoplayRunning}/>

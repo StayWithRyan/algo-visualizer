@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useEffect, useState} from 'react';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -19,6 +19,17 @@ const theme = createTheme({
 });
 
 export default function BasicSelect(props) {
+    let [value, setValue] = useState(props.value);
+    let [counter, setCounter] = useState(0);
+
+    useEffect(() => {
+        // remove focus from select field.
+        var tmp = document.createElement("input");
+        document.body.appendChild(tmp);
+        tmp.focus();
+        document.body.removeChild(tmp);
+    }, [value, counter]);
+
     return (
         <div>
             <InputLabel style={{ color: props.isDisabled ? Constants.disabledTextColor : Constants.textColor, height: "20px", fontFamily: Constants.fontFamily, userSelect: "none" }}>{props.title}</InputLabel>
@@ -28,10 +39,15 @@ export default function BasicSelect(props) {
                         style={{
                             color: props.isDisabled ? Constants.disabledTextColor : Constants.textColor, 
                             fontFamily: Constants.fontFamily, textAlign: props.centered ? "center" : ""}}
-                        value={props.value}
-                        onChange={(event) => {props.onChange(event.target.value)}}
+                        value={value}
+                        onChange={(event) => {props.onChange(event.target.value); setValue(event.target.value);}}
                     >
-                    {props.values.map(value => <MenuItem style={{fontFamily: Constants.fontFamily}} disabled = {props.isDisabled} key={value} value={value}>{value}</MenuItem>)}
+                    {props.values.map(value => 
+                        <MenuItem 
+                            onClick={() => {setCounter(counter + 1)}}
+                            style={{fontFamily: Constants.fontFamily}} disabled = {props.isDisabled} key={value} value={value}>{value}
+                        </MenuItem>
+                    )}
                     </Select>
                 </FormControl>
             </ThemeProvider>

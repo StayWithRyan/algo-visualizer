@@ -391,7 +391,6 @@ const createArray = (size) => {
 }
 
 const createTreeSortArray = (size, treeMaxLevel) => {
-    console.log("gen start")
     const createBinarySearchTree = (array) => {
         let tree = new TreeNode();
         for(let i = 0; i < array.length; ++i){
@@ -443,8 +442,6 @@ const createTreeSortArray = (size, treeMaxLevel) => {
     for(let i = 0; i < size; ++i) {
         array[i] = new ArrayElement(array[i], i);
     }
-
-    console.log("gen end")
     return array;
 }
 

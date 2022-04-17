@@ -1,8 +1,9 @@
 const PathfindingConstants = {
     sleepMin: 25,
-    sleepMax: 300,
-    sleepDefault: 50,
-    sleepStep: 15,
+    sleepMax: 1000,
+    sleepDefault: 250,
+    sleepStep: 75,
+
 
     generatingDelayTimeout: 10,
 
