@@ -1,11 +1,14 @@
 import BaseSorting from './BaseSorting';
 import {createTournamentSortTree, getNodesFromLevel, getTreeMaxLevel, addStep} from '../../../screens/TreeBasedPage/treeBasedHelpers';
-import {
-    AddedNodeType, CheckingNodeType, 
-    RegularNodeType
-} from '../../../screens/TreeBasedPage/Elements/Tree/TreeNodeTypes';
-import {DoneElementType} from '../../../screens/TreeBasedPage/Elements/Array/ArrayElementTypes';
 import ArrayElement from '../../../screens/TreeBasedPage/Elements/Array/ArrayElement';
+
+import {
+    CheckingNodeType,
+    DoneNodeType, RegularNodeType
+} from '../../../screens/TreeBasedPage/Elements/Tree/TreeNodeTypes';
+import {
+    DoneElementType
+} from '../../../screens/TreeBasedPage/Elements/Array/ArrayElementTypes';
 
 class TournamentSort extends BaseSorting {
     algorithmlInner() {
@@ -14,24 +17,23 @@ class TournamentSort extends BaseSorting {
         let arraySize = nodes.length;
         for(let i = 0; i < arraySize - 1; ++i) {
             this.buildTournament();
-            this.array.push(new ArrayElement(this.tree.value, DoneElementType));
+            this.array.push(new ArrayElement(this.tree.value, this.array.length, DoneElementType));
+            this.setSingleDone(this.tree);
             lastLevel = getTreeMaxLevel(this.tree);
             nodes = getNodesFromLevel(this.tree, lastLevel);
             let nextlastLevelNodex = [];
             for(let i = 0; i < nodes.length; ++i){
                 if(nodes[i].value != this.tree.value) {
-                    nextlastLevelNodex.push(new ArrayElement(nodes[i].value));
+                    nextlastLevelNodex.push(new ArrayElement(nodes[i].value, this.array.length));
                 }
             }
+            let prevTree = this.tree;
             this.tree = createTournamentSortTree({arrayParam: nextlastLevelNodex});
-            addStep(this.tree, this.array);
+            addStep(this.tree, [], prevTree, false);
         }
 
-        this.tree.setType(AddedNodeType);
-        addStep(this.tree, this.array);
-        this.array.push(new ArrayElement(this.tree.value, DoneElementType));
-        this.tree = null;
-        addStep(this.tree, this.array);
+        this.array.push(new ArrayElement(this.tree.value, this.array.length, DoneElementType));
+        addStep(null, [this.array[this.array.length - 1]], this.tree, false);
     }
 
     buildTournament() {
@@ -40,24 +42,55 @@ class TournamentSort extends BaseSorting {
             let nodes = getNodesFromLevel(this.tree, lastLevel);
             for(let i = 0; i < nodes.length; i += 2) {
                 let minNode = nodes[i];
-
-                nodes[i].setType(CheckingNodeType);
-                addStep(this.tree, this.array);
+                this.setSingleNodeChecking(nodes[i]);
 
                 if(i + 1 < nodes.length) {
                     if(nodes[i + 1].value < minNode.value) {
                         minNode = nodes[i + 1];
                     }
-                    nodes[i + 1].setType(CheckingNodeType);
-                    addStep(this.tree, this.array);
+                    this.setSingleNodeChecking(nodes[i + 1]);
                 }
-                minNode.parent.setType(AddedNodeType);
-                minNode.parent.value = minNode.value;
-                addStep(this.tree, this.array);
-                minNode.parent.setType(RegularNodeType);
+                minNode.parent.setValue(minNode.value);
+                this.setSingleNodeJustAdded(minNode.parent);
             }
             lastLevel--;
         }
+    }
+    
+    setSingleDone(node) {
+        node.setType(DoneNodeType);
+        addStep([node], [this.array[this.array.length - 1]]);
+    }
+    
+    setSingleNodeChecking(node) {
+        node.setType(CheckingNodeType);
+
+        let treeStep = [node];
+
+        if(this.prevNode && this.prevNode.id != node.id) {
+            this.prevNode.setType(RegularNodeType, true);
+            treeStep.push(this.prevNode);
+        }
+        
+        addStep(treeStep, []);
+
+        this.prevNode = node;
+    }
+
+    setSingleNodeJustAdded(node) {
+        node.setType(RegularNodeType);
+
+        let treeStep = [node];
+
+        if(this.prevNode && this.prevNode.id != node.id) {
+            this.prevNode.setType(RegularNodeType, true);
+            treeStep.push(this.prevNode);
+        }
+        
+        addStep(treeStep, []);
+
+        node.prevValue = node.value;
+        this.prevNode = null;
     }
 }
 

@@ -87,8 +87,8 @@ const drawEdge = (canvas, fromX, fromY, toX, toY) => {
 
     const context = canvas.getContext('2d');
     context.beginPath();
-    context.lineWidth = 1;
-    context.strokeStyle = "white";
+    context.lineWidth = 2;
+    context.strokeStyle = "#eeeeee";
     context.moveTo(x, y);
     context.lineTo(x2, y2);
     context.stroke();

@@ -7,6 +7,7 @@ class BaseAnimatedElementType extends BaseElementType{
         super()
         this.drawingSteps = 10;
         this.rainbow = new Rainbow();
+        this.animated = true;
     }
 
     draw(canvas, x, y, value) {
@@ -14,16 +15,15 @@ class BaseAnimatedElementType extends BaseElementType{
         let elementX = x - TreeBasedConstants.elementSize / 2;
         let elementY = y - TreeBasedConstants.elementSize / 2;
 
-        if(this.currentStep == this.drawingSteps - 1) {
+        if(this.currentStep == this.drawingSteps - 1 || this.animated === false) {
             context.fillStyle = `#${this.rainbow.colourAt(100)}`;
             context.fillRect(elementX, elementY, TreeBasedConstants.elementSize, TreeBasedConstants.elementSize);
         }
         else {
             context.fillStyle = `#${this.rainbow.colourAt(this.currentStep * this.drawingSteps)}`;
-            let shiftPosition = ( (this.drawingSteps - this.currentStep - 1) / 2);
-            let size = (TreeBasedConstants.elementSize - this.drawingSteps) + this.currentStep;
-            context.fillRect(elementX, elementY, TreeBasedConstants.elementSize, TreeBasedConstants.elementSize);
-            //context.fillRect(elementX + 1 + shiftPosition, elementY + 1 + shiftPosition, size, size);
+            let size = (TreeBasedConstants.elementSize - this.drawingSteps * 2) + this.currentStep * 2;
+            let shiftPosition = (TreeBasedConstants.elementSize - 1 - size) / 2;
+            context.fillRect(elementX + 1 + shiftPosition, elementY + 1 + shiftPosition, size, size);
         }
         
         this.fillText(canvas, x, y, value);
@@ -41,6 +41,11 @@ class BaseAnimatedElementType extends BaseElementType{
     preventFromAnimating() {
         this.currentStep = this.drawingSteps - 1;
     }
+
+    forbidAnimation() {
+        this.animated = false;
+    }
+
 }
 
 

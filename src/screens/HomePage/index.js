@@ -3,9 +3,9 @@ import './style.css';
 import NavLink from "../../components/NavLink";
 
 import stringSearchinglogo from '../../icons/search-engine.png';
-import pathfindingLogo from '../../icons//pathway.png';
-import sortingLogo from '../../icons//sort-descending.png';
-import treeBasedLogo from '../../icons//hierarchical-structure.png';
+import pathfindingLogo from '../../icons/maze.png';
+import sortingLogo from '../../icons/sort.png';
+import treeBasedLogo from '../../icons/hierarchical-structure.png';
 
 function HomePage({setPage}) {
 

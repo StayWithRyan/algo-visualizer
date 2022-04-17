@@ -13,17 +13,7 @@ class BaseNodeType {
         context.arc(x, y, TreeBasedConstants.elementSize / 2, 0, Math.PI * 2, false);
         context.fill();
     
-        this.drawOutline(canvas, x, y);
         this.fillText(canvas, x, y, value);
-    }
-
-    drawOutline(canvas, x, y) {
-        let context = canvas.getContext('2d');
-        context.lineWidth = 1;
-        context.strokeStyle = "#b31739";
-        context.beginPath();
-        context.arc(x, y, TreeBasedConstants.elementSize / 2 + 1, 0, Math.PI * 2, false);
-        context.stroke();
     }
 
     fillText(canvas, x, y, value) {
@@ -41,6 +31,17 @@ class BaseNodeType {
             }
         }
     }
+    
+    drawOutline(canvas, x, y) {
+        let context = canvas.getContext('2d');
+        context.lineWidth = 2;
+        context.strokeStyle = "#eeeeee";
+        context.beginPath();
+        context.arc(x, y, TreeBasedConstants.elementSize / 2 - 1, 0, Math.PI * 2, false);
+        context.stroke();
+
+    }
+
 }
 
 export default BaseNodeType;

@@ -7,12 +7,13 @@ class BaseAnimatedNodeType extends BaseNodeType{
         super()
         this.drawingSteps = 10;
         this.rainbow = new Rainbow();
+        this.animated = true;
     }
 
     draw(canvas, x, y, value) {
         let context = canvas.getContext('2d');
 
-        if(this.currentStep == this.drawingSteps - 1) {
+        if(this.currentStep == this.drawingSteps - 1 || this.animated === false) {
             context.fillStyle = `#${this.rainbow.colourAt(100)}`;
             context.beginPath();
             context.arc(x, y, TreeBasedConstants.elementSize / 2, 0, Math.PI * 2, false);
@@ -26,14 +27,13 @@ class BaseAnimatedNodeType extends BaseNodeType{
             context.fill();
             //main
             context.fillStyle = `#${this.rainbow.colourAt(this.currentStep * this.drawingSteps)}`;
-            let size = (TreeBasedConstants.elementSize - this.drawingSteps) + this.currentStep;
+            let size = (TreeBasedConstants.elementSize - this.drawingSteps * 3) + this.currentStep * 3;
             context.beginPath();
-            //context.arc(x, y, size / 2, 0, Math.PI * 2, false);
-            context.arc(x, y, TreeBasedConstants.elementSize / 2, 0, Math.PI * 2, false);
+            context.arc(x, y, size / 2, 0, Math.PI * 2, false);
+            //context.arc(x, y, TreeBasedConstants.elementSize / 2, 0, Math.PI * 2, false);
             context.fill();
         }
 
-        this.drawOutline(canvas, x, y);
         this.fillText(canvas, x, y, value);
 
         if(this.currentStep == this.drawingSteps) {
@@ -48,6 +48,10 @@ class BaseAnimatedNodeType extends BaseNodeType{
 
     preventFromAnimating() {
         this.currentStep = this.drawingSteps - 1;
+    }
+
+    forbidAnimation() {
+        this.animated = false;
     }
 }
 

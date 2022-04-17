@@ -10,14 +10,14 @@ class BaseTraversal {
     }
 
     algorithm() {
-        addStep(this.tree, this.array);
+        addStep([], []);
         this.traversal(this.tree);
     }
 
     setVisiting(node) {
         node.setType(VisitedNodeType);
-        this.array.push(new ArrayElement(node.value, VisitedElementType));
-        addStep(this.tree, this.array);
+        this.array.push(new ArrayElement(node.value, this.array.length, VisitedElementType));
+        addStep([node], [this.array[this.array.length - 1]]);
     }
 
 }

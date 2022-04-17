@@ -24,8 +24,8 @@ class BaseAnimatedElementType extends BaseElementType{
         else {
             context.fillStyle = `#${this.rainbow.colourAt(this.currentStep * this.drawingSteps)}`;
         
-            let shiftPosition = ( (this.drawingSteps - this.currentStep - 1) / 2);
-            let size = (PathfindingConstants.elementSize - this.drawingSteps) + this.currentStep;
+            let size = (PathfindingConstants.elementSize - this.drawingSteps * 2) + this.currentStep * 2;
+            let shiftPosition = (PathfindingConstants.elementSize - 1 - size) / 2;
             context.fillRect(
                 x + 1 + shiftPosition, y + 1 + shiftPosition,
                 size, size

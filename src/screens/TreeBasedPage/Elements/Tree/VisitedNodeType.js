@@ -5,7 +5,7 @@ class VisitedNodeType extends BaseAnimatedNodeType {
     constructor() {
         super();
         this.rainbow.setSpectrum(TreeBasedConstants.visitedColor[0], TreeBasedConstants.visitedColor[1]);
-        this.backgroundColor = TreeBasedConstants.regularColor;
+        this.backgroundColor = TreeBasedConstants.regularColor[1];
     }
 }
 

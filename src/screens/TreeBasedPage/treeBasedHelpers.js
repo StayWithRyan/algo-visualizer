@@ -33,43 +33,94 @@ const clearSteps = () => {
     arraySteps.length = 0;
 }
 
-const addStep = (treeToStep, arrayToStep) => {
-    treeSteps.push(copyTree(treeToStep));
-    arraySteps.push(copyArray(arrayToStep));
+//if prevTree !== false, then it is full reset(new tree)
+const addStep = (nodesToStep, arrayElementsToStep, prevTree=false, prevArray=false) => {
+    if(prevTree !== false) {
+        treeSteps.push([true, copyTree(nodesToStep), copyTree(prevTree)]);
+    }
+    else {
+        for(let i = 0; i < nodesToStep.length; ++i) {
+            nodesToStep[i] = copyTreeNode(nodesToStep[i]);
+        }
+        treeSteps.push([false, ...nodesToStep]);
+    }
+
+    if(prevArray !== false) {
+        arraySteps.push([true, copyArray(arrayElementsToStep), copyArray(prevArray)]);
+    }
+    else {
+        for(let i = 0; i < arrayElementsToStep.length; ++i) {
+            arrayElementsToStep[i] = copyArrayElement(arrayElementsToStep[i]);
+        }
+        arraySteps.push([false, ...arrayElementsToStep]);
+    }
 }
 
-const getStep = (index, isNext) => {
-    let treeStep = treeSteps[index];
-    let arrayStep = arraySteps[index];
 
-    if(isNext) {
-        //tree
-        let prevTreeStep = treeSteps[index - 1];
-        let queue = [];
-        if(treeStep != null) {
-            queue.push(treeStep);
+const getStep = (index, isNext) => {
+    let treeStep = [...treeSteps[isNext ? index : index + 1]];
+    let arrayStep = [...arraySteps[isNext ? index : index + 1]];
+
+    if(treeStep[0] === true) {
+        if(isNext) {
+            treeStep = [true, treeStep[1]]; // new tree
         }
-        while(queue.length > 0) {
-            let node = queue.shift();
-            let prevNode = getNodeById(prevTreeStep, node.id);
-            if(prevNode == null || prevNode.type.constructor.name !== node.type.constructor.name) {
+        else {
+            if(treeStep[2] && treeStep[2].type.preventFromAnimating) {
+                treeStep[2].type.preventFromAnimating();
+            }
+            treeStep = [true, treeStep[2]]; // prev tree
+        }
+    }
+    else {
+        if(isNext) {
+            for(let i = 1; i < treeStep.length; ++i) {
+                let node = treeStep[i];
                 if(node.type.setAnimating) {
-                    node.type.setAnimating();
+                    node.type.setAnimating()
                 }
             }
-            if(node.left) {
-                queue.push(node.left);
-            }
-            if(node.right) {
-                queue.push(node.right);
+        }
+        else {
+            for(let i = 1; i < treeStep.length; ++i) {
+                treeStep[i] = copyTreeNode(treeStep[i]);
+                let node = treeStep[i];
+                node.type = node.prevType;
+                node.value = node.prevValue;
+                if(node.type && node.type.preventFromAnimating) {
+                    node.type.preventFromAnimating()
+                }
             }
         }
-        //array
-        let prevArrayStep = arraySteps[index - 1];
-        for(let i = 0; i < arrayStep.length; ++i) {
-            if(i + 1 > prevArrayStep.length || prevArrayStep[i].type.constructor.name !== arrayStep[i].type.constructor.name) {
-                if(arrayStep[i].type.setAnimating) {
-                    arrayStep[i].type.setAnimating();
+    }
+
+    if(arrayStep[0] === true) {
+        if(isNext) {
+            arrayStep = [true, arrayStep[1]]; // new array
+        }
+        else {
+            arrayStep = [true, arrayStep[2]]; // prev array
+        }
+    }
+    else {
+        if(isNext) {
+            for(let i = 1; i < arrayStep.length; ++i) {
+                let elem = arrayStep[i];
+                if(elem.type.setAnimating) {
+                    elem.type.setAnimating()
+                }
+            }
+        }
+        else {
+            for(let i = 1; i < arrayStep.length; ++i) {
+                arrayStep[i] = copyArrayElement(arrayStep[i]);
+                let elem = arrayStep[i];
+                elem.type = elem.prevType;
+                if(elem.prevValue !== null) {
+                    elem.value = elem.prevValue;
+                }
+                if(elem.type && elem.type.preventFromAnimating) {
+                    elem.type.preventFromAnimating()
                 }
             }
         }
@@ -95,22 +146,46 @@ const copyTree = (tree) => {
 }
 
 const copyTreeNode = (node) => {
+    if(node === null) {
+        return null;
+    }
     let newNode = new TreeNode();
     newNode.level = node.level;
     newNode.value = node.value;
     newNode.id = node.id;
-    newNode.type = node.type;
+    newNode.type = new node.type.constructor();
+    if(node.prevType) {
+        newNode.prevType = new node.prevType.constructor();
+    }
+    newNode.prevValue = node.prevValue;
+    newNode.type.animated = node.type.animated;
+    newNode.type.currentStep = node.type.currentStep;
     return newNode;
 }
 
 const copyArray = (arrayToCopy) => {
     let newArray = []
     for(let i = 0; i < arrayToCopy.length; ++i) {
-        let newElem = new ArrayElement(arrayToCopy[i].value);
+        let newElem = new ArrayElement(arrayToCopy[i].value, i);
+        newElem.prevValue = arrayToCopy[i].prevValue;
         newElem.type = arrayToCopy[i].type;
+        newElem.prevType = arrayToCopy[i].prevType;
         newArray.push(newElem)
     }
     return newArray;
+}
+
+const copyArrayElement = (element) => {
+    if(element === null) {
+        return null;
+    }
+    let newElem = new ArrayElement(element.value, element.index, element.type.constructor);
+    if(element.prevType) {
+        newElem.prevType = new element.prevType.constructor();
+    }
+    newElem.type.animated = element.type.animated;
+    newElem.prevValue = element.prevValue;
+    return newElem;
 }
 
 const getTreeSizes = (algorithm) => {
@@ -189,7 +264,7 @@ const createTournamentSortTree = ({lastLevelSize = null, arrayParam = null}) => 
         array.sort((a, b) => 0.5 - Math.random());
 
         for(let i = 0; i < lastLevelSize; ++i) {
-            array[i] = new ArrayElement(array[i]);
+            array[i] = new ArrayElement(array[i], i);
         }
     }
     else {
@@ -212,7 +287,8 @@ const createTournamentSortTree = ({lastLevelSize = null, arrayParam = null}) => 
     let lastLevelNodes = getNodesFromLevel(newTree, levelSizes.length + 1);
     for(let i = 0; i < lastLevelNodes.length; ++i) {
         lastLevelNodes[i].setType(RegularNodeType)
-        lastLevelNodes[i].value = array[i].value;
+        lastLevelNodes[i].setValue(array[i].value);
+        lastLevelNodes[i].prevValue = array[i].value;
     }
     
     return newTree;
@@ -306,13 +382,16 @@ const createArray = (size) => {
     array.sort((a, b) => 0.5 - Math.random());
 
     for(let i = 0; i < size; ++i) {
-        array[i] = new ArrayElement(array[i]);
+        array[i] = new ArrayElement(array[i], i);
+        array[i].prevValue = array[i].value;
+        array[i].prevType = new array[i].type.constructor();
     }
 
     return array;
 }
 
 const createTreeSortArray = (size, treeMaxLevel) => {
+    console.log("gen start")
     const createBinarySearchTree = (array) => {
         let tree = new TreeNode();
         for(let i = 0; i < array.length; ++i){
@@ -362,9 +441,10 @@ const createTreeSortArray = (size, treeMaxLevel) => {
     }
 
     for(let i = 0; i < size; ++i) {
-        array[i] = new ArrayElement(array[i]);
+        array[i] = new ArrayElement(array[i], i);
     }
 
+    console.log("gen end")
     return array;
 }
 
@@ -407,8 +487,8 @@ const getNodeById = (tree, id) => {
 }
 
 export {
-    treeSteps, clearSteps, addStep, getStep, copyTree, copyArray,
-    createTree, createHeapSortTree, createTournamentSortTree, getNodeById,
+    treeSteps, arraySteps, clearSteps, addStep, getStep, copyTree, copyArray,
+    createTree, createHeapSortTree, createTournamentSortTree, getNodeById, copyTreeNode,
     resetTreeTypes, resetArrayTypes, getTreeSizes, createArray, createTreeSortArray, getNodesFromLevel, getTreeMaxLevel,
     algorithmsMapping, algorithms, sameTreeAlgorithms
 };

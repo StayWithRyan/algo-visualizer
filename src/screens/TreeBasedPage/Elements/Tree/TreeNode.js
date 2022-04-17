@@ -6,9 +6,11 @@ class TreeNode {
         this.parent = null;
         this.left = null;
         this.right = null;
-        this.value = value;
         this.id = 0;
+        this.value = value;
+        this.prevValue = value;
         this.type = new typeClass();
+        this.prevType = null;
     }
 
     setLeftChild(value, typeClass) {
@@ -33,8 +35,19 @@ class TreeNode {
         this.type.draw(canvas, x, y, this.value);
     }
 
-    setType(typeClass) {
+    setType(typeClass, forbidAnimation = false) {
+        this.prevType = new this.type.constructor();
         this.type = new typeClass();
+        if(forbidAnimation) {
+            if(this.type.forbidAnimation) {
+                this.type.forbidAnimation();
+            }
+        }
+    }
+
+    setValue(value) {
+        this.prevValue = this.value;
+        this.value = value;
     }
 }
 

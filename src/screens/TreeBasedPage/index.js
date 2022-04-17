@@ -6,14 +6,15 @@ import PageBar from '../../components/PageBar';
 
 import {
     algorithmsMapping, algorithms, sameTreeAlgorithms,
-    copyTree, copyArray, getStep, clearSteps,
+    copyTree, copyArray, getStep, clearSteps, copyTreeNode,
     createTree, createHeapSortTree, createArray, createTournamentSortTree,
-    createTreeSortArray, resetTreeTypes, resetArrayTypes, getTreeSizes, treeSteps
+    createTreeSortArray, resetTreeTypes, resetArrayTypes, getTreeSizes, treeSteps, arraySteps, getNodeById
 } from './treeBasedHelpers'
 import {draw} from './drawingTree'
 import {PlayBar, resetPlayBar, setAutoplaySleep} from '../../components/PlayBar';
 import Constants from '../../constants';
 import TreeBasedConstants from './constants';
+import TreeNode from './Elements/Tree/TreeNode';
 
 let tree = null;
 let array = null;
@@ -108,9 +109,66 @@ function TreeBasedPage(props) {
     
 
     const applyStep = (step, isNext) => {
-        let [newTree, newArray] = getStep(step, isNext);
-        tree = newTree;
-        array = newArray;
+        let [nodes, elements] = getStep(step, isNext);
+        let isTreeReset = nodes.shift();
+        let isArrayReset = elements.shift();
+        if(isTreeReset === true) {
+            tree = copyTree(nodes[0]);
+        }
+        else{
+            for(let i = 0; i < nodes.length; ++i) {
+                let node = nodes[i];
+                let nodeId = node.id;
+                let cureentNode = getNodeById(tree, nodeId);
+                let parentId = Math.floor((nodeId - 1) / 2);
+                let parent = getNodeById(tree, parentId);
+
+                if(isNext === false && node.prevType === null) {
+                    if(parent.left && parent.left.id == node.id) {
+                        parent.left = null;
+                    }
+                    else {
+                        parent.right = null;
+                    }
+                }
+                else{
+                    if(cureentNode === null) {
+                        if(nodeId === parentId * 2 + 1){
+                            parent.left = copyTreeNode(node);
+                            parent.left.parent = parent;
+                        }
+                        else {
+                            parent.right = copyTreeNode(node);
+                            parent.right.parent = parent;
+                        }
+                    }
+                    else {
+                        cureentNode.value = node.value;
+                        cureentNode.type = node.type; 
+                        cureentNode.type.animated = node.type.animated; 
+                    }
+                }
+            }
+        }
+        
+        if(isArrayReset === true) {
+            array = copyArray(elements[0]);
+        }
+        else {
+            for(let i = 0; i < elements.length; ++i) {
+                let element = elements[i];
+                if(isNext === false && array.length - 1 === element.index && element.type === null) {
+                    array.pop();
+                }
+                else if(array.length === element.index) {
+                    // new element
+                    array.push(element);
+                }
+                else {
+                    array[element.index] = element;
+                }
+            }
+        }
     };
 
     let canvasHeight = window.innerHeight - Constants.pageBarHeight - Constants.configurationBarHeight - 20;

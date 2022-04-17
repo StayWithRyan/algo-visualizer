@@ -11,14 +11,14 @@ const TreeBasedConstants = {
     elementSize: 50,
 
     textColor: "black",
-    regularColor: "pink",
-    visitedColor: ["white", "red"],
+    regularColor: ["black", "#16b8f3"],
+    visitedColor: ["#16b8f3", "#be004f"],
     justAddedColor: "brown",
     addedColor: "lightgreen",
     checkingColor: "yellow",
     swappingColor: "red",
     doneColor: ["white", "green"],
-    invisibleColor: "black",
+    invisibleColor: "white",
 
     font: "36px serif"
 }
