@@ -158,8 +158,8 @@ function PlayBar({setStep, setRunningAutoplay, isDisabled = false, keyboardDisab
         setRunning(true); 
         autoplayStopped = false;
         autoplayId++;
-        autoplay(autoplayId, forward);
         updateButtonsEnables(true);
+        autoplay(autoplayId, forward);
     }
 
     const handleStop = () => {

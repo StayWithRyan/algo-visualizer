@@ -11,19 +11,37 @@ import HeapSort from "../../algorithms/treeBased/sorting/HeapSort"
 import TreeSort from "../../algorithms/treeBased/sorting/TreeSort"
 import TournamentSort from "../../algorithms/treeBased/sorting/TournamentSort"
 
-const algorithmsMapping = {
-    "Обхід: серединний порядок (LNR)": LNRTraversal,
-    "Обхід: прямий порядок (NLR)": NLRTraversal,
-    "Обхід: зворотній порядок (LRN)": LRNTraversal,
-    "Пірамідальне сортування": HeapSort,
-    "Сортування бінарним деревом": TreeSort,
-    "Метод вибірки з дерева": TournamentSort
+const getAlgorithmClass = (algorithm) => {
+    if(algorithm === TreeBasedConstants.LNRTraversalName) {
+        return LNRTraversal;
+    }
+    if(algorithm === TreeBasedConstants.NLRTraversalName) {
+        return NLRTraversal;
+    }
+    if(algorithm === TreeBasedConstants.LRNTraversalName) {
+        return LRNTraversal;
+    }
+    if(algorithm === TreeBasedConstants.HeapSortName) {
+        return HeapSort;
+    }
+    if(algorithm === TreeBasedConstants.TreeSortName) {
+        return TreeSort;
+    }
+    if(algorithm === TreeBasedConstants.TournamentSortName) {
+        return TournamentSort;
+    }
 }
-const algorithms = [];
-for (let property in algorithmsMapping) {
-    algorithms.push(property);
-}
-let sameTreeAlgorithms = ["Обхід: серединний порядок (LNR)", "Обхід: прямий порядок (NLR)", "Обхід: зворотній порядок (LRN)"];
+
+const algorithms = [
+    TreeBasedConstants.LNRTraversalName,
+    TreeBasedConstants.NLRTraversalName,
+    TreeBasedConstants.LRNTraversalName,
+    TreeBasedConstants.HeapSortName,
+    TreeBasedConstants.TreeSortName,
+    TreeBasedConstants.TournamentSortName,
+];
+
+let sameTreeAlgorithms = [TreeBasedConstants.LNRTraversalName, TreeBasedConstants.NLRTraversalName, TreeBasedConstants.LRNTraversalName];
 
 let treeSteps = [];
 let arraySteps = [];
@@ -199,8 +217,12 @@ const getTreeSizes = (algorithm) => {
     while(treeSizeMax < lastLevelMaxElements);
     treeSizeMax--;
 
-    if(algorithm == "Сортування бінарним деревом" || algorithm == "Метод вибірки з дерева"){
+    if(algorithm === TreeBasedConstants.TournamentSortName){
         treeSizeMax = (treeSizeMax + 1) / 2;
+    }
+    
+    if(algorithm == TreeBasedConstants.TreeSortName){
+        treeSizeMax = ((treeSizeMax + 1) / 2) - 5;
     }
     return [treeSizeMax, treeMaxLevel];
 }
@@ -487,5 +509,5 @@ export {
     treeSteps, arraySteps, clearSteps, addStep, getStep, copyTree, copyArray,
     createTree, createHeapSortTree, createTournamentSortTree, getNodeById, copyTreeNode,
     resetTreeTypes, resetArrayTypes, getTreeSizes, createArray, createTreeSortArray, getNodesFromLevel, getTreeMaxLevel,
-    algorithmsMapping, algorithms, sameTreeAlgorithms
+    getAlgorithmClass, algorithms, sameTreeAlgorithms
 };

@@ -8,7 +8,7 @@ import PathfindingConstants from './constants';
 import Constants from '../../constants';
 import {draw, createMaze, copyMaze, steps, clearSteps, getStep, fillSnapshot, createSnapshot,
     getMousePosition, isOnBoarder, updateElement, resetMaze, cleanMazeAfterSearching,
-    algorithmsMapping, generatingAlgorithmsMapping, algorithms, generatingAlgorithms
+    getAlgorithmClass, getGeneratingAlgorithmClass, algorithms, generatingAlgorithms
 } from './mazeHelpers';
 import {StartElementType, TargetElementType, BlockElementType, EmptyElementType} from './Elements/MazeElementTypes';
 import {PlayBar, resetPlayBar, setAutoplaySleep} from '../../components/PlayBar';
@@ -59,12 +59,12 @@ function PathfindingPage(props) {
 
     const runAlgorithm = (algorithm) => {
         clearSteps();
-        const algorithmClass = algorithmsMapping[`${algorithm}`];
+        const algorithmClass = getAlgorithmClass(algorithm);
         const algorithmObj = new algorithmClass(copyMaze(maze));
-        if(algorithm == "Пошук 'Найкращий - перший'") {
+        if(algorithm == PathfindingConstants.BestFirstSearchName) {
             algorithmObj.setGreedy();
         }
-        if(algorithm == "Алгоритм пошуку A*") {
+        if(algorithm == PathfindingConstants.AStartName) {
             algorithmObj.setAStar();
         }
         algorithmObj.find();
@@ -87,7 +87,7 @@ function PathfindingPage(props) {
                 setIsGenerating(false);
                 setIsClear(false);
             }
-            generatingAlgorithmsMapping[`${generatingAlgorithm}`](maze, handleFinishGenerating);
+            getGeneratingAlgorithmClass(generatingAlgorithm)(maze, handleFinishGenerating);
         }
         catch(e) {
             // to handle situation when user leaving pathfinding page before generating is completed

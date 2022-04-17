@@ -21,6 +21,13 @@ const TreeBasedConstants = {
     doneColor: ["white", "green"],
     invisibleColor: "white",
 
+    LNRTraversalName: "Обхід: серединний порядок (LNR)",
+    NLRTraversalName: "Обхід: прямий порядок (NLR)",
+    LRNTraversalName: "Обхід: зворотній порядок (LRN)",
+    HeapSortName: "Пірамідальне сортування",
+    TreeSortName: "Сортування бінарним деревом",
+    TournamentSortName: "Метод вибірки з дерева",
+
     font: "36px serif"
 }
 

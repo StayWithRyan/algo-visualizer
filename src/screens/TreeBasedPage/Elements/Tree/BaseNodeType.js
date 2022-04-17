@@ -24,10 +24,15 @@ class BaseNodeType {
 
         if(value != null) {
             if(value < 10) {
-                context.fillText(value, x - 18 / 2, y + 13); // center text on node
+                if(value == 6 || value == 7 || value == 4 || value == 1) {
+                    context.fillText(value, x - 9, y + 12); // center text on node
+                }
+                else{
+                    context.fillText(value, x - 8, y + 12); // center text on node
+                }
             }
             else{
-                context.fillText(value, x - 18, y + 13); // center text on node
+                context.fillText(value, x - 18, y + 12); // center text on node
             }
         }
     }

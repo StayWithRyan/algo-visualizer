@@ -16,6 +16,15 @@ const PathfindingConstants = {
     targetColor: "#34a953",
 
     elementSize: 30,
+
+    DFSName: "Пошук у глибину",
+    BFSName: "Пошук у ширину (Алгоритм Дейкстри)",
+    BestFirstSearchName: "Пошук 'Найкращий - перший'",
+    AStartName: "Алгоритм пошуку A*",
+
+    RecursiveDivisionName: "Рекурсивний поділ",
+    EllersAlgorithmName: "Алгоритм Ейлера",
+    BasicRandomMazeName: "Випадкові блоки"
 }
 
 export default PathfindingConstants;

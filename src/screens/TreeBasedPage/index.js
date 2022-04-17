@@ -5,7 +5,7 @@ import BasicSlider from '../../components/BasicSlider';
 import PageBar from '../../components/PageBar';
 
 import {
-    algorithmsMapping, algorithms, sameTreeAlgorithms,
+    getAlgorithmClass, algorithms, sameTreeAlgorithms,
     copyTree, copyArray, getStep, clearSteps, copyTreeNode,
     createTree, createHeapSortTree, createArray, createTournamentSortTree,
     createTreeSortArray, resetTreeTypes, resetArrayTypes, getTreeSizes, treeSteps, arraySteps, getNodeById
@@ -14,7 +14,6 @@ import {draw} from './drawingTree'
 import {PlayBar, resetPlayBar, setAutoplaySleep} from '../../components/PlayBar';
 import Constants from '../../constants';
 import TreeBasedConstants from './constants';
-import TreeNode from './Elements/Tree/TreeNode';
 
 let tree = null;
 let array = null;
@@ -52,11 +51,11 @@ function TreeBasedPage(props) {
         let newTree = tree;
         let newArray = array;
 
-        if(algorithm == "Пірамідальне сортування") {
+        if(algorithm === TreeBasedConstants.HeapSortName) {
             newTree = createHeapSortTree(size);
             newArray = isReset? resetArrayTypes(array) : createArray(size);
         }
-        else if(algorithm == "Сортування бінарним деревом") {
+        else if(algorithm === TreeBasedConstants.TreeSortName) {
             newTree = null;
             newArray = isReset? resetArrayTypes(array) : createTreeSortArray(size, treeMaxLevel);
         }
@@ -64,7 +63,7 @@ function TreeBasedPage(props) {
             newTree = isReset? resetTreeTypes(tree) : createTree(size, treeMaxLevel);
             newArray = [];
         }
-        else if(algorithm == "Метод вибірки з дерева") {
+        else if(algorithm === TreeBasedConstants.TournamentSortName) {
             if(!isReset) {
                 newTree = createTournamentSortTree({lastLevelSize: size});
                 newArray = [];
@@ -99,7 +98,7 @@ function TreeBasedPage(props) {
     
     const runAlgorithm = (algorithm) => {
         clearSteps();
-        const algorithmClass = algorithmsMapping[`${algorithm}`];
+        const algorithmClass = getAlgorithmClass(algorithm);
         const algorithmObj = new algorithmClass(copyTree(tree), copyArray(array));
         algorithmObj.algorithm();
         resetPlayBar(treeSteps.length);

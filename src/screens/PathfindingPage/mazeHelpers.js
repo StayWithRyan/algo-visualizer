@@ -10,25 +10,39 @@ import EllersAlgorithm from '../../algorithms/pathfinding/mazeGenerators/EllersA
 import DFS from '../../algorithms/pathfinding/pathfindingAlgorithms/DFS';
 import BFS from '../../algorithms/pathfinding/pathfindingAlgorithms/BFS';
 
-const algorithmsMapping = {
-    "Пошук у глибину": DFS,
-    "Пошук у ширину (Алгоритм Дейкстри)": BFS,
-    "Пошук 'Найкращий - перший'": BFS,
-    "Алгоритм пошуку A*": BFS
+const getAlgorithmClass = (algorithm) => {
+    if(algorithm === PathfindingConstants.DFSName) {
+        return DFS;
+    }
+    else {
+        return BFS;
+    }
 }
-const generatingAlgorithmsMapping = {
-    "Рекурсивний поділ": RecursiveDivision,
-    "Алгоритм Ейлера": EllersAlgorithm,
-    "Випадкові блоки": BasicRandomMaze,
+
+const getGeneratingAlgorithmClass = (algorithm) => {
+    if(algorithm === PathfindingConstants.RecursiveDivisionName) {
+        return RecursiveDivision;
+    }
+    if(algorithm === PathfindingConstants.EllersAlgorithmName) {
+        return EllersAlgorithm;
+    }
+    if(algorithm === PathfindingConstants.BasicRandomMazeName) {
+        return BasicRandomMaze;
+    }
 }
-const algorithms = [];
-for (let property in algorithmsMapping) {
-    algorithms.push(property);
-}
-const generatingAlgorithms = [];
-for (let property in generatingAlgorithmsMapping) {
-    generatingAlgorithms.push(property);
-}
+
+const algorithms = [
+    PathfindingConstants.DFSName,
+    PathfindingConstants.BFSName,
+    PathfindingConstants.BestFirstSearchName,
+    PathfindingConstants.AStartName
+];
+
+const generatingAlgorithms = [
+    PathfindingConstants.RecursiveDivisionName,
+    PathfindingConstants.EllersAlgorithmName,
+    PathfindingConstants.BasicRandomMazeName
+];
 
 let elemSize = PathfindingConstants.elementSize;
 
@@ -257,5 +271,5 @@ const getNodeLocation = (maze, classToFind) => {
 export {
     steps, clearSteps, addStep, getStep, createMaze, copyMaze, copyElem, fillSnapshot, createSnapshot,
     getMousePosition, isOnBoarder, updateElement, resetMaze, getNodeLocation, cleanMazeAfterSearching, draw,
-    algorithmsMapping, generatingAlgorithmsMapping, algorithms, generatingAlgorithms
+    getAlgorithmClass, getGeneratingAlgorithmClass, algorithms, generatingAlgorithms
 };
