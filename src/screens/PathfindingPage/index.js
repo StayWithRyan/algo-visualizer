@@ -18,7 +18,7 @@ let maze = null;
 //Snapshot of blocks. Need to remember blocks positions when moving start and target nodes.
 let mazeSnapshot = null;
 
-function PathfindingPage(props) {
+function PathfindingPage() {
     if(maze === null) {
         maze = createMaze();
         mazeSnapshot = createSnapshot(maze);
@@ -209,7 +209,7 @@ function PathfindingPage(props) {
 
     return (
         <>
-            <PageBar name={Constants.pathfindingPageTitle} clickBack={props.goBack}/>
+            <PageBar name={Constants.pathfindingPageTitle}/>
             <ConfigurationBar pageName={Constants.pathfindingPageTitle}>
                 <BasicSelect isDisabled={autoplayRunning || isGenerating} title ="Алгоритм" onChange = {handleAlgorithmChange} 
                     value={algorithm} values={algorithms}  />

@@ -17,7 +17,7 @@ import {
 
 let array = null;
 
-function SortingPage(props) {
+function SortingPage() {
     if(array === null) {
         array = createArray(SortingConstants.arraySizeDefault);
     }
@@ -73,7 +73,7 @@ function SortingPage(props) {
 
     return (
         <>
-            <PageBar name={Constants.sortingPageTitle} clickBack={props.goBack}/>
+            <PageBar name={Constants.sortingPageTitle}/>
             <ConfigurationBar pageName={Constants.sortingPageTitle} >
                 <BasicSelect title="Алгоритм" isDisabled={autoplayRunning} onChange={handleAlgorithmChange} value={algorithm} values={algorithms}  />
                 <BasicSlider title="Розмір масиву"  isDisabled={autoplayRunning} min={SortingConstants.arraySizeMin} max={SortingConstants.arraySizeMax}

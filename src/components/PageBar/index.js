@@ -1,19 +1,16 @@
 import './style.css';
-
 import Constants from '../../constants';
 import { IoIosArrowBack } from 'react-icons/io';
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-function PageBar({name, clickBack}) {
-
+function PageBar({name}) {
+    const navigate = useNavigate();
     
     return (
         <>
-            <Link style={{ textDecoration: "none"}} to="/">
-                <IoIosArrowBack className='homeButton' style={{height: `${Constants.pageBarHeight}px`}} size={44} 
-                        onClick={clickBack}
-                />
-            </Link>
+            <IoIosArrowBack className='homeButton' style={{height: `${Constants.pageBarHeight}px`}} size={44} 
+                        onClick={() => navigate("/")}
+            />
             <div className="PageBar" 
                 style = {{
                     height: Constants.pageBarHeight, backgroundColor: Constants.pageBarColor, color: Constants.mainColor,

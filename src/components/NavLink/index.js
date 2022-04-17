@@ -5,7 +5,7 @@ function NavLink({text, logo, id, onClick}) {
         <div className={`NavPage NavPage${id}`} 
             onClick = {onClick}
         >
-            <img width="200" height="200" src={logo}/>
+            <img draggable="false" width="200" height="200" src={logo}/>
             <div className='PageText'>
                 {text}
             </div>

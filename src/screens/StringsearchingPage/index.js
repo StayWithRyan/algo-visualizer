@@ -17,7 +17,7 @@ import {
 } from "./stringsearchingHelpers";
 import {PlayBar, resetPlayBar, setAutoplaySleep} from '../../components/PlayBar';
 
-function StringsearchingPage(props) {
+function StringsearchingPage() {
 
     const [algorithm, setAlgorithm] = useState(algorithms[0]);
     const [searchingSleep, setSearchingSleep] = useState(SearchingConstants.sleepDefault);
@@ -129,7 +129,7 @@ function StringsearchingPage(props) {
     
     return (
         <>
-            <PageBar name={Constants.stringsearchingPageTitle} clickBack={props.goBack}/>
+            <PageBar name={Constants.stringsearchingPageTitle}/>
             <ConfigurationBar pageName={Constants.stringsearchingPageTitle}>
                 <BasicSelect title ="Алгоритм" isDisabled={isSearching} onChange = {handleAlgorithmChange} value = {algorithm} values = {algorithms}  />
                 <BasicButton title="Завершити пошук" onClick={handleClear} isDisabled={autoplayRunning || !isSearching}/>
