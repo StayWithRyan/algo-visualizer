@@ -8,7 +8,7 @@ const SortingConstants = {
 
     defaultColor: Constants.blueColor,
     checkingColor: Constants.yellowColor,
-    swappingColor: Constants.сrimsonColor,
+    swappingColor: Constants.crimsonColor,
 
     arraySizeMin: 10,
     arraySizeMax: 50,

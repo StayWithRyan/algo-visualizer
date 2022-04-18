@@ -9,11 +9,11 @@ const PathfindingConstants = {
 
     generatingDelayTimeout: 10,
 
-    gridColor: Constants.greyColor,
-    emptyColor: "black",
-    blockColor: [Constants.blueColor, Constants.darkСrimsonColor],
-    checkingColor: ["black", Constants.pinkColor],
-    pathColor: ["black", Constants.сrimsonColor],
+    gridColor: "black",
+    emptyColor: Constants.textColor,
+    blockColor: [Constants.blueColor, Constants.darkCrimsonColor],
+    checkingColor: [Constants.crimsonColor, Constants.pinkColor],
+    pathColor: [Constants.darkCrimsonColor, Constants.crimsonColor],
     startColor: Constants.darkGreenColor,
     targetColor: Constants.darkGreenColor,
 

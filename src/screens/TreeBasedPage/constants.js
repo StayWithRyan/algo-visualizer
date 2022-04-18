@@ -15,10 +15,10 @@ const TreeBasedConstants = {
 
     textColor: "black",
     regularColor: ["black", Constants.blueColor],
-    visitedColor: [Constants.blueColor, Constants.сrimsonColor],
+    visitedColor: [Constants.blueColor, Constants.crimsonColor],
     addedColor: Constants.lightGreenColor,
     checkingColor: Constants.yellowColor,
-    swappingColor: Constants.сrimsonColor,
+    swappingColor: Constants.crimsonColor,
     doneColor: [Constants.lightGreenColor, Constants.greenColor],
     invisibleColor: "white",
 

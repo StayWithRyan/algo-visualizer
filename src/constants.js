@@ -7,18 +7,14 @@ const Constants = {
     configurationBarColor: "#101010",
     mainBackground: "black",
 
-    _blueColor: "#4285f4",
-    _yellowColor: "#fbbc05",
-
-
     yellowColor: "#ffd046",
-    greenColor: "#0ad135",
+    greenColor: "#28FA78",
     darkGreenColor: "#34a953",
-    lightGreenColor: "#28fa78",
-    blueColor: "#16b8f3",
-    сrimsonColor: "#b31739",
-    darkСrimsonColor: "#331219",
-    pinkColor: "#deb1c4",
+    lightGreenColor: "#80ffb0",
+    blueColor: "#1BE7FF",
+    crimsonColor: "#b31739",
+    darkCrimsonColor: "#4d131f",
+    pinkColor: "#FFC6D9",
     greyColor: "#252527",
 
 

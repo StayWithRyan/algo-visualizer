@@ -11,7 +11,7 @@ const SearchingConstants = {
     checkingColor: Constants.yellowColor,
     checkingHashColor: Constants.blueColor,
     matchColor: Constants.greenColor,
-    noMatchColor: Constants.сrimsonColor
+    noMatchColor: Constants.crimsonColor
 }
 
 export default SearchingConstants;
