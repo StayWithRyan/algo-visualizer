@@ -12,11 +12,11 @@ const Constants = {
 
 
     yellowColor: "#ffd046",
-    greenColor: "#34a953",
-    lightGreenColor: "#07e35b",
+    greenColor: "#0ad135",
+    darkGreenColor: "#34a953",
+    lightGreenColor: "#28fa78",
     blueColor: "#16b8f3",
-    redColor: "#ea4334",
-    сrimsonColor: "#be004f",
+    сrimsonColor: "#b31739",
     darkСrimsonColor: "#331219",
     pinkColor: "#deb1c4",
     greyColor: "#252527",

@@ -14,8 +14,8 @@ const PathfindingConstants = {
     blockColor: [Constants.blueColor, Constants.darkСrimsonColor],
     checkingColor: ["black", Constants.pinkColor],
     pathColor: ["black", Constants.сrimsonColor],
-    startColor: Constants.greenColor,
-    targetColor: Constants.greenColor,
+    startColor: Constants.darkGreenColor,
+    targetColor: Constants.darkGreenColor,
 
     elementSize: 30,
 

@@ -10,8 +10,8 @@ const SearchingConstants = {
     defaultColor: Constants.textColor,
     checkingColor: Constants.yellowColor,
     checkingHashColor: Constants.blueColor,
-    matchColor: Constants.lightGreenColor,
-    noMatchColor: Constants.redColor
+    matchColor: Constants.greenColor,
+    noMatchColor: Constants.сrimsonColor
 }
 
 export default SearchingConstants;
