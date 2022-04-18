@@ -8,7 +8,7 @@ const Constants = {
     mainBackground: "black",
 
     yellowColor: "#ffd046",
-    greenColor: "#28FA78",
+    greenColor: "#0dff4a",
     darkGreenColor: "#34a953",
     lightGreenColor: "#80ffb0",
     blueColor: "#1BE7FF",
