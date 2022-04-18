@@ -1,12 +1,14 @@
+import Constants from "../../constants"
+
 const SortingConstants = {
     sleepMin: 25,
     sleepMax: 1000,
     sleepDefault: 550,
     sleepStep: 75,
 
-    defaultColor: "#16b8f3",
-    checkingColor: "#FFD046",
-    swappingColor: "#be004f",
+    defaultColor: Constants.blueColor,
+    checkingColor: Constants.yellowColor,
+    swappingColor: Constants.сrimsonColor,
 
     arraySizeMin: 10,
     arraySizeMax: 50,

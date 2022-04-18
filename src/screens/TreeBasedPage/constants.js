@@ -1,3 +1,5 @@
+import Constants from "../../constants"
+
 const TreeBasedConstants = {
     sleepMin: 25,
     sleepMax: 1000,
@@ -12,9 +14,8 @@ const TreeBasedConstants = {
     elementSize: 50,
 
     textColor: "black",
-    regularColor: ["black", "#16b8f3"],
-    visitedColor: ["#16b8f3", "#be004f"],
-    justAddedColor: "brown",
+    regularColor: ["black", Constants.blueColor],
+    visitedColor: [Constants.blueColor, Constants.сrimsonColor],
     addedColor: "lightgreen",
     checkingColor: "yellow",
     swappingColor: "red",

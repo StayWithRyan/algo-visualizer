@@ -1,3 +1,5 @@
+import Constants from "../../constants"
+
 const PathfindingConstants = {
     sleepMin: 25,
     sleepMax: 1000,
@@ -7,13 +9,13 @@ const PathfindingConstants = {
 
     generatingDelayTimeout: 10,
 
-    gridColor: "#252527",
+    gridColor: Constants.greyColor,
     emptyColor: "black",
-    blockColor: ["#16b8f3", "#331219"],
-    checkingColor: ["black", "#deb1c4"],
-    pathColor: ["#bac1cc", "#be004f"],
-    startColor: "#34a953",
-    targetColor: "#34a953",
+    blockColor: [Constants.blueColor, Constants.darkСrimsonColor],
+    checkingColor: ["black", Constants.pinkColor],
+    pathColor: ["black", Constants.сrimsonColor],
+    startColor: Constants.greenColor,
+    targetColor: Constants.greenColor,
 
     elementSize: 30,
 

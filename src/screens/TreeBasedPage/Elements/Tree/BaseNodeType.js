@@ -24,7 +24,7 @@ class BaseNodeType {
 
         if(value != null) {
             if(value < 10) {
-                if(value == 6 || value == 7 || value == 4 || value == 1) {
+                if(value == 6 || value == 7 || value == 4 || value == 1 || value == 0) {
                     context.fillText(value, x - 9, y + 12); // center text on node
                 }
                 else{
