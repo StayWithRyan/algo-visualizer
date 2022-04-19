@@ -9,8 +9,8 @@ const PathfindingConstants = {
 
     generatingDelayTimeout: 10,
 
-    gridColor: "black",
-    emptyColor: Constants.textColor,
+    gridColor: Constants.textColor,
+    emptyColor: "white",
     blockColor: [Constants.blueColor, Constants.darkCrimsonColor],
     checkingColor: [Constants.crimsonColor, Constants.pinkColor],
     pathColor: [Constants.darkCrimsonColor, Constants.crimsonColor],

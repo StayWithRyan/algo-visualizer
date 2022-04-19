@@ -12,7 +12,7 @@
 
 .modalContent {
     border-radius: 16px;
-    background-color: rgba(16, 16, 16, 0.97);
+    background-color: rgba(245, 244, 240, 0.96);
     width: 85%;    
     display: flex;
     flex-direction: column;

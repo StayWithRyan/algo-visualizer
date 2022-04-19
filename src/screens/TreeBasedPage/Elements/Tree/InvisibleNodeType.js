@@ -5,7 +5,6 @@ import { toHaveStyle } from '@testing-library/jest-dom/dist/matchers';
 class InvisibleNodeType extends BaseNode {
     constructor() {
         super();
-        this.nodeColor = TreeBasedConstants.invisibleColor;
     }
     
 

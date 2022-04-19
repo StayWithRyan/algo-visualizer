@@ -40,7 +40,7 @@ class BaseNodeType {
     drawOutline(canvas, x, y) {
         let context = canvas.getContext('2d');
         context.lineWidth = 2;
-        context.strokeStyle = "#eeeeee";
+        context.strokeStyle = Constants.textColor;
         context.beginPath();
         context.arc(x, y, TreeBasedConstants.elementSize / 2 - 1, 0, Math.PI * 2, false);
         context.stroke();

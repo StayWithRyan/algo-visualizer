@@ -1,14 +1,14 @@
 .BasicDisabledButton{
-    background-color: #101010;
+    background-color: #dededc;
     border-radius: 10px;
     width: 200px;
     height: 50px;
-    opacity: 0.3;
+    opacity: 0.40;
     user-select: none;
 }
 
 .BasicButton{
-    background-color: #101010;
+    background-color: #dededc;
     border-radius: 10px;
     min-width: 200px;
     height: 50px;
@@ -18,7 +18,7 @@
 }
 
 .BasicButton:hover{
-    background-color: #b31739;
+    background-color: #f35d67;
 }
 
 .BasicButtonText{

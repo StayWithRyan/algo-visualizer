@@ -12,7 +12,7 @@
 
 .PageText {
     text-align: center;
-    color: #eeeeee;
+    color: #0e0e0e;
     font-family: "Ubuntu";
     line-height: 1.4375em;
     font-weight: 500;
@@ -21,37 +21,37 @@
 
 
 .NavPage1 {
-    border-bottom: 0.3vh solid #660d20;
-    border-right: 0.15vw solid #660d20;
+    border-bottom: 0.3vh solid #f35d67;
+    border-right: 0.15vw solid #f35d67;
 }
 
 .NavPage2 {
-    border-bottom: 0.3vh solid #660d20;
-    border-left: 0.15vw solid #660d20;
+    border-bottom: 0.3vh solid #f35d67;
+    border-left: 0.15vw solid #f35d67;
 }
 
 .NavPage3 {
-    border-top: 0.3vh solid #660d20;
-    border-right: 0.15vw solid #660d20;
+    border-top: 0.3vh solid #f35d67;
+    border-right: 0.15vw solid #f35d67;
 }
 
 .NavPage4 {
-    border-top: 0.3vh solid #660d20;
-    border-left: 0.15vw solid #660d20;
+    border-top: 0.3vh solid #f35d67;
+    border-left: 0.15vw solid #f35d67;
 }
 
 .NavPage1:hover {
-    background-image: linear-gradient(135deg, #b31739 0%, #660d20 50%, #3d080d 100%);
+    background-image: linear-gradient(135deg, #b31739 0%, #f35d67 50%, #f2858c 100%);
 }
 
 .NavPage2:hover {
-    background-image: linear-gradient(225deg, #b31739 0%, #660d20 50%, #3d080d 100%);
+    background-image: linear-gradient(225deg, #b31739 0%, #f35d67 50%, #f2858c 100%);
 }
 
 .NavPage3:hover {
-    background-image: linear-gradient(45deg, #b31739 0%, #660d20 50%, #3d080d 100%);
+    background-image: linear-gradient(45deg, #b31739 0%, #f35d67 50%, #f2858c 100%);
 }
 
 .NavPage4:hover {
-    background-image: linear-gradient(315deg, #b31739 0%, #660d20 50%, #3d080d 100%);
+    background-image: linear-gradient(315deg, #b31739 0%, #f35d67 50%, #f2858c 100%);
 }

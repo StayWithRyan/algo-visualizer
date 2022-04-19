@@ -14,13 +14,12 @@ const TreeBasedConstants = {
     elementSize: 50,
 
     textColor: "black",
-    regularColor: ["black", Constants.blueColor],
+    regularColor: [Constants.mainBackground, Constants.blueColor],
     visitedColor: [Constants.blueColor, Constants.crimsonColor],
     addedColor: Constants.lightGreenColor,
     checkingColor: Constants.yellowColor,
     swappingColor: Constants.crimsonColor,
     doneColor: [Constants.lightGreenColor, Constants.greenColor],
-    invisibleColor: "white",
 
     LNRTraversalName: "Обхід: серединний порядок (LNR)",
     NLRTraversalName: "Обхід: прямий порядок (NLR)",
