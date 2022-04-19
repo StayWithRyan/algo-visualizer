@@ -21,9 +21,9 @@ const TreeBasedConstants = {
     swappingColor: Constants.crimsonColor,
     doneColor: [Constants.lightGreenColor, Constants.greenColor],
 
-    LNRTraversalName: "Обхід: серединний порядок (LNR)",
-    NLRTraversalName: "Обхід: прямий порядок (NLR)",
-    LRNTraversalName: "Обхід: зворотній порядок (LRN)",
+    LNRTraversalName: "Змішаний обхід (LNR)",
+    NLRTraversalName: "Низхідний обхід (NLR)",
+    LRNTraversalName: "Висхідний обхід (LRN)",
     HeapSortName: "Пірамідальне сортування",
     TreeSortName: "Сортування бінарним деревом",
     TournamentSortName: "Метод вибірки з дерева",

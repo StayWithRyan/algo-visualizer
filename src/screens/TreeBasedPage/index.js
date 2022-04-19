@@ -170,7 +170,7 @@ function TreeBasedPage() {
         }
     };
 
-    let canvasHeight = window.innerHeight - Constants.pageBarHeight - Constants.configurationBarHeight - 20;
+    let canvasHeight = window.innerHeight - Constants.pageBarHeight - Constants.configurationBarHeight - 10;
 
     return (
         <>

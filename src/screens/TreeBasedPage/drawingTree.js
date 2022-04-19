@@ -26,8 +26,8 @@ const drawTreeNodes = (canvas, node, x = null, y = null, width = null) => {
     }
     node.draw(canvas, x, y);
 
-    drawTreeNodes(canvas, node.left, x - width * 1/4, y + TreeBasedConstants.elementSize * 1.2, width / 2);
-    drawTreeNodes(canvas, node.right, x + width * 1/4, y + TreeBasedConstants.elementSize * 1.2, width / 2);
+    drawTreeNodes(canvas, node.left, x - width * 1/4, y + TreeBasedConstants.elementSize * 1.15, width / 2);
+    drawTreeNodes(canvas, node.right, x + width * 1/4, y + TreeBasedConstants.elementSize * 1.15, width / 2);
 }
 
 const drawTreeEdges = (canvas, node, x = null, y = null, width = null) => {
@@ -40,7 +40,7 @@ const drawTreeEdges = (canvas, node, x = null, y = null, width = null) => {
         width = window.innerWidth;
     }
 
-    let nextY = y + TreeBasedConstants.elementSize * 1.2;
+    let nextY = y + TreeBasedConstants.elementSize * 1.15;
     if(node.left) {
         let nextX = x - width * 1/4;
         drawEdge(canvas, x, y, nextX, nextY);
@@ -99,7 +99,7 @@ const drawArray = (canvas, array) => {
     let elementBoxSize =  TreeBasedConstants.elementSize * 1.1;
     let maxInRow = Math.floor(canvas.width * 0.8 / elementBoxSize);
     let x = (canvas.width - maxInRow * elementBoxSize) / 2  + TreeBasedConstants.elementSize / 2;
-    let y = canvas.height - TreeBasedConstants.elementSize * 3; // 3 rows
+    let y = canvas.height - TreeBasedConstants.elementSize * 2.8;
     let rowSize = 0;
 
     for(let i = 0; i < array.length; ++i) {
@@ -112,10 +112,6 @@ const drawArray = (canvas, array) => {
         x += elementBoxSize;
         rowSize++;
     }
-
-    // // clear previously drawn elements, is they exists
-    // context.fillStyle = "white";
-    // context.fillRect(x  - TreeBasedConstants.elementSize / 2, y  - TreeBasedConstants.elementSize / 2, canvas.width, canvas.height);
 }
 
 export {draw, clearCanvas}

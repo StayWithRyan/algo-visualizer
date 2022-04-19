@@ -2,7 +2,7 @@ const Constants = {
     mainColor: "#f35d67",
     disabledMainColor: "#e5adb0",
     textColor: "#0e0e0e",
-    disabledTextColor : "#646467",
+    disabledTextColor : "#a3a3a3",
     pageBarColor: "#f5f4f0",
     configurationBarColor: "#dededc",
     mainBackground: "#f5f4f0",

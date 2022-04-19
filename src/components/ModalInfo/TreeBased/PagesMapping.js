@@ -12,16 +12,16 @@ let TreeBasedPagesMapping = [
         name: "Загальна інформація"
     },
     {
-        page : <LNRTraversalInfo/>,
-        name: "Обхід: серединний порядок (LNR)"
+        page : <NLRTraversalInfo/>,
+        name: "Низхідний обхід (NLR)"
     },
     {
-        page : <NLRTraversalInfo/>,
-        name: "Обхід: прямий порядок (NLR)"
+        page : <LNRTraversalInfo/>,
+        name: "Змішаний обхід (LNR)"
     },
     {
         page : <LRNTraversalInfo/>,
-        name: "Обхід: зворотній порядок (LRN)"
+        name: "Висхідний обхід (LRN)"
     },
     {
         page : <HeapSortInfo/>,

@@ -33,8 +33,8 @@ const getAlgorithmClass = (algorithm) => {
 }
 
 const algorithms = [
-    TreeBasedConstants.LNRTraversalName,
     TreeBasedConstants.NLRTraversalName,
+    TreeBasedConstants.LNRTraversalName,
     TreeBasedConstants.LRNTraversalName,
     TreeBasedConstants.HeapSortName,
     TreeBasedConstants.TreeSortName,
