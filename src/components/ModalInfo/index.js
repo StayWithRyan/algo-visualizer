@@ -38,7 +38,7 @@ function ModalInfo(props) {
         }
     }
     
-    const [selectedInfoPage, setSelectedInfoPage] = useState(pages[0]);
+    const [selectedInfoPage, setSelectedInfoPage] = useState(props.algorithmName);
 
     return (
         <div className="modal" onClick = {props.handleCloseInfo}>

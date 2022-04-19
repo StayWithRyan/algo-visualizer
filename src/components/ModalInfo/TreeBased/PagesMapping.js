@@ -6,6 +6,8 @@ import HeapSortInfo from './HeapSortInfo';
 import TreeSortInfo from './TreeSortInfo';
 import TournamentSortInfo from './TournamentSortInfo';
 
+import TreeBasedConstants from '../../../screens/TreeBasedPage/constants';
+
 let TreeBasedPagesMapping = [
     {
         page : <GeneralInfo/>,
@@ -13,27 +15,27 @@ let TreeBasedPagesMapping = [
     },
     {
         page : <NLRTraversalInfo/>,
-        name: "Низхідний обхід (NLR)"
+        name: TreeBasedConstants.NLRTraversalName
     },
     {
         page : <LNRTraversalInfo/>,
-        name: "Змішаний обхід (LNR)"
+        name: TreeBasedConstants.LNRTraversalName
     },
     {
         page : <LRNTraversalInfo/>,
-        name: "Висхідний обхід (LRN)"
+        name: TreeBasedConstants.LRNTraversalName
     },
     {
         page : <HeapSortInfo/>,
-        name: "Пірамідальне сортування"
+        name: TreeBasedConstants.HeapSortName
     },
     {
         page : <TreeSortInfo/>,
-        name: "Сортування бінарним деревом"
+        name: TreeBasedConstants.TreeSortName
     },
     {
         page : <TournamentSortInfo/>,
-        name: "Метод вибірки з дерева"
+        name: TreeBasedConstants.TournamentSortName
     }
 ];
 

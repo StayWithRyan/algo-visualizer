@@ -4,26 +4,28 @@ import BFSInfo from './BFSInfo';
 import BestFirstSearchInfo from './BestFirstSearchInfo';
 import AStarInfo from './AStarInfo';
 
+import PathfindingConstants from '../../../screens/PathfindingPage/constants';
+
 let PathfindingPagesMapping = [
     {
-        page : <GeneralInfo/>,
+        page: <GeneralInfo/>,
         name: "Загальна інформація"
     },
     {
-        page : <DFSInfo/>,
-        name: "Пошук у глибину"
+        page: <AStarInfo/>,
+        name: PathfindingConstants.AStartName
     },
     {
-        page : <BFSInfo/>,
-        name: "Пошук у ширину (Алгоритм Дейкстри)"
+        page: <BestFirstSearchInfo/>,
+        name: PathfindingConstants.BestFirstSearchName
     },
     {
-        page : <BestFirstSearchInfo/>,
-        name: "Пошук 'Найкращий - перший'"
+        page: <DFSInfo/>,
+        name: PathfindingConstants.DFSName
     },
     {
-        page : <AStarInfo/>,
-        name: "Алгоритм пошуку A*"
+        page: <BFSInfo/>,
+        name: PathfindingConstants.BFSName
     }
 ];
 

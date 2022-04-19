@@ -11,7 +11,13 @@ const SearchingConstants = {
     checkingColor: Constants.yellowColor,
     checkingHashColor: Constants.blueColor,
     matchColor: Constants.greenColor,
-    noMatchColor: Constants.crimsonColor
+    noMatchColor: Constants.crimsonColor,
+
+    NaiveAlgorithmName: "Прямий пошук",
+    OptimizedNaiveAlgorithmName: "Оптимізований прямий пошук",
+    KMPAlgorithmName: "Алгоритм Кнута - Морріса - Пратта",
+    BoyerMooreAlgorithmName: "Алгоритм Боєра - Мура",
+    RabinKarpAlgorithmName: "Алгоритм Рабіна - Карпа"
 }
 
 export default SearchingConstants;

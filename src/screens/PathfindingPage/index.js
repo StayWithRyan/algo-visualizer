@@ -23,7 +23,7 @@ function PathfindingPage() {
         maze = createMaze();
         mazeSnapshot = createSnapshot(maze);
     }
-    const [algorithm, setAlgorithm] = useState(algorithms[3]);
+    const [algorithm, setAlgorithm] = useState(algorithms[0]);
     const [pathfindingSleep, setPathfindingSleep] = useState(PathfindingConstants.sleepDefault);
     const [generatingAlgorithm, setGeneratingAlgorithm] = useState(generatingAlgorithms[0]);
     const [autoplayRunning, setAutoplayRunning] = useState(false);
@@ -210,7 +210,7 @@ function PathfindingPage() {
     return (
         <>
             <PageBar name={Constants.pathfindingPageTitle}/>
-            <ConfigurationBar pageName={Constants.pathfindingPageTitle}>
+            <ConfigurationBar pageName={Constants.pathfindingPageTitle} algorithmName={algorithm}>
                 <BasicSelect isDisabled={autoplayRunning || isGenerating} title ="Алгоритм" onChange = {handleAlgorithmChange} 
                     value={algorithm} values={algorithms}  />
                 <BasicSlider isActive={true} isDisabled={isGenerating} title="Тривалість кроку (мс)" min={PathfindingConstants.sleepMin} max={PathfindingConstants.sleepMax} 

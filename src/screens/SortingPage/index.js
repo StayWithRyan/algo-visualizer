@@ -10,7 +10,7 @@ import PageBar from '../../components/PageBar';
 import Constants from '../../constants';
 import SortingConstants from './constants';
 import {
-    algorithmsMapping, algorithms,
+    getAlgorithmClass, algorithms,
     steps, clearSteps, getStep, copyArray, createArray, draw, resetArrayTypes
 } from './sortingHelpers';
 
@@ -56,7 +56,7 @@ function SortingPage() {
 
     const runAlgorithm = (algorithm) => {
         clearSteps();
-        const algorithmClass = algorithmsMapping[`${algorithm}`];
+        const algorithmClass = getAlgorithmClass(algorithm);
         const algorithmObj = new algorithmClass(copyArray(array));
         algorithmObj.sort();
         resetPlayBar(steps.length);
@@ -74,7 +74,7 @@ function SortingPage() {
     return (
         <>
             <PageBar name={Constants.sortingPageTitle}/>
-            <ConfigurationBar pageName={Constants.sortingPageTitle} >
+            <ConfigurationBar pageName={Constants.sortingPageTitle}  algorithmName={algorithm}>
                 <BasicSelect title="Алгоритм" isDisabled={autoplayRunning} onChange={handleAlgorithmChange} value={algorithm} values={algorithms}  />
                 <BasicSlider title="Розмір масиву"  isDisabled={autoplayRunning} min={SortingConstants.arraySizeMin} max={SortingConstants.arraySizeMax}
                     default={SortingConstants.arraySizeDefault} step={SortingConstants.arraySizeStep} onChange={handleSizeChange} />

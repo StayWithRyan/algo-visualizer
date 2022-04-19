@@ -32,10 +32,10 @@ const getGeneratingAlgorithmClass = (algorithm) => {
 }
 
 const algorithms = [
-    PathfindingConstants.DFSName,
-    PathfindingConstants.BFSName,
+    PathfindingConstants.AStartName,
     PathfindingConstants.BestFirstSearchName,
-    PathfindingConstants.AStartName
+    PathfindingConstants.DFSName,
+    PathfindingConstants.BFSName
 ];
 
 const generatingAlgorithms = [

@@ -17,7 +17,7 @@ function ConfigurationBar(props) {
         <div className="ConfigurationBar" style = {{height: Constants.configurationBarHeight, backgroundColor: Constants.configurationBarColor}}>
             {props.children}
             <AiOutlineInfoCircle size={50} color={Constants.blueColor} style={{cursor: "pointer"}} onClick = {() => {setInfoOpened(true)}}/>
-            {infoOpened && <ModalInfo pageName={props.pageName} handleCloseInfo={handleCloseInfo} />}
+            {infoOpened && <ModalInfo pageName={props.pageName} algorithmName={props.algorithmName} handleCloseInfo={handleCloseInfo} />}
         </div>
     );
 }

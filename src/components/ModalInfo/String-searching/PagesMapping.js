@@ -5,30 +5,32 @@ import KMPInfo from './KMPInfo';
 import BoyerMooreInfo from './BoyerMooreInfo';
 import RabinKarpInfo from './RabinKarpInfo';
 
+import SearchingConstants from '../../../screens/StringsearchingPage/constants';
+
 let StringSearchingPagesMapping = [
     {
-        page : <GeneralInfo/>,
+        page: <GeneralInfo/>,
         name: "Загальна інформація"
     },
     {
-        page : <NaiveInfo/>,
-        name: "Прямий пошук"
+        page: <NaiveInfo/>,
+        name: SearchingConstants.NaiveAlgorithmName
     },
     {
-        page : <OptimizedNaiveInfo/>,
-        name: "Оптимізований прямий пошук"
+        page: <OptimizedNaiveInfo/>,
+        name: SearchingConstants.OptimizedNaiveAlgorithmName
     },
     {
-        page : <KMPInfo/>,
-        name: "Алгоритм Кнута - Морріса - Пратта"
+        page: <KMPInfo/>,
+        name: SearchingConstants.KMPAlgorithmName
     },
     {
-        page : <BoyerMooreInfo/>,
-        name: "Алгоритм Боєра - Мура"
+        page: <BoyerMooreInfo/>,
+        name: SearchingConstants.BoyerMooreAlgorithmName
     },
     {
-        page : <RabinKarpInfo/>,
-        name: "Алгоритм Рабіна - Карпа"
+        page: <RabinKarpInfo/>,
+        name: SearchingConstants.RabinKarpAlgorithmName
     }
 ];
 

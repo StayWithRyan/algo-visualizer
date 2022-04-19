@@ -13,7 +13,7 @@ import Constants from '../../constants';
 import SearchingConstants from './constants';
 import {
     patternSteps, clearSteps, getStep, convertCharactersArrayToString, copyCharactersArray,
-    algorithmsMapping, algorithms, createCharactersArray, resetCharactersArray
+    getAlgorithmClass, algorithms, createCharactersArray, resetCharactersArray
 } from "./stringsearchingHelpers";
 import {PlayBar, resetPlayBar, setAutoplaySleep} from '../../components/PlayBar';
 
@@ -86,7 +86,7 @@ function StringsearchingPage() {
 
     const runAlgorithm = (pattern, text, algorithm) => {
         clearSteps();
-        const algorithmClass = algorithmsMapping[`${algorithm}`];
+        const algorithmClass = getAlgorithmClass(algorithm);
         const algorithmObj = new algorithmClass(copyCharactersArray(pattern), copyCharactersArray(text));
         algorithmObj.search();
         resetPlayBar(patternSteps.length, -1);
@@ -130,7 +130,7 @@ function StringsearchingPage() {
     return (
         <>
             <PageBar name={Constants.stringsearchingPageTitle}/>
-            <ConfigurationBar pageName={Constants.stringsearchingPageTitle}>
+            <ConfigurationBar pageName={Constants.stringsearchingPageTitle} algorithmName={algorithm}>
                 <BasicSelect title ="Алгоритм" isDisabled={isSearching} onChange = {handleAlgorithmChange} value = {algorithm} values = {algorithms}  />
                 <BasicButton title="Завершити пошук" onClick={handleClear} isDisabled={autoplayRunning || !isSearching}/>
                 <BasicSlider isActive={true} title="Тривалість кроку (мс)" min={SearchingConstants.sleepMin} max={SearchingConstants.sleepMax} 

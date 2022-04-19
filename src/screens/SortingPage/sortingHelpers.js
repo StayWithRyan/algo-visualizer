@@ -1,30 +1,57 @@
 import ArrayElement from "./Elements/ArrayElement"
 import {RegularElementType} from "./Elements/ArrayElementTypes"
 import BubbleSort from '../../algorithms/sorting/BubbleSort';
+import CocktailSort from '../../algorithms/sorting/CocktailSort';
 import SelectionSort from '../../algorithms/sorting/SelectionSort';
 import InsertionSort from '../../algorithms/sorting/InsertionSort';
+import GnomeSort from '../../algorithms/sorting/GnomeSort';
+import ShellSort from '../../algorithms/sorting/ShellSort';
 import MergeSort from '../../algorithms/sorting/MergeSort';
 import QuickSort from '../../algorithms/sorting/QuickSort';
 import HeapSort from '../../algorithms/sorting/HeapSort';
-import ShellSort from '../../algorithms/sorting/ShellSort';
-import CocktailSort from '../../algorithms/sorting/CocktailSort';
-import GnomeSort from '../../algorithms/sorting/GnomeSort';
+import SortingConstants from "./constants"
 
-const algorithmsMapping = {
-    "Сортування бульбашкою": BubbleSort,
-    "Сортування змішуванням": CocktailSort,
-    "Сортування вибором": SelectionSort,
-    "Сортування включенням": InsertionSort,
-    "Сортування гнома": GnomeSort,
-    "Сортування Шелла": ShellSort,
-    "Сортування злиттям": MergeSort,
-    "Швидке сортування": QuickSort,
-    "Пірамідальне сортування": HeapSort
-}    
-const algorithms = [];
-for (let property in algorithmsMapping) {
-    algorithms.push(property);
+const getAlgorithmClass = (algorithm) => {
+    if(algorithm === SortingConstants.BubbleSortName) {
+        return BubbleSort;
+    }
+    if(algorithm === SortingConstants.CocktailSortName) {
+        return CocktailSort;
+    }
+    if(algorithm === SortingConstants.SelectionSortName) {
+        return SelectionSort;
+    }
+    if(algorithm === SortingConstants.InsertionSortName) {
+        return InsertionSort;
+    }
+    if(algorithm === SortingConstants.GnomeSortName) {
+        return GnomeSort;
+    }
+    if(algorithm === SortingConstants.ShellSortName) {
+        return ShellSort;
+    }
+    if(algorithm === SortingConstants.MergeSortName) {
+        return MergeSort;
+    }
+    if(algorithm === SortingConstants.QuickSortName) {
+        return QuickSort;
+    }
+    if(algorithm === SortingConstants.HeapSortName) {
+        return HeapSort;
+    }
 }
+
+const algorithms = [
+    SortingConstants.BubbleSortName,
+    SortingConstants.CocktailSortName,
+    SortingConstants.SelectionSortName,
+    SortingConstants.InsertionSortName,
+    SortingConstants.GnomeSortName,
+    SortingConstants.ShellSortName,
+    SortingConstants.MergeSortName,
+    SortingConstants.QuickSortName,
+    SortingConstants.HeapSortName
+];
 
 let steps = [];
 
@@ -88,5 +115,5 @@ const resetArrayTypes = (array) => {
 
 export {
     steps, clearSteps, addStep, getStep, createArray, copyArray, draw, resetArrayTypes,
-    algorithmsMapping, algorithms
+    getAlgorithmClass, algorithms
 };

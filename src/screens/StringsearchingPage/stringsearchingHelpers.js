@@ -5,17 +5,31 @@ import BoyerMooreAlgorithm from '../../algorithms/string-searching/BoyerMoore';
 import RabinKarpAlgorithm from '../../algorithms/string-searching/RabinKarp';
 import SearchingConstants from './constants';
 
-const algorithmsMapping = {
-    "Прямий пошук": NaiveAlgorithm,
-    "Оптимізований прямий пошук": OptimizedNaiveAlgorithm,
-    "Алгоритм Кнута - Морріса - Пратта": KMPAlgorithm,
-    "Алгоритм Боєра - Мура": BoyerMooreAlgorithm,
-    "Алгоритм Рабіна - Карпа": RabinKarpAlgorithm
+const getAlgorithmClass = (algorithm) => {
+    if(algorithm === SearchingConstants.NaiveAlgorithmName) {
+        return NaiveAlgorithm;
+    }
+    if(algorithm === SearchingConstants.OptimizedNaiveAlgorithmName) {
+        return OptimizedNaiveAlgorithm;
+    }
+    if(algorithm === SearchingConstants.KMPAlgorithmName) {
+        return KMPAlgorithm;
+    }
+    if(algorithm === SearchingConstants.BoyerMooreAlgorithmName) {
+        return BoyerMooreAlgorithm;
+    }
+    if(algorithm === SearchingConstants.RabinKarpAlgorithmName) {
+        return RabinKarpAlgorithm;
+    }
 }
-const algorithms = [];
-for (let property in algorithmsMapping) {
-    algorithms.push(property);
-}
+
+const algorithms = [
+    SearchingConstants.NaiveAlgorithmName,
+    SearchingConstants.OptimizedNaiveAlgorithmName,
+    SearchingConstants.KMPAlgorithmName,
+    SearchingConstants.BoyerMooreAlgorithmName,
+    SearchingConstants.RabinKarpAlgorithmName
+];
 
 let patternSteps = [];
 let patternPositionSteps = [];
@@ -72,5 +86,5 @@ const resetCharactersArray = (charactersArray) => {
 export {
     patternSteps, clearSteps, addStep, getStep, copyCharactersArray, createCharactersArray,
     convertCharactersArrayToString, resetCharactersArray,
-    algorithmsMapping, algorithms,
+    getAlgorithmClass, algorithms,
 };

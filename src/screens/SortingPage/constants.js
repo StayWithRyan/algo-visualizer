@@ -13,7 +13,18 @@ const SortingConstants = {
     arraySizeMin: 10,
     arraySizeMax: 50,
     arraySizeDefault: 10,
-    arraySizeStep: 10
+    arraySizeStep: 10,
+
+
+    BubbleSortName: "Сортування бульбашкою",
+    CocktailSortName: "Сортування змішуванням",
+    SelectionSortName: "Сортування вибором",
+    InsertionSortName: "Сортування включенням",
+    GnomeSortName: "Сортування гнома",
+    ShellSortName: "Сортування Шелла",
+    MergeSortName: "Сортування злиттям",
+    QuickSortName: "Швидке сортування",
+    HeapSortName: "Пірамідальне сортування"
 }
 
 export default SortingConstants;
