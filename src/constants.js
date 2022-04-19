@@ -15,7 +15,6 @@ const Constants = {
     crimsonColor: "#b31739",
     darkCrimsonColor: "#4d131f",
     pinkColor: "#FFC6D9",
-    greyColor: "#252527",
 
 
     fontFamily: "Ubuntu",
