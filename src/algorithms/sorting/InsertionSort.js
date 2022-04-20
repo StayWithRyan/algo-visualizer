@@ -2,9 +2,7 @@ import BaseSort from './BaseSort';
 
 class InsertionSort extends BaseSort {
     innerSort() {
-        let length = this.array.length;
-
-        for (let i = 1; i < length; i++) {
+        for (let i = 1; i <= this.array.length - 1; i++) {
             let key = i;
             for(let j = i - 1; j >= 0; j--) {
                 this.setChecking(j, key);

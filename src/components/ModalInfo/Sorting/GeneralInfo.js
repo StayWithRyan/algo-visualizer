@@ -63,16 +63,17 @@ function GeneralInfo() {
                 Зауважте:
             </TextItem>
             <TextItem tabs={3}>
-            Кнопки <MdKeyboardArrowRight size={28} style={keyboardIconStyle}/>, <MdKeyboardArrowLeft size={28} style={keyboardIconStyle}/> та 
+                Кнопки <MdKeyboardArrowRight size={28} style={keyboardIconStyle}/>, <MdKeyboardArrowLeft size={28} style={keyboardIconStyle}/> та 
                 <MdSpaceBar size={28} style={keyboardIconStyle}/> недоступні під час автоматичного виконання алгоритму.
             </TextItem>
             <TextItem tabs={3}>
-            Кнопки <MdKeyboardArrowRight size={28} style={keyboardIconStyle}/>, <MdKeyboardArrowLeft size={28} style={keyboardIconStyle}/>,
+                Кнопки <MdKeyboardArrowRight size={28} style={keyboardIconStyle}/>, <MdKeyboardArrowLeft size={28} style={keyboardIconStyle}/>,
                 <MdKeyboardArrowUp size={28} style={keyboardIconStyle}/> та <MdKeyboardArrowDown size={28} style={keyboardIconStyle}/> 
                 можна зажати.
             </TextItem>
 
             <HorizontalLine/>
+
             <TextItem>Підказки:</TextItem>
             <TextItem tabs={1}>Щоб розпочати роботу з новим алгоритмом, достатньо його обрати. 
                 Після цього одразу можете виконувати його. Не забудьте лише згенерувати новий масив, при необхідності.

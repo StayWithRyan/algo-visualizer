@@ -51,7 +51,7 @@ function ModalInfo(props) {
                 <div className="modalInfo" 
                     style = {{
                         color: Constants.textColor, fontFamily: Constants.fontFamily,
-                        borderTop: `5px solid ${Constants.mainColor}`
+                        borderTop: `0.7vh solid ${Constants.mainColor}`
                     }}>
                         
                 <div className="modalInfoText"> {getPageWithName(selectedInfoPage)}</div>

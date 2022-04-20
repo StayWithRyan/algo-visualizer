@@ -1,4 +1,5 @@
 import TextItem from "../TextItem"
+import HorizontalLine from "../HorizontalLine"
 
 function CocktailSortInfo() {
     return (
@@ -7,8 +8,12 @@ function CocktailSortInfo() {
                 Сортування змішуванням (англ. Cocktail sort) — один із різновидів алгоритму сортування бульбашкою. 
                 Відрізняється від сортування бульбашкою тим, що сортування відбувається в обох напрямках, міняючи напрямок при кожному проході.
             </TextItem>
-            <TextItem><div>Ефективність алгоритму - O(n<sup>2</sup>)</div></TextItem>
-            <TextItem><u>Покроковий опис алгоритму сортування змішуванням:</u></TextItem>
+
+            <TextItem><div>Ефективність алгоритму - O(n<sup>2</sup>).</div></TextItem>
+
+            <HorizontalLine/>
+            
+            <TextItem>Покроковий опис алгоритму сортування змішуванням:</TextItem>
             <TextItem tabs={1}>{"1. Присвоїти swapped <— true; start <— 0; end <— n-1"}</TextItem>
             <TextItem tabs={1}>{"2. Поки swapped === true повторювати кроки 3-10"}</TextItem>
             <TextItem tabs={2}>{"3. Присвоїти swapped <— false"}</TextItem>

@@ -4,7 +4,7 @@ function HorizontalLine() {
     return (
         <h2 style = {{
             backgroundColor: Constants.mainColor,
-            height: "1px",
+            height: "0.3vh",
             color: Constants.mainBackground,
             userSelect: "none"
         }}>
