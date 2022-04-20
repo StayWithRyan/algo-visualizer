@@ -12,9 +12,10 @@ const Constants = {
     darkGreenColor: "#1c7c54",
     lightGreenColor: "#c8f2b0",
     blueColor: "#6184d8",
+    zimaBlue: "#16B8F3",
     crimsonColor: "#b31739",
     darkCrimsonColor: "#4d131f",
-    pinkColor: "#FFC6D9",
+    pinkColor: "#F2c9cc",
 
 
     fontFamily: "Ubuntu",

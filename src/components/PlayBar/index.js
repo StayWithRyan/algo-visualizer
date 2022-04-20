@@ -28,7 +28,7 @@ const setAutoplaySleep = (sleepTimeout) => {
     timeout = sleepTimeout;
 }
 
-function PlayBar({setStep, setRunningAutoplay, isDisabled = false, keyboardDisabled = false}) {
+function PlayBar({setStep, setRunningAutoplay, isDisabled = false}) {
     let [running, setRunning] = useState(false);
     const [prevStepEnabled, setPrevStepEnabled] = useState(false);
     const [nextStepEnabled, setNextStepEnabled] = useState(true);
@@ -38,19 +38,6 @@ function PlayBar({setStep, setRunningAutoplay, isDisabled = false, keyboardDisab
     }, [running]);
 
     const handleKeyDown = (event) => {
-
-        if(event.code == 'ArrowRight') {
-            if(nextStepEnabled && !isDisabled) {
-                handleNextStep();
-            }
-        }
-
-        if(event.code == 'ArrowLeft') {
-            if(prevStepEnabled && !isDisabled) {
-                handlePrevStep();
-            }
-        }
-
         if(event.code == 'Enter') {
             if(!keyboardLocked) {
                 if(nextStepEnabled && !running && !isDisabled) {
@@ -74,6 +61,23 @@ function PlayBar({setStep, setRunningAutoplay, isDisabled = false, keyboardDisab
                 keyboardLocked = true;
             }
         }
+
+        const activeElement = document.activeElement;
+        if(activeElement.type === "text"){
+            return;
+        }
+
+        if(event.code == 'ArrowRight') {
+            if(nextStepEnabled && !isDisabled) {
+                handleNextStep();
+            }
+        }
+
+        if(event.code == 'ArrowLeft') {
+            if(prevStepEnabled && !isDisabled) {
+                handlePrevStep();
+            }
+        }
     }
 
     const handleKeyUp = (event) => {
@@ -82,15 +86,13 @@ function PlayBar({setStep, setRunningAutoplay, isDisabled = false, keyboardDisab
 
 
     useEffect(() => {
-        if(keyboardDisabled === false) {
-            document.addEventListener('keydown', handleKeyDown)
-            document.addEventListener('keyup', handleKeyUp)
-            return () => {
-                document.removeEventListener('keydown', handleKeyDown);
-                document.removeEventListener('keyup', handleKeyUp)
-            };
-        }
-    }, [nextStepEnabled, prevStepEnabled, running, isDisabled, keyboardDisabled]);
+        document.addEventListener('keydown', handleKeyDown)
+        document.addEventListener('keyup', handleKeyUp)
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+            document.removeEventListener('keyup', handleKeyUp)
+        };
+    }, [nextStepEnabled, prevStepEnabled, running, isDisabled]);
 
     if(currentStep === firstStep) {
         if(prevStepEnabled == true) {
@@ -173,27 +175,27 @@ function PlayBar({setStep, setRunningAutoplay, isDisabled = false, keyboardDisab
     if(!running) {
         mainButton = 
         <>
-            <div class="tooltip">
+            <div className="tooltip">
                 <AiOutlineDoubleLeft className={(prevStepEnabled && !isDisabled) ? 'activePlayBarIcon' : 'disabledPlayBarIcon'} style={{width: "50px"}} size={34} 
                     onClick={(prevStepEnabled && !isDisabled) ? () => {handleAutoplay(false)} : () => {}}
                 />
-                <span class="tooltiptext">Автоматичне виконання у зворотню сторону</span>
+                <span className="tooltiptext">Автоматичне виконання у зворотню сторону</span>
             </div>
-            <div class="tooltip">
+            <div className="tooltip">
                 <AiOutlineDoubleRight className={(nextStepEnabled && !isDisabled) ? 'activePlayBarIcon' : 'disabledPlayBarIcon'} style={{width: "50px"}} size={34} 
                     onClick={(nextStepEnabled && !isDisabled) ? () => {handleAutoplay(true)} : () => {}}
                 />
-                <span class="tooltiptext">Автоматичне виконання</span>
+                <span className="tooltiptext">Автоматичне виконання</span>
             </div>
         </>
     }
     else {
         mainButton = 
-        <div class="tooltip">
+        <div className="tooltip">
             <BsStopCircle className='activePlayBarIcon' style={{width: "100px"}} size={34} 
                 onClick={handleStop}
             /> 
-            <span class="tooltiptext">Зупинити</span>
+            <span className="tooltiptext">Зупинити</span>
         </div>
 
     }
@@ -201,18 +203,18 @@ function PlayBar({setStep, setRunningAutoplay, isDisabled = false, keyboardDisab
         <div className = "PlayBar" style={{border: isDisabled ? `3px solid ${Constants.disabledMainColor}` : `3px solid ${Constants.mainColor}`}}>
             <div className = "PlayBarButtons">
                 
-                <div class="tooltip">
+                <div className="tooltip">
                     <BiArrowToLeft className={(prevStepEnabled && !isDisabled) ? 'activePlayBarIcon' : 'disabledPlayBarIcon'} style={{width: "50px"}} size={34} 
                         onClick={(prevStepEnabled && !isDisabled)  ? handlePrevStep : () => {}}
                     />
-                    <span class="tooltiptext">Попередній крок</span>
+                    <span className="tooltiptext">Попередній крок</span>
                 </div>
                 {mainButton}
-                <div class="tooltip">
+                <div className="tooltip">
                     <BiArrowToRight className={(nextStepEnabled && !isDisabled)  ? 'activePlayBarIcon' : 'disabledPlayBarIcon'} style={{width: "50px"}} size={34} 
                         onClick={(nextStepEnabled && !isDisabled) ? handleNextStep : () => {}}
                     />
-                    <span class="tooltiptext">Наступний крок</span>
+                    <span className="tooltiptext">Наступний крок</span>
                 </div>
             </div>
         </div>

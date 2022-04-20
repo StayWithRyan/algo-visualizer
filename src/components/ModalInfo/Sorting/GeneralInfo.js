@@ -1,75 +1,88 @@
 import TextItem from "../TextItem"
 import HorizontalLine from "../HorizontalLine"
+import KeyboardIcon from "../KeyboardIcon"
 
-import { 
-    MdKeyboardArrowLeft, MdKeyboardArrowRight,
-    MdKeyboardArrowDown, MdKeyboardArrowUp,
-    MdKeyboardReturn, MdKeyboardBackspace,
-    MdSpaceBar
-} from 'react-icons/md';
+import KeyboardArrowRight from '../../../icons/arrow-right.png';
+import KeyboardArrowLeft from '../../../icons/arrow-left.png';
+import KeyboardArrowUp from '../../../icons/arrow-up.png';
+import KeyboardArrowDown from '../../../icons/arrow-down.png';
+import KeyboardEnter from '../../../icons/enter.png';
+import KeyboardBackspace from '../../../icons/backspace.png';
+import KeyboardSpace from '../../../icons/space.png';
 
 import { BiArrowToRight, BiArrowToLeft } from 'react-icons/bi';
 import { BsStopCircle } from 'react-icons/bs';
 import { AiOutlineDoubleRight, AiOutlineDoubleLeft} from "react-icons/ai";
+import { RiCheckboxBlankFill} from "react-icons/ri";
 
 import Constants from "../../../constants";
+import SortingConstants from "../../../screens/SortingPage/constants";
 
 function GeneralInfo() {
-    const keyboardIconStyle = {width: "40px", color: Constants.blueColor};
-    const confBarIconStyle = {width: "40px", color: Constants.mainColor};
+    const confBarIconStyle = {color: Constants.mainColor, verticalAlign: "middle"};
+    const iconSize = 28;
     return (
         <>
-            <TextItem>Виконувати алгоритм можна використовуючи клавіатуру, або кнопки на конфігураційній панелі.</TextItem>
-            <TextItem tabs={1}><u>Використання конфігураційної панелі:</u></TextItem>
-            <TextItem tabs={2}>
-                <BiArrowToRight size={28} style={confBarIconStyle}/> — Виконати наступний крок алгоритму.
+            <TextItem>Використання конфігураційної панелі:</TextItem>
+            <TextItem tabs={1}>
+                <BiArrowToRight size={iconSize} style={confBarIconStyle}/> — Виконати наступний крок алгоритму.
             </TextItem>
-            <TextItem tabs={2}>
-                <BiArrowToLeft size={28} style={confBarIconStyle}/> — Повернутися на попередній крок алгоритму.
+            <TextItem tabs={1}>
+                <BiArrowToLeft size={iconSize} style={confBarIconStyle}/> — Повернутися на попередній крок алгоритму.
             </TextItem>
-            <TextItem tabs={2}>
-                <AiOutlineDoubleRight size={28} style={confBarIconStyle}/> — Запустити автоматичне виконання алгоритму.
+            <TextItem tabs={1}>
+                <AiOutlineDoubleRight size={iconSize} style={confBarIconStyle}/> — Запустити автоматичне виконання алгоритму.
             </TextItem>
-            <TextItem tabs={2}>
-                <AiOutlineDoubleLeft size={28} style={confBarIconStyle}/> — Запустити автоматичне виконання алгоритму у зворотню сторону.
+            <TextItem tabs={1}>
+                <AiOutlineDoubleLeft size={iconSize} style={confBarIconStyle}/> — Запустити автоматичне виконання алгоритму у зворотню сторону.
             </TextItem>
-            <TextItem tabs={2}>
-                <BsStopCircle size={28} style={confBarIconStyle}/> — Зупинити автоматичне виконання алгоритму.
+            <TextItem tabs={1}>
+                <BsStopCircle size={iconSize} style={confBarIconStyle}/> — Зупинити автоматичне виконання алгоритму.
             </TextItem>
 
-            <TextItem tabs={1}><u>Використання клавіатури:</u></TextItem>
-            <TextItem tabs={2}>
-                <MdKeyboardArrowRight size={28} style={keyboardIconStyle}/>(Стрілка вправо) — Виконати наступний крок алгоритму.
+            <HorizontalLine/>
+
+            <TextItem>Використання клавіатури:</TextItem>
+            <TextItem tabs={1}>
+                <KeyboardIcon src={KeyboardArrowRight}/>(Стрілка вправо) — Виконати наступний крок алгоритму.
             </TextItem>
-            <TextItem tabs={2}>
-                <MdKeyboardArrowLeft size={28} style={keyboardIconStyle}/>(Стрілка вліво) — Повернутися на попередній крок алгоритму.
+            <TextItem tabs={1}>
+                <KeyboardIcon src={KeyboardArrowLeft}/>(Стрілка вліво) — Повернутися на попередній крок алгоритму.
             </TextItem>
-            <TextItem tabs={2}>
-                <MdKeyboardReturn size={28} style={keyboardIconStyle}/>(Enter) — Запустити\зупинити автоматичне виконання алгоритму.
+            <TextItem tabs={1}>
+                <KeyboardIcon src={KeyboardEnter}/>(Enter) — Запустити\зупинити автоматичне виконання алгоритму.
             </TextItem>
-            <TextItem tabs={2}>
-                <MdKeyboardBackspace size={28} style={keyboardIconStyle}/>(Backspace) — Запустити\зупинити автоматичне виконання алгоритму у зворотню сторону.
+            <TextItem tabs={1}>
+                <KeyboardIcon src={KeyboardBackspace}/>(Backspace) — Запустити\зупинити автоматичне виконання алгоритму у зворотню сторону.
             </TextItem>
-            <TextItem tabs={2}>
-                <MdKeyboardArrowUp size={28} style={keyboardIconStyle}/>(Стрілка вверх) — Збільшити тривалість кроку автоматичного виконання.
+            <TextItem tabs={1}>
+                <KeyboardIcon src={KeyboardArrowUp}/>(Стрілка вверх) — Збільшити тривалість кроку автоматичного виконання.
             </TextItem>
-            <TextItem tabs={2}>
-                <MdKeyboardArrowDown size={28} style={keyboardIconStyle}/>(Стрілка вниз) — Зменшити тривалість кроку автоматичного виконання.
+            <TextItem tabs={1}>
+                <KeyboardIcon src={KeyboardArrowDown}/>(Стрілка вниз) — Зменшити тривалість кроку автоматичного виконання.
             </TextItem>
-            <TextItem tabs={2}>
-                <MdSpaceBar size={28} style={keyboardIconStyle}/>(Space) — Згенерувани новий масив.
+            <TextItem tabs={1}>
+                <KeyboardIcon src={KeyboardSpace} height={18} />(Space) — Згенерувани новий масив.
             </TextItem>
-            <TextItem tabs={2}>
-                Зауважте:
+            <TextItem tabs={1}>
+                Клавіші <KeyboardIcon src={KeyboardArrowRight}/> <KeyboardIcon src={KeyboardArrowLeft}/> <KeyboardIcon src={KeyboardSpace} height={18} /> недоступні під час автоматичного виконання алгоритму.
             </TextItem>
-            <TextItem tabs={3}>
-                Кнопки <MdKeyboardArrowRight size={28} style={keyboardIconStyle}/>, <MdKeyboardArrowLeft size={28} style={keyboardIconStyle}/> та 
-                <MdSpaceBar size={28} style={keyboardIconStyle}/> недоступні під час автоматичного виконання алгоритму.
-            </TextItem>
-            <TextItem tabs={3}>
-                Кнопки <MdKeyboardArrowRight size={28} style={keyboardIconStyle}/>, <MdKeyboardArrowLeft size={28} style={keyboardIconStyle}/>,
-                <MdKeyboardArrowUp size={28} style={keyboardIconStyle}/> та <MdKeyboardArrowDown size={28} style={keyboardIconStyle}/> 
+            <TextItem tabs={1}>
+                Клавіші <KeyboardIcon src={KeyboardArrowRight}/> <KeyboardIcon src={KeyboardArrowLeft}/> <KeyboardIcon src={KeyboardArrowUp}/> <KeyboardIcon src={KeyboardArrowDown}/> 
                 можна зажати.
+            </TextItem>
+
+            <HorizontalLine/>
+
+            <TextItem>Кольори:</TextItem>
+            <TextItem tabs={1}>
+                <RiCheckboxBlankFill size={iconSize} style={{color: SortingConstants.defaultColor, verticalAlign: "middle"}}/> - Звичайний елемент масиву
+            </TextItem>
+            <TextItem tabs={1}>
+                <RiCheckboxBlankFill size={iconSize} style={{color: SortingConstants.checkingColor, verticalAlign: "middle"}}/> - Порівняння
+            </TextItem>
+            <TextItem tabs={1}>
+                <RiCheckboxBlankFill size={iconSize} style={{color: SortingConstants.swappingColor, verticalAlign: "middle"}}/> - Зміна елмента
             </TextItem>
 
             <HorizontalLine/>
@@ -78,7 +91,10 @@ function GeneralInfo() {
             <TextItem tabs={1}>Щоб розпочати роботу з новим алгоритмом, достатньо його обрати. 
                 Після цього одразу можете виконувати його. Не забудьте лише згенерувати новий масив, при необхідності.
             </TextItem>
-            <TextItem tabs={1} style={{marginBottom: "0"}}>Згенерувати новий масив (на клавіатурі це клавіша "Space") можна також нажавши на повзунок розміру масиву (без пересування).</TextItem>
+            <TextItem tabs={1}>Згенерувати новий масив (на клавіатурі це клавіша "Space") можна також нажавши на повзунок розміру масиву (без пересування).</TextItem>
+            <TextItem tabs={1} style={{marginBottom: "0"}}>
+                Тривалісь кроку використовується лише в автоматичному режимі. Ви можете змінювати її навіть під час виконання алгоритму.
+            </TextItem>
         </>
     );
 }

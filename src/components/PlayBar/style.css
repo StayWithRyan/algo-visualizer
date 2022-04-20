@@ -39,8 +39,10 @@
     left: 35px;
     visibility: hidden;
     width: 120px;
-    background-color: rgba(245, 244, 240, 0.8);
-    color: #0e0e0e;
+    background-color: rgba(0, 0, 0, 0.8);
+    font-family: "Ubuntu";
+    font-size: small;
+    color: white;
     text-align: center;
     border-radius: 6px;
     padding: 5px 0;

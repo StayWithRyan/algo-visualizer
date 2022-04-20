@@ -11,7 +11,7 @@ const PathfindingConstants = {
 
     gridColor: Constants.textColor,
     emptyColor: "white",
-    blockColor: [Constants.blueColor, Constants.darkCrimsonColor],
+    blockColor: [Constants.zimaBlue, Constants.darkCrimsonColor],
     checkingColor: [Constants.crimsonColor, Constants.pinkColor],
     pathColor: [Constants.darkCrimsonColor, Constants.crimsonColor],
     startColor: Constants.darkGreenColor,

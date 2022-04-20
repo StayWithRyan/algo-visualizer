@@ -135,7 +135,7 @@ function StringsearchingPage() {
                 <BasicButton title="Завершити пошук" onClick={handleClear} isDisabled={autoplayRunning || !isSearching}/>
                 <BasicSlider isActive={true} title="Тривалість кроку (мс)" min={SearchingConstants.sleepMin} max={SearchingConstants.sleepMax} 
                     default={SearchingConstants.sleepDefault} step={SearchingConstants.sleepStep} onChange={setSearchingSleep} />
-                <PlayBar keyboardDisabled={!isSearching} setStep={applyStep} setRunningAutoplay={setAutoplayRunning} isDisabled={!isInputValid}/>
+                <PlayBar setStep={applyStep} setRunningAutoplay={setAutoplayRunning} isDisabled={!isInputValid}/>
             </ConfigurationBar>
             {isSearching // pattern
                 ? <div className="textCard">

@@ -2,15 +2,17 @@ function TextItem(props) {
     return (
         <h2 style = {{
             ...props.style,
-            paddingLeft: props.tabs ? `${props.tabs * 50}px` : "0px",
+            paddingLeft: props.tabs ? `${props.tabs * 3}vw` : "0px",
             fontWeight: 100,
             fontSize: "1.5em",
             userSelect: "none",
-            textAlign: "justify",
+            textAlign: props.nojustify? "none" : "justify",
             display: "flex",
             flex: 1
         }}>
-            {props.children}
+            <div style={{display: "block"}}>
+                {props.children}
+            </div>
         </h2>
     );
 }
