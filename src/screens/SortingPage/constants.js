@@ -18,7 +18,7 @@ const SortingConstants = {
 
     BubbleSortName: "Сортування бульбашкою",
     CocktailSortName: "Сортування змішуванням",
-    SelectionSortName: "Сортування вибором",
+    SelectionSortName: "Сортування простою вибіркою",
     InsertionSortName: "Сортування включенням",
     GnomeSortName: "Сортування гнома",
     ShellSortName: "Сортування Шелла",

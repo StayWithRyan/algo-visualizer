@@ -173,29 +173,47 @@ function PlayBar({setStep, setRunningAutoplay, isDisabled = false, keyboardDisab
     if(!running) {
         mainButton = 
         <>
-            <AiOutlineDoubleLeft className={(prevStepEnabled && !isDisabled) ? 'activePlayBarIcon' : 'disabledPlayBarIcon'} style={{width: "66px"}} size={34} 
-                onClick={(prevStepEnabled && !isDisabled) ? () => {handleAutoplay(false)} : () => {}}
-            />
-            <AiOutlineDoubleRight className={(nextStepEnabled && !isDisabled) ? 'activePlayBarIcon' : 'disabledPlayBarIcon'} style={{width: "66px"}} size={34} 
-                onClick={(nextStepEnabled && !isDisabled) ? () => {handleAutoplay(true)} : () => {}}
-            />
+            <div class="tooltip">
+                <AiOutlineDoubleLeft className={(prevStepEnabled && !isDisabled) ? 'activePlayBarIcon' : 'disabledPlayBarIcon'} style={{width: "50px"}} size={34} 
+                    onClick={(prevStepEnabled && !isDisabled) ? () => {handleAutoplay(false)} : () => {}}
+                />
+                <span class="tooltiptext">Автоматичне виконання у зворотню сторону</span>
+            </div>
+            <div class="tooltip">
+                <AiOutlineDoubleRight className={(nextStepEnabled && !isDisabled) ? 'activePlayBarIcon' : 'disabledPlayBarIcon'} style={{width: "50px"}} size={34} 
+                    onClick={(nextStepEnabled && !isDisabled) ? () => {handleAutoplay(true)} : () => {}}
+                />
+                <span class="tooltiptext">Автоматичне виконання</span>
+            </div>
         </>
     }
     else {
-        mainButton = <BsStopCircle className='activePlayBarIcon' style={{width: "132px"}} size={34} 
-            onClick={handleStop}
-        /> 
+        mainButton = 
+        <div class="tooltip">
+            <BsStopCircle className='activePlayBarIcon' style={{width: "100px"}} size={34} 
+                onClick={handleStop}
+            /> 
+            <span class="tooltiptext">Зупинити</span>
+        </div>
+
     }
     return (
         <div className = "PlayBar" style={{border: isDisabled ? `3px solid ${Constants.disabledMainColor}` : `3px solid ${Constants.mainColor}`}}>
             <div className = "PlayBarButtons">
-                <BiArrowToLeft className={(prevStepEnabled && !isDisabled) ? 'activePlayBarIcon' : 'disabledPlayBarIcon'} style={{width: "66px"}} size={34} 
-                    onClick={(prevStepEnabled && !isDisabled)  ? handlePrevStep : () => {}}
-                />
+                
+                <div class="tooltip">
+                    <BiArrowToLeft className={(prevStepEnabled && !isDisabled) ? 'activePlayBarIcon' : 'disabledPlayBarIcon'} style={{width: "50px"}} size={34} 
+                        onClick={(prevStepEnabled && !isDisabled)  ? handlePrevStep : () => {}}
+                    />
+                    <span class="tooltiptext">Попередній крок</span>
+                </div>
                 {mainButton}
-                <BiArrowToRight className={(nextStepEnabled && !isDisabled)  ? 'activePlayBarIcon' : 'disabledPlayBarIcon'} style={{width: "66px"}} size={34} 
-                    onClick={(nextStepEnabled && !isDisabled) ? handleNextStep : () => {}}
-                />
+                <div class="tooltip">
+                    <BiArrowToRight className={(nextStepEnabled && !isDisabled)  ? 'activePlayBarIcon' : 'disabledPlayBarIcon'} style={{width: "50px"}} size={34} 
+                        onClick={(nextStepEnabled && !isDisabled) ? handleNextStep : () => {}}
+                    />
+                    <span class="tooltiptext">Наступний крок</span>
+                </div>
             </div>
         </div>
     );

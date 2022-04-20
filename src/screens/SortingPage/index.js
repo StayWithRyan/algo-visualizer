@@ -52,7 +52,7 @@ function SortingPage() {
             document.removeEventListener('keydown', handleKeyDown);
         };
         
-    }, [autoplayRunning]);
+    }, [autoplayRunning, algorithm]);
 
     useEffect(() => {
         let intervalId = setInterval(() =>  {draw(canvasRef.current, array)}, Constants.drawInterval);
