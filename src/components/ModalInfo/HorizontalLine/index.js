@@ -1,14 +1,15 @@
 import Constants from "../../../constants";
 
-function EmptyRow() {
+function HorizontalLine() {
     return (
         <h2 style = {{
+            backgroundColor: Constants.mainColor,
+            height: "1px",
             color: Constants.mainBackground,
             userSelect: "none"
         }}>
-            Empty
         </h2>
     );
 }
 
-export default EmptyRow;
+export default HorizontalLine;

@@ -11,6 +11,7 @@
 }
 
 .modalContent {
+    max-height: 70vh;
     border-radius: 16px;
     background-color: rgba(245, 244, 240, 0.96);
     width: 85%;    
@@ -21,8 +22,14 @@
 }
 
 .modalInfo {
-    width: 90%;
-    padding-bottom: 30px;
+    overflow-y: auto;
+    padding-left: 5%;
+    margin-bottom: 30px;
+    width: 95%;
+}
+
+.modalInfoText {
+    width: 95%;
 }
 
 .ModelSelector{
@@ -30,6 +37,5 @@
     flex: 1;
     flex-direction: row;
     justify-content: center;
-    padding-top: 10px;
     padding-bottom: 20px;
 }

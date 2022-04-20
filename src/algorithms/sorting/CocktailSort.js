@@ -4,12 +4,12 @@ class CocktailSort extends BaseSort {
     innerSort() {
         let swapped = true;
         let start = 0;
-        let end = this.array.length;
+        let end = this.array.length - 1;
   
         while (swapped == true) {
             swapped = false;
 
-            for (let i = start; i < end - 1; ++i) {
+            for (let i = start; i <= end - 1; ++i) {
                 this.setChecking(i, i + 1);
                 if (this.array[i].value > this.array[i + 1].value) {
                     this.swap(i, i + 1);

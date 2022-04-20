@@ -39,19 +39,19 @@ function PlayBar({setStep, setRunningAutoplay, isDisabled = false, keyboardDisab
 
     const handleKeyDown = (event) => {
 
-        if(event.key == 'ArrowRight') {
+        if(event.code == 'ArrowRight') {
             if(nextStepEnabled && !isDisabled) {
                 handleNextStep();
             }
         }
 
-        if(event.key == 'ArrowLeft') {
+        if(event.code == 'ArrowLeft') {
             if(prevStepEnabled && !isDisabled) {
                 handlePrevStep();
             }
         }
 
-        if(event.key == 'Enter') {
+        if(event.code == 'Enter') {
             if(!keyboardLocked) {
                 if(nextStepEnabled && !running && !isDisabled) {
                     handleAutoplay(true);
@@ -63,7 +63,7 @@ function PlayBar({setStep, setRunningAutoplay, isDisabled = false, keyboardDisab
             }
         }
 
-        if(event.key == 'Backspace') {
+        if(event.code == 'Backspace') {
             if(!keyboardLocked) {
                 if(prevStepEnabled && !running && !isDisabled) {
                     handleAutoplay(false);

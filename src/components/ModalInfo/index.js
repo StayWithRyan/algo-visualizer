@@ -42,18 +42,23 @@ function ModalInfo(props) {
 
     return (
         <div className="modal" onClick = {props.handleCloseInfo}>
-        <div className="modalContent" onClick = {(e) => {e.stopPropagation();}}>
-
-            <div className='ModelSelector'>
-                <BasicSelect centered={true} title ="" onChange = {setSelectedInfoPage} 
-                        value={selectedInfoPage} values={pages} width = {320}
-                />
-            </div>
-            <div className="modalInfo" style = {{color: Constants.textColor, fontFamily: Constants.fontFamily }}>
-                {getPageWithName(selectedInfoPage)}
+            <div className="modalContent" onClick = {(e) => {e.stopPropagation();}}>
+                <div className='ModelSelector'>
+                    <BasicSelect centered={true} title ="" onChange = {setSelectedInfoPage} 
+                            value={selectedInfoPage} values={pages} width = {320}
+                    />
+                </div>
+                <div className="modalInfo" 
+                    style = {{
+                        color: Constants.textColor, fontFamily: Constants.fontFamily,
+                        borderTop: `5px solid ${Constants.mainColor}`
+                    }}>
+                        
+                <div className="modalInfoText"> {getPageWithName(selectedInfoPage)}</div>
+                   
+                </div>
             </div>
         </div>
-    </div>
     );
 }
 

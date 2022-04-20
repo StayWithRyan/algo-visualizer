@@ -47,6 +47,22 @@ function TreeBasedPage() {
         return () => {clearInterval(intervalId); tree = null; array = null;};
     }, []);
 
+    const handleKeyDown = (event) => {
+        if(autoplayRunning === false) {
+            if(event.code == 'Space') {
+                handleSizeChange(treeSize);
+            }
+        }
+    }
+
+    useEffect(() => {
+        document.addEventListener('keydown', handleKeyDown);
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+        
+    }, [autoplayRunning, treeSize, algorithm]);
+
     const updateTreeAndArray = (size, algorithm, isReset = false) => {
         let newTree = tree;
         let newArray = array;

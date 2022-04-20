@@ -2,11 +2,9 @@ import BaseSort from './BaseSort';
 
 class SelectionSort extends BaseSort {
     innerSort() {
-        let length = this.array.length;
-        let i, j, max_idx;
-        for (i = length - 1; i >= 0; i--) {
-            max_idx = i;
-            for (j = 0; j < i; j++) {
+        for (let i = this.array.length - 1; i >= 1; i--) {
+            let max_idx = 0;
+            for (let j = 1; j <= i; j++) {
                 this.setChecking(j, max_idx);
                 if (this.array[j].value > this.array[max_idx].value) {
                     max_idx = j;

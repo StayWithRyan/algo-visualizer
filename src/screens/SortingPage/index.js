@@ -38,6 +38,22 @@ function SortingPage() {
         setAutoplaySleep(sortingSleep);
     }, [sortingSleep]);
 
+    const handleKeyDown = (event) => {
+        if(autoplayRunning === false) {
+            if(event.code == 'Space') {
+                handleSizeChange(array.length);
+            }
+        }
+    }
+
+    useEffect(() => {
+        document.addEventListener('keydown', handleKeyDown);
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+        
+    }, [autoplayRunning]);
+
     useEffect(() => {
         let intervalId = setInterval(() =>  {draw(canvasRef.current, array)}, Constants.drawInterval);
         return () => {clearInterval(intervalId); array = null;}

@@ -3,13 +3,16 @@ import TextItem from "../TextItem"
 function SelectionSortInfo() {
     return (
         <>
-            <TextItem><div>Ефективність алгоритму - O(n<sup>2</sup>)</div></TextItem>
-            <TextItem><u>Покроковий опис алгоритму сортування бульбашкою:</u></TextItem>
-            <TextItem tabs={1}>{"1. Цикл за індексом проходження. Повторювати кроки S2 - S 4  при i=1..n-1."}</TextItem>
-            <TextItem tabs={1}>{"2. Зафіксувати перший поточний елемент: встановити R0 = Ri."}</TextItem>
-            <TextItem tabs={1}>{"3. Якщо A[j] > A[j+1], то переставити місцями елементи A[j] <-> A[j+1]"}</TextItem>
-            <TextItem tabs={1}>{"4. Перестановка елементів. Якщо min Rj < R0 та j !=i , то min Rj <-> R0."}</TextItem>
-            <TextItem tabs={1}>{"5. Кінець. Вихід."}</TextItem>
+            <TextItem>
+            Алгоритм працює таким чином - На кожному кроці проходження алгоритму шукається найбільше значення із невідсортованого масиву і розміщається на своє місце. 
+            </TextItem>
+            <TextItem><div>Ефективність алгоритму - O(n(n-1)/2 ≈ n<sup>2</sup>) </div></TextItem>
+            <TextItem><u>Покроковий опис алгоритму сортування вибором:</u></TextItem>
+            <TextItem tabs={1}>{"1. Повторювати крок 2 при i=n-1,n-2,...,1"}</TextItem>
+            <TextItem tabs={2}>{"2. Присвоїти max_index <— 0"}</TextItem>
+            <TextItem tabs={2}>{"3. Повторювати крок 4 при j=1,2,...,i"}</TextItem>
+            <TextItem tabs={3}>{"4. Якщо A[j] > A[max_index], то присвоїти max_index <— j"}</TextItem>
+            <TextItem tabs={2} style={{marginBottom: "0"}}>{"5. Переставити місцями елементи A[i] <—> A[max_index]"}</TextItem>
         </>
     );
 }

@@ -13,14 +13,14 @@ export default function BasicSlider(props) {
 
     const handleKeyDown = (event) => {
         if(props.isActive) {
-            if (event.key === 'ArrowUp') {
+            if (event.code === 'ArrowUp') {
                 if(value < props.max) {
                     let valueToSet = value + props.step <= props.max ? value + props.step : props.max;
                     props.onChange(valueToSet);
                     setValue(valueToSet);
                 }
             }
-            if (event.key === 'ArrowDown') {
+            if (event.code === 'ArrowDown') {
                 if(value > 0) {
                     let valueToSet = value - props.step >= props.min ? value - props.step : props.min;
                     props.onChange(valueToSet);
