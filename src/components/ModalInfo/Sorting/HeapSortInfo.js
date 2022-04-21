@@ -33,7 +33,7 @@ function HeapSortInfo() {
             <TextItem tabs={1}>{"H1. Присвоїти: largest = i; l = 2i+1 (лівий син); r = 2i+2 (правий син)"}</TextItem>
             <TextItem tabs={1}>{"H2. Якщо l < n && A[l] > A[largest], то присвоїти largest =  l"}</TextItem>
             <TextItem tabs={1}>{"H3. Якщо r < n && A[r] > A[largest], то присвоїти largest = r"}</TextItem>
-            <TextItem tabs={1} style={{marginBottom: "0"}}>{
+            <TextItem tabs={1}>{
                 `H4. Якщо largest != i, то переставити місцями елементи A[largest] <—> A[i] 
                 та викликати процедуру просіювання вниз із наступними параметрами: n (кількість елементів в дереві), largest (індекс елемента для просіювання)`
             }</TextItem>

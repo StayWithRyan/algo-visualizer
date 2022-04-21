@@ -24,7 +24,7 @@ function GnomeSortInfo() {
             <TextItem tabs={1}>{"1. Присвоїти index = 0"}</TextItem>
             <TextItem tabs={1}>{"2. Поки index < n повторювати крок 3"}</TextItem>
             <TextItem tabs={2}>{"3. Якщо index == 0 або A[index] >= A[index-1], то присвоїти index = index+1, інакше перейти до кроку 4"}</TextItem>
-            <TextItem tabs={3} style={{marginBottom: "0"}}>{"4. Переставити місцями елементи A[index] <—> A[index-1] та присвоїти index = index-1"}</TextItem>
+            <TextItem tabs={3}>{"4. Переставити місцями елементи A[index] <—> A[index-1] та присвоїти index = index-1"}</TextItem>
         </>
     );
 }

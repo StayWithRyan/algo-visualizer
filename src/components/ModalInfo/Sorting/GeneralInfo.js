@@ -1,6 +1,7 @@
 import TextItem from "../TextItem"
 import HorizontalLine from "../HorizontalLine"
 import KeyboardIcon from "../KeyboardIcon"
+import ColorBox from "../ColorBox"
 
 import KeyboardArrowRight from '../../../icons/arrow-right.png';
 import KeyboardArrowLeft from '../../../icons/arrow-left.png';
@@ -13,7 +14,6 @@ import KeyboardSpace from '../../../icons/space.png';
 import { BiArrowToRight, BiArrowToLeft } from 'react-icons/bi';
 import { BsStopCircle } from 'react-icons/bs';
 import { AiOutlineDoubleRight, AiOutlineDoubleLeft} from "react-icons/ai";
-import { RiCheckboxBlankFill} from "react-icons/ri";
 
 import Constants from "../../../constants";
 import SortingConstants from "../../../screens/SortingPage/constants";
@@ -76,13 +76,13 @@ function GeneralInfo() {
 
             <TextItem>Кольори:</TextItem>
             <TextItem tabs={1}>
-                <RiCheckboxBlankFill size={iconSize} style={{color: SortingConstants.defaultColor, verticalAlign: "middle"}}/> - Звичайний елемент масиву
+                <ColorBox color={SortingConstants.defaultColor}/> - Звичайний елемент масиву
             </TextItem>
             <TextItem tabs={1}>
-                <RiCheckboxBlankFill size={iconSize} style={{color: SortingConstants.checkingColor, verticalAlign: "middle"}}/> - Порівняння
+                <ColorBox color={SortingConstants.checkingColor}/> - Порівняння
             </TextItem>
             <TextItem tabs={1}>
-                <RiCheckboxBlankFill size={iconSize} style={{color: SortingConstants.swappingColor, verticalAlign: "middle"}}/> - Зміна елмента
+                <ColorBox color={SortingConstants.swappingColor}/> - Зміна елмента
             </TextItem>
 
             <HorizontalLine/>
@@ -92,7 +92,7 @@ function GeneralInfo() {
                 Після цього одразу можете виконувати його. Не забудьте лише згенерувати новий масив, при необхідності.
             </TextItem>
             <TextItem tabs={1}>Згенерувати новий масив (на клавіатурі це клавіша "Space") можна також нажавши на повзунок розміру масиву (без пересування).</TextItem>
-            <TextItem tabs={1} style={{marginBottom: "0"}}>
+            <TextItem tabs={1}>
                 Тривалісь кроку використовується лише в автоматичному режимі. Ви можете змінювати її навіть під час виконання алгоритму.
             </TextItem>
         </>

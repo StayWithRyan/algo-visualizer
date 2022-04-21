@@ -23,7 +23,7 @@ function CocktailSortInfo() {
             <TextItem tabs={2}>{"7. Присвоїти swapped = false; end = end - 1"}</TextItem>
             <TextItem tabs={2}>{"8. Повторювати крок 9 при i=end-1,end-2,...,start"}</TextItem>
             <TextItem tabs={3}>{"9. Якщо A[i] > A[i+1], то переставити місцями елементи A[i] <—> A[i+1] та присвоїти swapped = true"}</TextItem>
-            <TextItem tabs={2} style={{marginBottom: "0"}}>{"10. Присвоїти start = start + 1"}</TextItem>
+            <TextItem tabs={2}>{"10. Присвоїти start = start + 1"}</TextItem>
         </>
     );
 }

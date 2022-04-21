@@ -18,7 +18,7 @@ function InsertionSortInfo() {
             <TextItem tabs={2}>{"2. Присвоїти key = i"}</TextItem>
             <TextItem tabs={2}>{"3. Повторювати крок 4 при j=i-1,i-2,...,0"}</TextItem>
             <TextItem tabs={3}>{"4. Якщо A[j] > A[key], то перейти до кроку 5, інакше перейти до наступної ітерації кроку 1"}</TextItem>
-            <TextItem tabs={4} style={{marginBottom: "0"}}>{"5. Переставити місцями елементи A[j] <—> A[key], та присвоїти key = j"}</TextItem>
+            <TextItem tabs={4}>{"5. Переставити місцями елементи A[j] <—> A[key], та присвоїти key = j"}</TextItem>
         </>
     );
 }

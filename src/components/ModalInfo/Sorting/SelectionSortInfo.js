@@ -17,7 +17,7 @@ function SelectionSortInfo() {
             <TextItem tabs={2}>{"2. Присвоїти max_index = 0"}</TextItem>
             <TextItem tabs={2}>{"3. Повторювати крок 4 при j=1,2,...,i"}</TextItem>
             <TextItem tabs={3}>{"4. Якщо A[j] > A[max_index], то присвоїти max_index = j"}</TextItem>
-            <TextItem tabs={2} style={{marginBottom: "0"}}>{"5. Переставити місцями елементи A[i] <—> A[max_index]"}</TextItem>
+            <TextItem tabs={2}>{"5. Переставити місцями елементи A[i] <—> A[max_index]"}</TextItem>
         </>
     );
 }

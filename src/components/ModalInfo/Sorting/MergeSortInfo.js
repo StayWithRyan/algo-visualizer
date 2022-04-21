@@ -33,7 +33,7 @@ function MergeSortInfo() {
             </TextItem>
             <TextItem tabs={1}>{"M5. В масив A_tmp занести елементи підмасиву L, що залишились"}</TextItem>
             <TextItem tabs={1}>{"M6. В масив A_tmp занести елементи підмасиву R, що залишились"}</TextItem>
-            <TextItem tabs={1} style={{marginBottom: "0"}}>{"M7. Дані масиву A_tmp послідновно присвоїти основному масиву A, починаючи з індекса l"}</TextItem>
+            <TextItem tabs={1}>{"M7. Дані масиву A_tmp послідновно присвоїти основному масиву A, починаючи з індекса l"}</TextItem>
 
         </>
     );

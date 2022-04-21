@@ -28,7 +28,7 @@ function QuickSortInfo() {
             <TextItem tabs={1}>{"8. Якщо i+1 != high, то переставити місцями елементи A[i+1] <—> A[high]"}</TextItem>
             <TextItem tabs={1}>{"9. Присвоїти pivotIndex = i + 1"}</TextItem>
             <TextItem tabs={1}>{"10. Рекурсивно виконати сортування лівої частини масиву: Розпочати даний алгоритм сортування з 2 кроку, прийнявши low = low; high = pivotIndex - 1"}</TextItem>
-            <TextItem tabs={1} style={{marginBottom: "0"}}>{"11. Рекурсивно виконати сортування правої частини масиву: Розпочати даний алгоритм сортування з 2 кроку, прийнявши low = pivotIndex + 1; high = high"}</TextItem>
+            <TextItem tabs={1}>{"11. Рекурсивно виконати сортування правої частини масиву: Розпочати даний алгоритм сортування з 2 кроку, прийнявши low = pivotIndex + 1; high = high"}</TextItem>
         </>
     );
 }
