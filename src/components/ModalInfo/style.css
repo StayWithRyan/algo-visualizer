@@ -23,6 +23,7 @@
     background-color: rgba(245, 244, 240, 0.95);
     border-bottom-left-radius: 16px;
     overflow-y: auto;
+    border-bottom-right-radius: 16px;
     padding-left: 5%;
     width: 95%;
 }

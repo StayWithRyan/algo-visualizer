@@ -9,7 +9,7 @@ import PathfindingConstants from '../../../screens/PathfindingPage/constants';
 let PathfindingPagesMapping = [
     {
         page: <GeneralInfo/>,
-        name: "Загальна інформація"
+        name: "Загальна інформація про пошук шляху"
     },
     {
         page: <AStarInfo/>,

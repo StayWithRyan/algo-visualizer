@@ -21,7 +21,7 @@ const PathfindingConstants = {
 
     DFSName: "Пошук у глибину",
     BFSName: "Пошук у ширину (Алгоритм Дейкстри)",
-    BestFirstSearchName: "Пошук 'Найкращий - перший'",
+    BestFirstSearchName: `Жадібний пошук "Найкращий - перший"`,
     AStartName: "Алгоритм пошуку A*",
 
     RecursiveDivisionName: "Рекурсивний поділ",

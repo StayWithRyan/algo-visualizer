@@ -11,7 +11,7 @@ import TreeBasedConstants from '../../../screens/TreeBasedPage/constants';
 let TreeBasedPagesMapping = [
     {
         page : <GeneralInfo/>,
-        name: "Загальна інформація"
+        name: "Загальна інформація про алгоритми на деревах"
     },
     {
         page : <NLRTraversalInfo/>,

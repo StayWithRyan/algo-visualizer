@@ -45,7 +45,10 @@ export default function BasicSelect(props) {
                     {props.values.map(value => 
                         <MenuItem 
                             onClick={() => {setCounter(counter + 1)}}
-                            style={{fontFamily: Constants.fontFamily}} disabled = {props.isDisabled} key={value} value={value}>{value}
+                            style={{fontFamily: Constants.fontFamily, fontWeight: value.includes("Загальна")  ? "800" : ""}}
+                            disabled = {props.isDisabled} key={value} value={value}
+                        >
+                            {value}
                         </MenuItem>
                     )}
                     </Select>
