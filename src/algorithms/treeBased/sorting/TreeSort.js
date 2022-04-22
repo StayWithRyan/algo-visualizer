@@ -1,5 +1,4 @@
 import BaseSorting from './BaseSorting';
-import Constants from '../../../constants';
 import {AddedNodeType, CheckingNodeType, DoneNodeType, RegularNodeType} from '../../../screens/TreeBasedPage/Elements/Tree/TreeNodeTypes';
 import TreeNode from '../../../screens/TreeBasedPage/Elements/Tree/TreeNode';
 import {AddedElementType, CheckingElementType, DoneElementType} from '../../../screens/TreeBasedPage/Elements/Array/ArrayElementTypes';

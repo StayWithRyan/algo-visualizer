@@ -23,5 +23,6 @@
 }
 
 .textBox::selection {
-    background: #be004f;
+    background: #6184d8;
+    color: white;
 }

@@ -6,7 +6,7 @@ import {EmptyElementType, BlockElementType, StartElementType, TargetElementType,
 import MazeElement from './Elements/MazeElement';
 import RecursiveDivision from '../../algorithms/pathfinding/mazeGenerators/RecursiveDivision';
 import BasicRandomMaze from '../../algorithms/pathfinding/mazeGenerators/BasicRandomMaze';
-import EllersAlgorithm from '../../algorithms/pathfinding/mazeGenerators/EllersAlgorithm';
+import BinaryTreeAlgorithm from '../../algorithms/pathfinding/mazeGenerators/BinaryTreeAlgorithm';
 import DFS from '../../algorithms/pathfinding/pathfindingAlgorithms/DFS';
 import BFS from '../../algorithms/pathfinding/pathfindingAlgorithms/BFS';
 
@@ -23,8 +23,8 @@ const getGeneratingAlgorithmClass = (algorithm) => {
     if(algorithm === PathfindingConstants.RecursiveDivisionName) {
         return RecursiveDivision;
     }
-    if(algorithm === PathfindingConstants.EllersAlgorithmName) {
-        return EllersAlgorithm;
+    if(algorithm === PathfindingConstants.BinaryTreeAlgorithmName) {
+        return BinaryTreeAlgorithm;
     }
     if(algorithm === PathfindingConstants.BasicRandomMazeName) {
         return BasicRandomMaze;
@@ -40,7 +40,7 @@ const algorithms = [
 
 const generatingAlgorithms = [
     PathfindingConstants.RecursiveDivisionName,
-    PathfindingConstants.EllersAlgorithmName,
+    PathfindingConstants.BinaryTreeAlgorithmName,
     PathfindingConstants.BasicRandomMazeName
 ];
 

@@ -21,37 +21,37 @@
 
 
 .NavPage1 {
-    border-bottom: 0.3vh solid #f35d67;
-    border-right: 0.15vw solid #f35d67;
+    border-bottom: 0.3vh solid #e30813;
+    border-right: 0.15vw solid #e30813;
 }
 
 .NavPage2 {
-    border-bottom: 0.3vh solid #f35d67;
-    border-left: 0.15vw solid #f35d67;
+    border-bottom: 0.3vh solid #e30813;
+    border-left: 0.15vw solid #e30813;
 }
 
 .NavPage3 {
-    border-top: 0.3vh solid #f35d67;
-    border-right: 0.15vw solid #f35d67;
+    border-top: 0.3vh solid #e30813;
+    border-right: 0.15vw solid #e30813;
 }
 
 .NavPage4 {
-    border-top: 0.3vh solid #f35d67;
-    border-left: 0.15vw solid #f35d67;
+    border-top: 0.3vh solid #e30813;
+    border-left: 0.15vw solid #e30813;
 }
 
 .NavPage1:hover {
-    background-image: linear-gradient(135deg, #b31739 0%, #f35d67 50%, #f2858c 100%);
+    background-image: linear-gradient(135deg, #6b040a 0%, #e30813 50%, #f04e59 100%);
 }
 
 .NavPage2:hover {
-    background-image: linear-gradient(225deg, #b31739 0%, #f35d67 50%, #f2858c 100%);
+    background-image: linear-gradient(225deg, #6b040a 0%, #e30813 50%, #f04e59 100%);
 }
 
 .NavPage3:hover {
-    background-image: linear-gradient(45deg, #b31739 0%, #f35d67 50%, #f2858c 100%);
+    background-image: linear-gradient(45deg, #6b040a 0%, #e30813 50%, #f04e59 100%);
 }
 
 .NavPage4:hover {
-    background-image: linear-gradient(315deg, #b31739 0%, #f35d67 50%, #f2858c 100%);
+    background-image: linear-gradient(315deg, #6b040a 0%, #e30813 50%, #f04e59 100%);
 }

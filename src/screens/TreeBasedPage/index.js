@@ -68,7 +68,7 @@ function TreeBasedPage() {
         let newArray = array;
 
         if(algorithm === TreeBasedConstants.HeapSortName) {
-            newTree = createHeapSortTree(size);
+            newTree = null;
             newArray = isReset? resetArrayTypes(array) : createArray(size);
         }
         else if(algorithm === TreeBasedConstants.TreeSortName) {

@@ -25,7 +25,7 @@ const PathfindingConstants = {
     AStartName: "Алгоритм пошуку A*",
 
     RecursiveDivisionName: "Рекурсивний поділ",
-    EllersAlgorithmName: "Алгоритм Ейлера",
+    BinaryTreeAlgorithmName: "Бінарне дерево",
     BasicRandomMazeName: "Випадкові блоки"
 }
 

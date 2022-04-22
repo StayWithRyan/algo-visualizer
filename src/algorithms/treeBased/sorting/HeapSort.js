@@ -9,14 +9,14 @@ import {
     SwappingElementType, DoneElementType, RegularElementType
 } from '../../../screens/TreeBasedPage/Elements/Array/ArrayElementTypes';
 import {addStep} from '../../../screens/TreeBasedPage/treeBasedHelpers';
+import TreeNode from '../../../screens/TreeBasedPage/Elements/Tree/TreeNode';
 
 
 class HeapSort extends BaseSorting {
     algorithmlInner() {  
         // Build heap
         for(let i = 0; i < this.array.length; ++i) {
-            let addedNode = this.addValueToTree(this.array[i].value);
-            this.setJustAdded(addedNode);
+            let addedNode = this.insert(this.array[i].value);
             addedNode = this.heapifyUp(addedNode);
             this.setAdded(addedNode);
         }
@@ -78,20 +78,33 @@ class HeapSort extends BaseSorting {
         
     }
 
-    // adds value to first node with value null
-    addValueToTree(value) {
+    insert(value) {
+        if(this.tree === null) {
+            // first node
+            this.tree = new TreeNode(value);
+            addStep(this.tree, [this.array[0]], null, false);
+            return this.tree;
+        }
+
         let queue = [];
         queue.push(this.tree);
+
         while(queue.length > 0) {
             let node = queue.shift();
-            if(node.value == null) {
-                node.setValue(value);
-                return node;
+            if(node.left === null) {
+                node.setLeftChild(value, RegularNodeType);
+                this.setJustAdded(node.left);
+                return node.left;
             }
-            if(node.left != null) {
+            if(node.right === null) {
+                node.setRightChild(value);
+                this.setJustAdded(node.right);
+                return node.right;
+            }
+            if(node.left !== null) {
                 queue.push(node.left);
             }
-            if(node.right != null) {
+            if(node.right !== null) {
                 queue.push(node.right);
             }
         }
@@ -178,8 +191,6 @@ class HeapSort extends BaseSorting {
     }
 
     setJustAdded(node) {
-        node.setType(RegularNodeType);
-
         let treeStep = [node];
         let arrayStep = [this.array[node.id]];
 

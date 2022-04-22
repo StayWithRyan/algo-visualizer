@@ -13,7 +13,7 @@
 }
 
 .activePlayBarIcon {
-    color: #f35d67;
+    color: #e30813;
     cursor: pointer;
 }
 .activePlayBarIcon:hover {
@@ -21,7 +21,7 @@
 }
 
 .disabledPlayBarIcon {
-    color: #e5adb0;
+    color: #df8d90;
 }
 
 .tooltip {
