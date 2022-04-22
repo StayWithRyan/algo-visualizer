@@ -34,7 +34,7 @@ function GeneralInfo() {
                 <AiOutlineDoubleRight size={iconSize} style={confBarIconStyle}/> — Запустити автоматичне виконання алгоритму.
             </TextItem>
             <TextItem tabs={1}>
-                <AiOutlineDoubleLeft size={iconSize} style={confBarIconStyle}/> — Запустити автоматичне виконання алгоритму у зворотню сторону.
+                <AiOutlineDoubleLeft size={iconSize} style={confBarIconStyle}/> — Запустити автоматичне виконання алгоритму у протилежну сторону.
             </TextItem>
             <TextItem tabs={1}>
                 <BsStopCircle size={iconSize} style={confBarIconStyle}/> — Зупинити автоматичне виконання алгоритму.
@@ -53,7 +53,7 @@ function GeneralInfo() {
                 <KeyboardIcon src={KeyboardEnter}/>(Enter) — Запустити\зупинити автоматичне виконання алгоритму.
             </TextItem>
             <TextItem tabs={1}>
-                <KeyboardIcon src={KeyboardBackspace}/>(Backspace) — Запустити\зупинити автоматичне виконання алгоритму у зворотню сторону.
+                <KeyboardIcon src={KeyboardBackspace}/>(Backspace) — Запустити\зупинити автоматичне виконання алгоритму у протилежну сторону.
             </TextItem>
             <TextItem tabs={1}>
                 <KeyboardIcon src={KeyboardArrowUp}/>(Стрілка вверх) — Збільшити тривалість кроку автоматичного виконання.
@@ -62,7 +62,7 @@ function GeneralInfo() {
                 <KeyboardIcon src={KeyboardArrowDown}/>(Стрілка вниз) — Зменшити тривалість кроку автоматичного виконання.
             </TextItem>
             <TextItem tabs={1}>
-                <KeyboardIcon src={KeyboardSpace} height={18} />(Space) — Згенерувани нове дерево\масив.
+                <KeyboardIcon src={KeyboardSpace} height={18} />(Space) — Згенерувати нове дерево\масив.
             </TextItem>
             <TextItem tabs={1}>
                 Клавіші <KeyboardIcon src={KeyboardArrowRight}/> <KeyboardIcon src={KeyboardArrowLeft}/> <KeyboardIcon src={KeyboardSpace} height={18} /> недоступні під час автоматичного виконання алгоритму.
@@ -96,7 +96,7 @@ function GeneralInfo() {
             <TextItem>Підказки:</TextItem>
             <TextItem tabs={1}>Згенерувати нове дерево\масив (на клавіатурі це клавіша "Space") можна також нажавши на повзунок розміру дерева\масиву (без пересування).</TextItem>
             <TextItem tabs={1}>
-                Тривалісь кроку використовується лише в автоматичному режимі. Ви можете змінювати її навіть під час виконання алгоритму.
+                Тривалість кроку використовується лише в автоматичному режимі. Ви можете змінювати її навіть під час виконання алгоритму.
             </TextItem>
         </>
     );

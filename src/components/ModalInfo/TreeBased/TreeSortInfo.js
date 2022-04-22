@@ -27,7 +27,7 @@ function TreeSortInfo() {
             
             <TextItem>Покроковий опис сортування бінарним деревом:</TextItem>
             <TextItem tabs={1}>{"1. Повторювати крок 2 при i=0,1,...,n-1"}</TextItem>
-            <TextItem tabs={2}>{"2. Дабавити елемент масиву за індексом i у бінарне дерево пошуку"}</TextItem>
+            <TextItem tabs={2}>{"2. Добавити елемент масиву за індексом i у бінарне дерево пошуку"}</TextItem>
             <TextItem tabs={1}>{"3. Виконати змішаний обхід дерева"}</TextItem>
 
             <HorizontalLine/>

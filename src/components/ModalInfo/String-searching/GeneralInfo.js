@@ -33,7 +33,7 @@ function GeneralInfo() {
                 <AiOutlineDoubleRight size={iconSize} style={confBarIconStyle}/> — Запустити автоматичне виконання алгоритму.
             </TextItem>
             <TextItem tabs={1}>
-                <AiOutlineDoubleLeft size={iconSize} style={confBarIconStyle}/> — Запустити автоматичне виконання алгоритму у зворотню сторону.
+                <AiOutlineDoubleLeft size={iconSize} style={confBarIconStyle}/> — Запустити автоматичне виконання алгоритму у протилежну сторону.
             </TextItem>
             <TextItem tabs={1}>
                 <BsStopCircle size={iconSize} style={confBarIconStyle}/> — Зупинити автоматичне виконання алгоритму.
@@ -52,7 +52,7 @@ function GeneralInfo() {
                 <KeyboardIcon src={KeyboardEnter}/>(Enter) — Запустити\зупинити автоматичне виконання алгоритму.
             </TextItem>
             <TextItem tabs={1}>
-                <KeyboardIcon src={KeyboardBackspace}/>(Backspace) — Запустити\зупинити автоматичне виконання алгоритму у зворотню сторону.
+                <KeyboardIcon src={KeyboardBackspace}/>(Backspace) — Запустити\зупинити автоматичне виконання алгоритму у протилежну сторону.
             </TextItem>
             <TextItem tabs={1}>
                 <KeyboardIcon src={KeyboardArrowUp}/>(Стрілка вверх) — Збільшити тривалість кроку автоматичного виконання.
@@ -94,11 +94,11 @@ function GeneralInfo() {
             <TextItem tabs={1}>Неможливо розпочати виконання алгоритму за допомогою клавіші <KeyboardIcon src={KeyboardArrowRight}/>,
                 якщо поле для вводу активне
             </TextItem>
-            <TextItem tabs={1}>Щоб розпочати роботу з новим алгоритмом, достатньо його обрати. 
+            <TextItem tabs={1}>Щоб розпочати роботу з новим алгоритмом, достатньо його вибрати. 
                 Після цього одразу можете виконувати його.
             </TextItem>
             <TextItem tabs={1}>
-                Тривалісь кроку використовується лише в автоматичному режимі. Ви можете змінювати її навіть під час виконання алгоритму.
+                Тривалість кроку використовується лише в автоматичному режимі. Ви можете змінювати її навіть під час виконання алгоритму.
             </TextItem>
         </>
     );

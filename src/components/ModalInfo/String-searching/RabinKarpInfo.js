@@ -18,7 +18,7 @@ function RabinKarpInfo() {
             <HorizontalLine/>
 
             <TextItem>Покроковий опис алгоритму Рабіна - Карпа: (n — довжина тексту, m — довжина зразка):</TextItem>
-            <TextItem tabs={1}>1. Препроцесінг зарзка: Вирахувати його хеш-значення</TextItem>
+            <TextItem tabs={1}>1. Препроцесінг зразка: Вирахувати його хеш-значення</TextItem>
             <TextItem tabs={1}>2. Присвоїти i = 0</TextItem>
             <TextItem tabs={1}>
                 3. Вирахувати хеш значення підрядка (довжиною m) тексту за індексом i
