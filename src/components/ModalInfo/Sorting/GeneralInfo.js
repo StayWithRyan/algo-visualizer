@@ -82,7 +82,7 @@ function GeneralInfo() {
                 <ColorBox color={SortingConstants.checkingColor}/> - Порівняння
             </TextItem>
             <TextItem tabs={1}>
-                <ColorBox color={SortingConstants.swappingColor}/> - Зміна елмента
+                <ColorBox color={SortingConstants.swappingColor}/> - Зміна
             </TextItem>
 
             <HorizontalLine/>
