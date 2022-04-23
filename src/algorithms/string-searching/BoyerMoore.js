@@ -9,9 +9,6 @@ class BoyerMooreAlgorithm extends BaseStringSearching {
     badCharHeuristic() {
         this.badchar = {};
         for (let i = 0; i < this.pattern.length; i++) {
-            this.badchar[this.pattern[i].char] = -1;
-        }
-        for (let i = 0; i < this.pattern.length; i++) {
             this.badchar[this.pattern[i].char] = i;
         }
     }

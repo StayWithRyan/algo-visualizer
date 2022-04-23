@@ -179,7 +179,7 @@ function PlayBar({setStep, setRunningAutoplay, isDisabled = false}) {
                 <AiOutlineDoubleLeft className={(prevStepEnabled && !isDisabled) ? 'activePlayBarIcon' : 'disabledPlayBarIcon'} style={{width: "50px"}} size={34} 
                     onClick={(prevStepEnabled && !isDisabled) ? () => {handleAutoplay(false)} : () => {}}
                 />
-                <span className="tooltiptext">Автоматичне виконання у протилежну сторону</span>
+                <span className="tooltiptext">Автоматичне виконання в протилежну сторону</span>
             </div>
             <div className="tooltip">
                 <AiOutlineDoubleRight className={(nextStepEnabled && !isDisabled) ? 'activePlayBarIcon' : 'disabledPlayBarIcon'} style={{width: "50px"}} size={34} 
