@@ -28,7 +28,7 @@ async function BasicRandomMaze (maze, handleFinishGenerating) {
     }
 
     // add pixel art
-    if(Helpers.getRandomInt(100) == 0) {
+    if(Helpers.getRandomInt(10) == 0) {
         let pixelArt = getRandomArt();
         for(let i = 0; i < 5; ++i) {
             if(height >= pixelArt.length && width >= pixelArt[0].length) {

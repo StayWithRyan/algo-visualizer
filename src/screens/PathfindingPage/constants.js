@@ -20,7 +20,7 @@ const PathfindingConstants = {
     elementSize: 30,
 
     DFSName: "Пошук у глибину",
-    BFSName: "Пошук у ширину (Алгоритм Дейкстри)",
+    BFSName: "Пошук у ширину",
     BestFirstSearchName: `Жадібний пошук "Найкращий - перший"`,
     AStartName: "Алгоритм пошуку A*",
 
