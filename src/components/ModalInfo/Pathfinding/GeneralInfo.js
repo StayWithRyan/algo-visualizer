@@ -5,6 +5,8 @@ import PlayBarInfo from "../GeneralInfo/PlayBarInfo"
 import KeyboardInfo from "../GeneralInfo/KeyboardInfo"
 
 import PathfindingConstants from "../../../screens/PathfindingPage/constants";
+import createBlock from '../../../icons/create.MP4';
+import moveNode from '../../../icons/move.MP4';
 
 function GeneralInfo() {
     return (
@@ -28,8 +30,14 @@ function GeneralInfo() {
             <HorizontalLine/>
 
             <TextItem>Можливості:</TextItem>
-            <TextItem tabs={1}>Ви можете створювати\видаляти стіни власноруч, використовуючи мишку.</TextItem>
-            <TextItem tabs={1}>Ви можете пересувати точки старту й кінця.</TextItem>
+            <TextItem tabs={1}>Ви можете створювати\видаляти стіни власноруч, використовуючи ліву кнопку мишки:</TextItem>
+            <TextItem tabs={1}>
+                <video height={200} loop autoPlay src={createBlock} />
+            </TextItem>
+            <TextItem tabs={1}>Ви можете пересувати точки старту й кінця:</TextItem>
+            <TextItem tabs={1}>
+                <video height={200} loop autoPlay src={moveNode} />
+            </TextItem>
 
             <HorizontalLine/>
 
