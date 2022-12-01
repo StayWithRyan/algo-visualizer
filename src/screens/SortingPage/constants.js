@@ -16,6 +16,7 @@ const SortingConstants = {
     arraySizeStep: 10,
 
 
+    InfoModalName: "Загальна інформація про сортування",
     BubbleSortName: "Сортування бульбашкою",
     CocktailSortName: "Сортування змішуванням",
     SelectionSortName: "Сортування простою вибіркою",

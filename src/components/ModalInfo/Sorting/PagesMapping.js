@@ -14,7 +14,7 @@ import SortingConstants from '../../../screens/SortingPage/constants';
 let SortingPagesMapping = [
     {
         page: <GeneralInfo/>,
-        name: "Загальна інформація про сортування"
+        name: SortingConstants.InfoModalName
     },
     {
         page: <BubbleSortInfo/>,

@@ -130,7 +130,7 @@ function StringsearchingPage() {
     return (
         <>
             <PageBar name={Constants.stringsearchingPageTitle}/>
-            <ConfigurationBar pageName={Constants.stringsearchingPageTitle} algorithmName={algorithm}>
+            <ConfigurationBar pageName={Constants.stringsearchingPageTitle} algorithmName={SearchingConstants.InfoModalName}>
                 <BasicSelect title ="Алгоритм" isDisabled={isSearching} onChange = {handleAlgorithmChange} value = {algorithm} values = {algorithms}  />
                 <BasicButton title="Завершити пошук" onClick={handleClear} isDisabled={autoplayRunning || !isSearching}/>
                 <BasicSlider isActive={true} title="Тривалість кроку (мс)" min={SearchingConstants.sleepMin} max={SearchingConstants.sleepMax} 

@@ -10,7 +10,7 @@ import SearchingConstants from '../../../screens/StringsearchingPage/constants';
 let StringSearchingPagesMapping = [
     {
         page: <GeneralInfo/>,
-        name: "Загальна інформація про пошук стрічки"
+        name: SearchingConstants.InfoModalName
     },
     {
         page: <NaiveInfo/>,

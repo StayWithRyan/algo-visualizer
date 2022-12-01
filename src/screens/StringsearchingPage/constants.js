@@ -13,6 +13,7 @@ const SearchingConstants = {
     matchColor: Constants.greenColor,
     noMatchColor: Constants.crimsonColor,
 
+    InfoModalName: "Загальна інформація про пошук стрічки",
     NaiveAlgorithmName: "Прямий пошук",
     OptimizedNaiveAlgorithmName: "Оптимізований прямий пошук",
     KMPAlgorithmName: "Алгоритм Кнута - Морріса - Пратта",

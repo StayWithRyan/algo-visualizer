@@ -210,7 +210,7 @@ function PathfindingPage() {
     return (
         <>
             <PageBar name={Constants.pathfindingPageTitle}/>
-            <ConfigurationBar pageName={Constants.pathfindingPageTitle} algorithmName={algorithm}>
+            <ConfigurationBar pageName={Constants.pathfindingPageTitle} algorithmName={PathfindingConstants.InfoModalName}>
                 <BasicSelect isDisabled={autoplayRunning || isGenerating} title ="Алгоритм" onChange = {handleAlgorithmChange} 
                     value={algorithm} values={algorithms}  />
                 <BasicSlider isActive={true} isDisabled={isGenerating} title="Тривалість кроку (мс)" min={PathfindingConstants.sleepMin} max={PathfindingConstants.sleepMax} 

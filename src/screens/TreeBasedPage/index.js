@@ -191,7 +191,7 @@ function TreeBasedPage() {
     return (
         <>
             <PageBar name={Constants.treeBasedPageTitle}/>
-            <ConfigurationBar pageName={Constants.treeBasedPageTitle} algorithmName={algorithm}>
+            <ConfigurationBar pageName={Constants.treeBasedPageTitle} algorithmName={TreeBasedConstants.InfoModalName}>
                 <BasicSelect title ="Алгоритм" isDisabled={autoplayRunning} onChange = {handleAlgorithmChange} value = {algorithm} values = {algorithms}  />
                 <BasicSlider title="Розмір дерева(масиву)" isDisabled={autoplayRunning} min={TreeBasedConstants.treeSizeMin} max={treeSizeMax}
                     default={TreeBasedConstants.treeSizeDefault} step={TreeBasedConstants.treeSizeStep} onChange={handleSizeChange} />

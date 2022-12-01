@@ -21,6 +21,7 @@ const TreeBasedConstants = {
     swappingColor: Constants.crimsonColor,
     doneColor: [Constants.lightGreenColor, Constants.greenColor],
 
+    InfoModalName: "Загальна інформація про алгоритми на деревах",
     LNRTraversalName: "Змішаний обхід (LNR)",
     NLRTraversalName: "Низхідний обхід (NLR)",
     LRNTraversalName: "Висхідний обхід (LRN)",

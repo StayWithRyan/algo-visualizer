@@ -90,7 +90,7 @@ function SortingPage() {
     return (
         <>
             <PageBar name={Constants.sortingPageTitle}/>
-            <ConfigurationBar pageName={Constants.sortingPageTitle}  algorithmName={algorithm}>
+            <ConfigurationBar pageName={Constants.sortingPageTitle}  algorithmName={SortingConstants.InfoModalName}>
                 <BasicSelect title="Алгоритм" isDisabled={autoplayRunning} onChange={handleAlgorithmChange} value={algorithm} values={algorithms}  />
                 <BasicSlider title="Розмір масиву"  isDisabled={autoplayRunning} min={SortingConstants.arraySizeMin} max={SortingConstants.arraySizeMax}
                     default={SortingConstants.arraySizeDefault} step={SortingConstants.arraySizeStep} onChange={handleSizeChange} />

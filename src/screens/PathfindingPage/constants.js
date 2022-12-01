@@ -19,6 +19,7 @@ const PathfindingConstants = {
 
     elementSize: 30,
 
+    InfoModalName: "Загальна інформація про пошук шляху",
     DFSName: "Пошук у глибину",
     BFSName: "Пошук у ширину",
     BestFirstSearchName: `Жадібний пошук "Найкращий - перший"`,
